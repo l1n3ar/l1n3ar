@@ -26,20 +26,17 @@ world's first decentralized, quantum-safe cbdc ios wallet. hand-implemented post
 `go` `swiftui` `post-quantum-crypto` `docker` `aws`
 
 **aculead** — tuteck, 2023 
-real-time b2b transportation management platform. reverse-bidding module over websockets sustaining 10k+ concurrent bids with ordered state. cut logistics costs 30% for 100+ enterprise clients.
+real-time b2b transportation management platform. reverse-bidding module over websockets sustaining concurrent bids with ordered state. cut logistics costs 30% for enterprise clients.
 `fastapi` `react` `websockets` `postgresql` `docker` `aws`
 
 **idocusense** — tuteck, 2023 
-ai-powered ocr + risk analytics platform. end-to-end fraud detection pipeline combining rule-based heuristics with ml scoring, 50k+ documents/month at 99.9% detection accuracy.
+ai-powered ocr + risk analytics platform. end-to-end fraud detection pipeline combining rule-based heuristics with ml scoring
 `flask` `react` `machine-learning` `aws-ec2` `aws-rds` `docker`
 
 **grocernest** — tuteck, 2022 
-full-scale e-commerce platform. high-throughput rest api for vendor + inventory management, architected for 100k+ daily transactions at 99.9% uptime. etl pipelines on azure data factory + logic apps. led a backend team of 4.
+full-scale e-commerce platform. high-throughput rest api for vendor + inventory management, etl pipelines on azure data factory + logic apps. led a backend team of 4.
 `node.js` `mariadb` `docker` `aws` `azure-data-factory`
 
-**trademark nlp** — conxult, 2022
-automated copywriting + trademark processing pipeline. nlp pipelines with trie-based indexing and inverted indexes for sub-second lookup across 10k+ documents/day, 60% less manual review.
-`node.js` `express` `nlp` `trie-indexing`
 
 ## stack
 
