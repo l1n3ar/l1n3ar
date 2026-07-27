@@ -33,6 +33,14 @@ reverse bidding engine over websockets. 10k+ concurrent bids. 30% down on logist
 ocr + risk analytics. rules stacked under ml scoring. 50k docs/month, 99.9% detection accuracy.
 `flask` `react` `aws` `docker`
 
+**grocernest** — tuteck, 2022
+kirana store to full e-commerce platform. 100k+ daily transactions, 99.9% uptime. led a team of 4.
+`node.js` `mariadb` `docker` `aws`
+
+**trademark nlp** — conxult, 2022
+automated copywriting + trademark screening. trie-based indexing, inverted indexes. 10k+ docs/day, 60% less manual review.
+`node.js` `express` `nlp`
+
 ## stack
 
 ![](https://img.shields.io/badge/-python-2b2b2b?style=flat-square)
@@ -45,4 +53,20 @@ ocr + risk analytics. rules stacked under ml scoring. 50k docs/month, 99.9% dete
 ![](https://img.shields.io/badge/-docker-2b2b2b?style=flat-square)
 ![](https://img.shields.io/badge/-aws-2b2b2b?style=flat-square)
 ![](https://img.shields.io/badge/-azure-2b2b2b?style=flat-square)
+
+## off the clock
+
+drummer — [eatbreakfast](https://linktr.ee/eatbreakfast), [flowersaremagic](https://linktr.ee/flowersaremagic), [the light we refuse](http://linktr.ee/thelightwerefuse). session work for [dindun](https://www.instagram.com/dindun.din/).
+football: real madrid + man united. die-hard ronaldo fan. nike fanboy.
+reading: crime and mystery thrillers.
+
+## stats
+
+<div align="center">
+
+![](https://github-readme-stats.vercel.app/api?username=l1n3ar&show_icons=true&hide_title=true&hide_border=true&bg_color=00000000&title_color=0b3d2e&icon_color=0b3d2e&text_color=2b2b2b)
+![](https://github-readme-streak-stats.herokuapp.com/?user=l1n3ar&hide_border=true&background=00000000&ring=0b3d2e&fire=0b3d2e&currStreakLabel=0b3d2e)
+
+</div>
+
 

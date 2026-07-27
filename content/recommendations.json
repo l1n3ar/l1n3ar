@@ -1,8 +1,57 @@
 [
   {
-    "who": "name · title, company",
-    "quote": "drop a real line here — from a manager, a teammate, a client. paste the full linkedin recommendation; the sidebar shows a short preview and \"read more\" opens the rest.",
+    "who": "Sibabrata Banerjee · Co-founder and CTO, Currency Network",
+    "quote": "It was a pleasure working along-with Mehul in the Digital Currency prototype project. Mehul is extremely technologically adept, passionate, demonstrating positive attitude and ever willing to take-on challenges head-on. He played a pivotal role in solving major technical issues, showcasing his problem-solving abilities and coding expertise across technologies such as Blockchain, Node.js, Go, and Swift. His collaborative nature and leadership qualities positively contributes towards bringing the best out-of everyone in the team within a project. I highly recommend Mehul for his outstanding work, professional approach, proficiency as a programmer and his passion for technology, and truly believe he is an invaluable asset to any team/organisation.",
+    "order": 11
+  },
+  {
+    "who": "Animesh Ghosh · Head of Crypto & Digital Assets, Currency Network",
+    "quote": "I have had the pleasure of working closely with Mehul over the past one year during our Digital Currency project. As a mobile developer, he consistently demonstrated exceptional skills and dedication to delivering high-quality solutions. Mehul possesses a profound understanding of mobile technologies which he adeptly applied to our projects. He played a crucial role in building a quantum-secure digital currency wallet, where his innovative approach and problem-solving abilities were instrumental in overcoming challenges and achieving success. I wholeheartedly recommend Mehul for any mobile development role.",
+    "order": 10
+  },
+  {
+    "who": "Dipta Pratim Banerjee · Head of Delivery & Partner, TuTeck Technologies",
+    "quote": "I had the pleasure of working closely with Mehul, and I can confidently say that he is an exceptional \"Technophile.\" Mehul has consistently demonstrated a strong grasp of technology concepts, a dedication to staying up-to-date with the latest trends, and a knack for solving complex technical challenges. His problem-solving skills are second to none — he has a natural ability to dissect complex technical issues, identify root causes, and develop effective solutions. What sets Mehul apart is not only his technical prowess but also his strong teamwork and communication skills.",
+    "order": 9
+  },
+  {
+    "who": "Soumya Dasgupta · Chief Delivery and Strategy Officer, TuTeck Technologies",
+    "quote": "Mehul is one of the brightest young technologists I have seen in my 25+ year long career. Mehul architects and designs digital solutions across multiple tech stacks, quite amazing for someone with just 3 years of experience. What really differentiates Mehul is his strong understanding of business across multiple domains and his ability to seamlessly address business problems with technical solutions. Mehul stands tall and drives customer workshops with senior business and technical stakeholders, and ticks all the boxes to be a strong people leader as well. He has tremendous contribution in TuTeck's journey so far and is a key pillar for the growth of the company.",
+    "order": 8
+  },
+  {
+    "who": "Samantak Panda · Founder and CEO, TuTeck Technologies",
+    "quote": "Mehul is a highly dedicated individual with a passion for his role and a desire to deliver the highest quality service to the company, his peers, and his customers. He goes the extra mile when needed and readily accepts additional responsibilities and challenges when required. I can always count on Mehul to perform at the highest levels on my delivery teams across all of his delivery capabilities. He has helped mentor junior teams in the delivery of complex enterprise-wide solutions. I would always want to have Mehul as a member of my team.",
+    "order": 7
+  },
+  {
+    "who": "Sumayukh Sinha · Developer, AI Engineer, TuTeck Technologies",
+    "quote": "Mehul is a very reliable colleague to have around. Apart from being a beacon of inspiration for his juniors, he's a classic example of what happens when job meets passion. His technical skill set in itself speaks for the level of dedication he likes putting into his work. His never-ending appetite for learning and practically sound problem-solving ability is what I admire the most about him. His proclivity towards getting inspired by new ideas and insights, and sharing them with the team, is what makes him a natural leader.",
+    "order": 6
+  },
+  {
+    "who": "Juned SK",
+    "quote": "I have had the pleasure of working closely with Mehul for a significant period of time, and I can confidently say that he is a valuable asset to any team with his exceptional work ethic. He is my senior and fortunately my mentor, and he has been really very instrumental in shaping my professional growth. One of Mehul's greatest strengths is his exceptional ability to learn and adapt quickly — he is always up-to-date with the latest technologies and frameworks, allowing him to deliver cutting-edge solutions. Any organization would be fortunate to have him as part of their team.",
+    "order": 5
+  },
+  {
+    "who": "Sayantan Chakraborty · Senior Software Consultant, TuTeck Technologies",
+    "quote": "Mehul possesses a remarkable level of professionalism and expertise in his field. As my senior, he consistently demonstrated a deep understanding of our work and was always willing to share his knowledge and offer guidance whenever needed. What truly sets Mehul apart is his unwavering support and encouragement for his colleagues — he fostered a positive and collaborative work environment where everyone felt comfortable seeking assistance and sharing ideas. His approachability and willingness to lend a helping hand were instrumental in creating a cohesive and motivated team.",
+    "order": 4
+  },
+  {
+    "who": "Santanu Mitra · Applied AI, CrowdStrike",
+    "quote": "I had the pleasure of working with an exceptional talent like Mehul at TuTeck Technologies, collaborating on different projects. I was particularly impressed by Mehul's logical and problem-solving ability and hard work with dedication — he is always an example of where hard work and exceptional talent meet. His programming skills as well as cloud infrastructure knowledge are unparalleled, motivating the whole team with simple examples. Mehul would be an asset to any team.",
+    "order": 3
+  },
+  {
+    "who": "Pratik Banerjee · Co-Founder & Business Strategist, TuTeck Technologies",
+    "quote": "I know Mehul since he started his career just out of college. He is highly skilled in backend technologies and has consistently developed high-quality, scalable software solutions for the team. He is able to quickly learn and adapt to new technologies, making him a valuable asset in a rapidly evolving field. He is an amazing team player and mentor, and can effectively communicate technical information to his team members and non-technical stakeholders alike. I appreciate the way he takes on challenges with such a positive attitude — he leaves us with such a great impression.",
     "order": 2
   },
-  { "who": "name · title, company", "quote": "a second one, same pattern.", "order": 1 }
+  {
+    "who": "Aditya Keyal · Director of Application Development, Publicis Sapient",
+    "quote": "Mehul has consistently demonstrated an impressive level of enthusiasm and proactivity in his work. He possesses a keen intellect and is quick to understand complex technical concepts — his passion for web development is evident in his work, and he consistently brings new and innovative ideas to the table. He has expertise across a range of programming languages and web development frameworks, and his strong communication skills coupled with his never-give-up attitude make him an asset for any organization.",
+    "order": 1
+  }
 ]
