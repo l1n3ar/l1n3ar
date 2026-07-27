@@ -5,6 +5,7 @@
 full stack ai systems engineer.
 
 tech @ BARBRI · previously employee #1 @ lega, acquired by barbri
+
 [mehulchattopadhyaywork@gmail.com](mailto-mehulchattopadhyaywork@gmail.com) · [linkedin](https-//www.linkedin.com/in/mehulchattopadhyay/)
 
 </div>
@@ -23,22 +24,22 @@ i built an enterprise ai governance platform as employee #1, taken from zero to 
 i worked on the world's first decentralized, quantum-safe cbdc ios wallet- a government-backed digital payment system spanning a consumer ios app, a merchant onboarding web app, and a merchant mobile app, designed and piloted with real users rather than launched cold. i built the ios apps and worked with ibm to debug and stabilize the go backend. mvp presented to a swiss central bank.
 `go` `swiftui` `post-quantum-crypto` `docker` `aws`
 
-**aculead** · tuteck, 2023–24 · [code](https//github.com/l1n3ar/Reverse-Bidding-API)
+**aculead** · tuteck, 2023–24 · [code](https://github.com/l1n3ar/Reverse-Bidding-API)
 
 i built a real-time reverse-bidding marketplace for freight. shippers post a load, carriers compete in a live, descending-price auction to win it, running private invite-only pools, an open public market, and direct-assign, all through the same bidding engine, with per-shipper multi-tenant rules underneath.
 `fastapi` `python` `postgresql` `redis` `websockets`
 
-**grocernest** · tuteck, 2022–23 · [code](https//github.com/l1n3ar/Grocernest)
+**grocernest** · tuteck, 2022–23 · [code](https://github.com/l1n3ar/Grocernest)
 
 i led a backend team of four to build a full-scale grocery e-commerce platform- checkout, in-store pos, inventory and grn, delivery-staff operations, and a subscription model, all wired to an automated cashback/referral engine and whatsapp for otps, order updates, and invoices.
 `node.js` `express` `sequelize` `mariadb` `aws`
 
-**contromoist** · tuteck, 2024 · [code](https//github.com/l1n3ar/Contromoist-PA)
+**contromoist** · tuteck, 2024 · [code](https://github.com/l1n3ar/Contromoist-PA)
 
 i owned the entire backend for an air-conditioning installation business; project management, template-driven quality inspections, and travel expense claims, re-platformed piece by piece off an existing legacy erp without taking its live database offline.
 `node.js` `express` `sequelize` `mysql` `jwt`
 
-**registrum** · conxult innovations, 2022 · [code](https//github.com/l1n3ar/Registrum-API)
+**registrum** · conxult innovations, 2022 · [code](https://github.com/l1n3ar/Registrum-API)
 
 i built a provenance system for blockchain notarization of trademarks and copyrightsk - it gives a filing an immutable, timestamped proof of ownership on polygon by hashing the asset (or the mark's text, for word marks), anchoring that hash on-chain, and issuing a verifiable certificate, without ever putting the underlying document on a public ledger.
 `node.js` `express` `web3.js` `polygon` `mongodb` `redis`
