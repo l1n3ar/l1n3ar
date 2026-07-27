@@ -8,12 +8,12 @@ export const projectFrontmatterSchema = z.object({
   year: z.string(),
   role: z.string(),
   line: z.string(),
+  description: z.string(),
   tech: z.array(z.string()).default([]),
   github: z.string().url().optional(),
   demo: z.string().url().optional(),
   metrics: z.array(metricSchema).default([]),
   order: z.number().default(0),
-  featured: z.boolean().default(false),
   asks: z.array(z.string()).default([]),
 });
 export type ProjectFrontmatter = z.infer<typeof projectFrontmatterSchema>;
@@ -37,10 +37,6 @@ export const recommendationSchema = z.object({
   order: z.number().default(0),
 });
 export type Recommendation = z.infer<typeof recommendationSchema>;
-
-export const techIconEntrySchema = z.object({ slug: z.string().optional() });
-export const techIconMapSchema = z.record(techIconEntrySchema);
-export type TechIconMap = z.infer<typeof techIconMapSchema>;
 
 export const siteConfigSchema = z.object({
   name: z.string(),

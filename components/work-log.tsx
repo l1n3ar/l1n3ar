@@ -1,28 +1,52 @@
 'use client';
+import { useRef, useState } from 'react';
+import { ChevronUp, ChevronDown } from 'lucide-react';
 import type { Project } from '@/lib/schema';
 import { Button } from '@/components/ui/button';
 import { ProjectRow } from './project-row';
-import { kicker, linkButtonClass } from '@/lib/typography';
+import { kicker } from '@/lib/typography';
 
 export function WorkLog({
-  projects, onSelect, onOpenIndex,
-}: { projects: Project[]; onSelect: (id: string) => void; onOpenIndex: () => void }) {
-  const shown = projects.filter((p) => p.featured);
+  projects, selectedId, onSelect,
+}: { projects: Project[]; selectedId?: string; onSelect: (id: string) => void }) {
+  const rowRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const [cursor, setCursor] = useState(0);
+
+  const step = (dir: 1 | -1) => {
+    const next = Math.min(Math.max(cursor + dir, 0), projects.length - 1);
+    setCursor(next);
+    rowRefs.current[next]?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  };
+
   return (
     <>
-      <div className="px-8 pt-5 pb-1.5 flex items-baseline gap-2.5 shrink-0">
-        <div className={kicker}>work</div>
-        <span className="font-heading italic text-xs text-ink/45 whitespace-nowrap shrink-0">{shown.length} of {projects.length}</span>
-        <Button
-          variant="link"
-          onClick={onOpenIndex}
-          className={`${linkButtonClass} ml-auto whitespace-nowrap shrink-0`}
-        >
-          view full index →
-        </Button>
+      <div className="px-8 pt-5 pb-2 flex items-baseline gap-2.5 shrink-0">
+        <div className={`${kicker} text-0_9`}>work</div>
+        <div className="ml-auto flex gap-1">
+          <Button variant="ghost" size="icon" aria-label="scroll up" disabled={cursor === 0} onClick={() => step(-1)}>
+            <ChevronUp className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="scroll down"
+            disabled={cursor === projects.length - 1}
+            onClick={() => step(1)}
+          >
+            <ChevronDown className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
-      <div className="flex-[1.3] min-h-0 px-8 pb-3 overflow-y-auto overflow-x-hidden gz-scroll">
-        {shown.map((p) => <ProjectRow key={p.id} project={p} onSelect={onSelect} variant="primary" />)}
+      <div className="flex-[1.3] min-h-0 px-8 pb-3 overflow-y-auto overflow-x-hidden scroll-smooth gz-scroll">
+        {projects.map((p, i) => (
+          <ProjectRow
+            key={p.id}
+            ref={(el) => { rowRefs.current[i] = el; }}
+            project={p}
+            selected={p.id === selectedId}
+            onSelect={onSelect}
+          />
+        ))}
       </div>
     </>
   );

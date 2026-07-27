@@ -11,7 +11,7 @@ export function Sidebar({ about, history, recs }: { about: string; history: Work
   const recDialogRef = useRef<RecDialogHandle>(null);
 
   return (
-    <div className="gz-scroll border-r border-g py-4 px-6 flex flex-col min-h-0 min-w-0 overflow-y-auto overflow-x-hidden">
+    <div className="gz-scroll border-r border-g py-4 px-6 flex flex-col min-h-0 min-w-0 overflow-y-auto overflow-x-hidden scroll-smooth">
       <div className={`${kicker} mb-1.5`}>about</div>
       <p className="text-0_8 leading-relaxed mb-4 pb-3.5 border-b border-g/25 break-words">{about}</p>
 
@@ -29,7 +29,7 @@ export function Sidebar({ about, history, recs }: { about: string; history: Work
       </div>
 
       <div className={`${kicker} mt-4 mb-1.5 pt-3 border-t border-g/25`}>recommendations</div>
-      <div className="gz-scroll flex-1 min-h-20 overflow-y-auto overflow-x-hidden pr-0.5">
+      <div className="gz-scroll flex-1 min-h-20 overflow-y-auto overflow-x-hidden scroll-smooth pr-0.5">
         {recs.map((r) => {
           const long = r.quote.length > REC_PREVIEW_LEN;
           const short = long ? r.quote.slice(0, REC_PREVIEW_LEN) + '…' : r.quote;

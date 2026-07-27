@@ -4,9 +4,8 @@ import matter from 'gray-matter';
 import { remark } from 'remark';
 import remarkHtml from 'remark-html';
 import {
-  projectFrontmatterSchema, workHistoryEntrySchema, recommendationSchema,
-  techIconMapSchema, siteConfigSchema,
-  type Project, type WorkHistoryEntry, type Recommendation, type TechIconMap, type SiteConfig,
+  projectFrontmatterSchema, workHistoryEntrySchema, recommendationSchema, siteConfigSchema,
+  type Project, type WorkHistoryEntry, type Recommendation, type SiteConfig,
 } from './schema';
 
 const CONTENT_DIR = path.join(process.cwd(), 'content');
@@ -28,11 +27,6 @@ export function getRecommendations(): Recommendation[] {
   return (JSON.parse(raw) as unknown[])
     .map((e) => recommendationSchema.parse(e))
     .sort((a, b) => b.order - a.order);
-}
-
-export function getTechIconMap(): TechIconMap {
-  const raw = fs.readFileSync(path.join(CONTENT_DIR, 'tech-icons.json'), 'utf8');
-  return techIconMapSchema.parse(JSON.parse(raw));
 }
 
 export async function getAllProjects(): Promise<Project[]> {

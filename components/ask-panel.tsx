@@ -20,22 +20,7 @@ export function AskPanel({ suggestions, onProjectSelected }: { suggestions: stri
         <div className={kicker}>ask about the work</div>
       </div>
 
-      <div ref={resultsRef} className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-8 gz-scroll">
-        {messages.length === 0 && (
-          <div className="flex gap-2 flex-wrap pb-2">
-            {suggestions.map((s) => (
-              <Button
-                key={s}
-                variant="outline"
-                className="font-heading italic text-0_8 px-2.5 py-1 border-g/40"
-                onClick={() => append({ role: 'user', content: s })}
-              >
-                {s}
-              </Button>
-            ))}
-          </div>
-        )}
-
+      <div ref={resultsRef} className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-8 gz-scroll scroll-smooth">
         {messages.map((m) => (
           <div key={m.id} className="pb-3">
             {m.role === 'user' ? (
@@ -75,6 +60,21 @@ export function AskPanel({ suggestions, onProjectSelected }: { suggestions: stri
           </div>
         ))}
       </div>
+
+      {messages.length === 0 && (
+        <div className="flex flex-wrap justify-center gap-2 px-8 pb-2">
+          {suggestions.map((s) => (
+            <Button
+              key={s}
+              variant="outline"
+              className="font-heading italic text-0_8 px-2.5 py-1 border-g/40"
+              onClick={() => append({ role: 'user', content: s })}
+            >
+              {s}
+            </Button>
+          ))}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="px-8 pt-2.5 pb-4 shrink-0">
         <div className="flex items-center gap-2.5 rounded-sm px-3.5 py-2 bg-g">
