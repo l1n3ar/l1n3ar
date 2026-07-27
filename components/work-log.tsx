@@ -21,7 +21,7 @@ export function WorkLog({
   return (
     <>
       <div className="px-8 pt-5 pb-2 flex items-baseline gap-2.5 shrink-0">
-        <div className={`${kicker} text-0_9`}>work</div>
+        <div className={`${kicker} text-0_9`}>projects</div>
         <div className="ml-auto flex gap-1">
           <Button variant="ghost" size="icon" aria-label="scroll up" disabled={cursor === 0} onClick={() => step(-1)}>
             <ChevronUp className="h-4 w-4" />

@@ -6,7 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { kicker } from '@/lib/typography';
 
-export function AskPanel({ suggestions, onProjectSelected }: { suggestions: string[]; onProjectSelected: (id: string) => void }) {
+export function AskPanel({
+  projectName, suggestions, onProjectSelected,
+}: { projectName: string; suggestions: string[]; onProjectSelected: (id: string) => void }) {
   const { messages, input, handleInputChange, handleSubmit, append, addToolResult } = useChat({ api: '/api/ask' });
   const resultsRef = useRef<HTMLDivElement>(null);
 
@@ -17,7 +19,7 @@ export function AskPanel({ suggestions, onProjectSelected }: { suggestions: stri
   return (
     <div className="flex-1 min-h-0 flex flex-col border-t border-g">
       <div className="px-8 pt-3.5 pb-2 flex items-baseline gap-2 shrink-0">
-        <div className={kicker}>ask about the work</div>
+        <div className={kicker}>ask about <span className='underline font-bold'>{projectName}</span></div>
       </div>
 
       <div ref={resultsRef} className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-8 gz-scroll scroll-smooth">

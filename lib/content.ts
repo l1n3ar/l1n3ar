@@ -26,7 +26,7 @@ export function getRecommendations(): Recommendation[] {
   const raw = fs.readFileSync(path.join(CONTENT_DIR, 'recommendations.json'), 'utf8');
   return (JSON.parse(raw) as unknown[])
     .map((e) => recommendationSchema.parse(e))
-    .sort((a, b) => b.order - a.order);
+    .sort((a, b) => a.order - b.order);
 }
 
 export async function getAllProjects(): Promise<Project[]> {

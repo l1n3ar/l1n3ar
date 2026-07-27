@@ -16,6 +16,7 @@ export function PortfolioApp({
 }) {
   const [selectedId, setSelectedId] = useState(projects[0]?.id);
   const selected = projects.find((p) => p.id === selectedId) ?? projects[0];
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const caseDialogRef = useRef<CaseDialogHandle>(null);
 
@@ -23,12 +24,22 @@ export function PortfolioApp({
     <div className="h-screen overflow-hidden flex flex-col bg-cream text-ink font-body">
       <Masthead site={site} />
 
-      <div className="grid grid-cols-layout flex-1 min-h-0">
-        <Sidebar about={site.about} history={workHistory} recs={recommendations} />
+      <div
+        className={`grid flex-1 min-h-0 transition-[grid-template-columns] duration-300 ${
+          sidebarOpen ? 'grid-cols-layout' : 'grid-cols-[3rem_1fr_20%]'
+        }`}
+      >
+        <Sidebar
+          about={site.about}
+          history={workHistory}
+          recs={recommendations}
+          open={sidebarOpen}
+          onToggleOpen={() => setSidebarOpen((o) => !o)}
+        />
 
         <div className="flex flex-col min-h-0 min-w-0 border-r border-g">
           <WorkLog projects={projects} selectedId={selectedId} onSelect={setSelectedId} />
-          <AskPanel suggestions={selected.asks} onProjectSelected={setSelectedId} />
+          <AskPanel projectName={selected.name} suggestions={selected.asks} onProjectSelected={setSelectedId} />
         </div>
 
         <ContextPanel project={selected} onOpenCase={(id) => caseDialogRef.current?.open(id)} />
