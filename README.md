@@ -91,7 +91,7 @@ reading- crime and mystery thrillers.
 <div align="center">
 
 <!-- ![](https-//github-readme-stats.vercel.app/api?username=l1n3ar&show_icons=true&hide_title=true&hide_border=true&bg_color=00000000&title_color=0b3d2e&icon_color=0b3d2e&text_color=2b2b2b) -->
-![](https-//github-readme-streak-stats.herokuapp.com/?user=l1n3ar&hide_border=true&background=00000000&ring=0b3d2e&fire=0b3d2e&currStreakLabel=0b3d2e)
+![](https://github-readme-streak-stats.herokuapp.com/?user=l1n3ar&hide_border=true&background=00000000&ring=0b3d2e&fire=0b3d2e&currStreakLabel=0b3d2e)
 
 </div>
 
