@@ -49,34 +49,34 @@ i built a provenance system for blockchain notarization of trademarks and copyri
 
 <div align="center">
 
-![](https-//img.shields.io/badge/-Python-2b2b2b?style=flat-square&logo=python&logoColor=white)
-![](https-//img.shields.io/badge/-Go-2b2b2b?style=flat-square&logo=go&logoColor=white)
-![](https-//img.shields.io/badge/-TypeScript-2b2b2b?style=flat-square&logo=typescript&logoColor=white)
-![](https-//img.shields.io/badge/-JavaScript-2b2b2b?style=flat-square&logo=javascript&logoColor=white)
-![](https-//img.shields.io/badge/-Swift-2b2b2b?style=flat-square&logo=swift&logoColor=white)
-![](https-//img.shields.io/badge/-Java-2b2b2b?style=flat-square&logo=openjdk&logoColor=white)
+![](https://img.shields.io/badge/-Python-2b2b2b?style=flat-square&logo=python&logoColor=white)
+![](https://img.shields.io/badge/-Go-2b2b2b?style=flat-square&logo=go&logoColor=white)
+![](https://img.shields.io/badge/-TypeScript-2b2b2b?style=flat-square&logo=typescript&logoColor=white)
+![](https://img.shields.io/badge/-JavaScript-2b2b2b?style=flat-square&logo=javascript&logoColor=white)
+![](https://img.shields.io/badge/-Swift-2b2b2b?style=flat-square&logo=swift&logoColor=white)
+![](https://img.shields.io/badge/-Java-2b2b2b?style=flat-square&logo=openjdk&logoColor=white)
 
-![](https-//img.shields.io/badge/-FastAPI-2b2b2b?style=flat-square&logo=fastapi&logoColor=white)
-![](https-//img.shields.io/badge/-Next.js-2b2b2b?style=flat-square&logo=next.js&logoColor=white)
-![](https-//img.shields.io/badge/-Node.js-2b2b2b?style=flat-square&logo=nodedotjs&logoColor=white)
-![](https-//img.shields.io/badge/-React-2b2b2b?style=flat-square&logo=react&logoColor=white)
-![](https-//img.shields.io/badge/-SwiftUI-2b2b2b?style=flat-square&logo=swift&logoColor=white)
-![](https-//img.shields.io/badge/-Flask-2b2b2b?style=flat-square&logo=flask&logoColor=white)
+![](https://img.shields.io/badge/-FastAPI-2b2b2b?style=flat-square&logo=fastapi&logoColor=white)
+![](https://img.shields.io/badge/-Next.js-2b2b2b?style=flat-square&logo=next.js&logoColor=white)
+![](https://img.shields.io/badge/-Node.js-2b2b2b?style=flat-square&logo=nodedotjs&logoColor=white)
+![](https://img.shields.io/badge/-React-2b2b2b?style=flat-square&logo=react&logoColor=white)
+![](https://img.shields.io/badge/-SwiftUI-2b2b2b?style=flat-square&logo=swift&logoColor=white)
+![](https://img.shields.io/badge/-Flask-2b2b2b?style=flat-square&logo=flask&logoColor=white)
 
-![](https-//img.shields.io/badge/-PostgreSQL-2b2b2b?style=flat-square&logo=postgresql&logoColor=white)
-![](https-//img.shields.io/badge/-pgvector-2b2b2b?style=flat-square)
-![](https-//img.shields.io/badge/-MongoDB-2b2b2b?style=flat-square&logo=mongodb&logoColor=white)
-![](https-//img.shields.io/badge/-MariaDB-2b2b2b?style=flat-square&logo=mariadb&logoColor=white)
+![](https://img.shields.io/badge/-PostgreSQL-2b2b2b?style=flat-square&logo=postgresql&logoColor=white)
+![](https://img.shields.io/badge/-pgvector-2b2b2b?style=flat-square)
+![](https://img.shields.io/badge/-MongoDB-2b2b2b?style=flat-square&logo=mongodb&logoColor=white)
+![](https://img.shields.io/badge/-MariaDB-2b2b2b?style=flat-square&logo=mariadb&logoColor=white)
 
-![](https-//img.shields.io/badge/-LiteLLM-2b2b2b?style=flat-square)
-![](https-//img.shields.io/badge/-MCP-2b2b2b?style=flat-square)
-![](https-//img.shields.io/badge/-RAG-2b2b2b?style=flat-square)
-![](https-//img.shields.io/badge/-Vector%20Search-2b2b2b?style=flat-square)
-![](https-//img.shields.io/badge/-Human--in--the--Loop-2b2b2b?style=flat-square)
+![](https://img.shields.io/badge/-LiteLLM-2b2b2b?style=flat-square)
+![](https://img.shields.io/badge/-MCP-2b2b2b?style=flat-square)
+![](https://img.shields.io/badge/-RAG-2b2b2b?style=flat-square)
+![](https://img.shields.io/badge/-Vector%20Search-2b2b2b?style=flat-square)
+![](https://img.shields.io/badge/-Human--in--the--Loop-2b2b2b?style=flat-square)
 
-![](https-//img.shields.io/badge/-Docker-2b2b2b?style=flat-square&logo=docker&logoColor=white)
-![](https-//img.shields.io/badge/-AWS-2b2b2b?style=flat-square&logo=amazonaws&logoColor=white)
-![](https-//img.shields.io/badge/-Azure-2b2b2b?style=flat-square&logo=microsoftazure&logoColor=white)
+![](https://img.shields.io/badge/-Docker-2b2b2b?style=flat-square&logo=docker&logoColor=white)
+![](https://img.shields.io/badge/-AWS-2b2b2b?style=flat-square&logo=amazonaws&logoColor=white)
+![](https://img.shields.io/badge/-Azure-2b2b2b?style=flat-square&logo=microsoftazure&logoColor=white)
 
 </div>
 
