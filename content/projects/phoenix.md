@@ -6,7 +6,7 @@ role: employee #1 · architect · 0→1
 line: enterprise ai governance.
 description: "i built an enterprise ai governance platform as employee #1, taken from zero to production. every model call from every team routes through one gateway, gets logged, and any agentic tool call needs human approval before it fires. no chatbot wrapper pretending to be a real system, built to survive an acquisition and keep scaling afterward."
 tech: [next.js, fastapi, litellm, pgvector, mcp, postgres, azure]
-demo: https://lega.ai
+# demo: https://lega.ai
 metrics:
   - key: org
     value: "lega → barbri"

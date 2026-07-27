@@ -59,11 +59,16 @@ export function PortfolioApp({
 
       <div className="bg-g text-cream px-6 py-3 flex items-baseline gap-6">
         {site.footerLinks.map((l) => (
-          <a key={l.label} href={l.href} target='_blank' className="font-heading italic text-0_8 text-cream/90 hover:text-cream">
+          <a
+            key={l.label}
+            href={l.href}
+            {...(l.href.startsWith('mailto:') ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+            className="font-heading italic text-0_8 text-cream/90 hover:text-cream"
+          >
             {l.label}
           </a>
         ))}
-        <span className="ml-auto font-heading italic text-xs text-cream/65">{site.location}</span>
+        <span className="ml-auto font-body text-xs text-cream/65">{site.alterEgo}</span>
       </div>
 
       <CaseDialog ref={caseDialogRef} />

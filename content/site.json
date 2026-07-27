@@ -1,13 +1,14 @@
 {
   "name": "Mehul Chattopadhyay",
-  "role": "full stack engineer, ai systems",
+  "role": "full stack ai systems engineer ",
   "location": "kolkata, india",
+  "alterEgo" : "l1n3ar",
   "email": "mehulchattopadhyaywork@gmail.com",
-  "about": "tech @ BARBRI | ex tech @ lega.ai (acquired by BARBRI) | ex TuTeck Technologies ",
+  "about": "tech @ BARBRI | ex tech @ lega.ai (acquired by BARBRI) ",
   "footerLinks": [
-    { "label": "email", "href": "mailto:mehulchattopadhyaywork@gmail.com" },
     { "label": "github", "href": "https://github.com/l1n3ar" },
     { "label": "linkedin", "href": "https://www.linkedin.com/in/mehulchattopadhyay/" },
     { "label": "resume.pdf", "href": "https://drive.google.com/file/d/1Ra7LVipQ_YHeoL2CZ2qwXxNRiYGAwfIT/view?usp=sharing" }
   ]
 }
+
