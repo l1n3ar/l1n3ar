@@ -85,7 +85,7 @@ export function PhoenixCaseStudy() {
         </CaseSection>
 
         <CaseImage
-          src="/case-media/phoenix-architecture.svg"
+          src="/case-media/phoenix/phoenix-architecture.svg"
           alt="Gateway architecture: apps and orchestrators call a central gateway, which routes to bring-your-own model providers and to a tool/MCP layer; gated tool calls pause for human approval before executing."
         />
 

@@ -17,7 +17,7 @@ export const CaseDialog = forwardRef<CaseDialogHandle>(function CaseDialog(_prop
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="border border-g shadow-lg p-0 bg-cream rounded-none w-[94vw] h-[92vh] max-w-5xl overflow-y-auto overflow-x-hidden gz-scroll">
+      <DialogContent className="shadow-lg p-0 bg-cream rounded-none w-[94vw] h-[92vh] max-w-5xl overflow-y-auto overflow-x-hidden gz-scroll">
         {CaseStudyComponent && (
           <>
             <DialogClose asChild>
