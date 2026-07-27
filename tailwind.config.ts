@@ -11,6 +11,8 @@ export default {
         g: '#0b3d2e',    // the one accent — text/border/rule, never a large fill
         cream: '#f6f1e4', // page ground
         ink: '#1b2420',   // body text
+        codeBg: '#0b1a13',  // case-markdown code block background
+        codeInk: '#e8e3d8', // case-markdown code block text
       },
       fontFamily: {
         heading: ['"Cormorant Garamond"', 'serif'],

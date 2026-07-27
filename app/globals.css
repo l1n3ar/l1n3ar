@@ -28,10 +28,10 @@
 .case-markdown p { text-align: justify; hyphens: auto; }
 .case-markdown pre {
   font-family: theme('fontFamily.mono');
-  background: #0b1a13; color: #e8e3d8;
+  background: theme('colors.codeBg'); color: theme('colors.codeInk');
   padding: 1rem 1.25rem; border-radius: theme('borderRadius.sm'); font-size: theme('fontSize.0_8'); line-height: 1.6; overflow: auto;
 }
 .case-markdown img {
   width: 100%; border: 0.375rem solid theme('colors.cream');
-  outline: 0.06rem solid rgb(11 61 46 / 0.2);
+  outline: 0.06rem solid theme('colors.g / 20%');
 }

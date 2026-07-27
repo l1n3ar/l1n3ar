@@ -1,18 +1,24 @@
-import Image from 'next/image';
 import { resolveIcon } from '@/lib/icons';
 import type { TechIconMap } from '@/lib/schema';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 
 export function Icon({ tech, iconMap }: { tech: string; iconMap: TechIconMap }) {
   const icon = resolveIcon(tech, iconMap);
-  if (icon.type === 'img') {
-    return <Image title={icon.label} src={icon.src} width={22} height={22} alt={icon.label} className="opacity-85" unoptimized />;
-  }
   return (
-    <span
-      title={icon.label}
-      className="inline-flex items-center justify-center w-6 h-6 rounded-full border border-g/40 font-heading italic text-0_6 text-g"
-    >
-      {icon.mark}
-    </span>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Avatar className="w-5 h-5 ring-2 ring-cream -ml-2 first:ml-0 transition-transform hover:z-10 hover:scale-125 hover:-translate-y-0.5">
+          {icon.type === 'img' ? (
+            <AvatarImage src={icon.src} alt={icon.label} />
+          ) : (
+            <AvatarFallback className="font-heading italic text-0_6 text-g bg-cream border border-g/40">
+              {icon.mark}
+            </AvatarFallback>
+          )}
+        </Avatar>
+      </TooltipTrigger>
+      <TooltipContent className="font-heading italic text-0_7 bg-g text-cream border-0">{icon.label}</TooltipContent>
+    </Tooltip>
   );
 }

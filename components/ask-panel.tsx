@@ -1,6 +1,10 @@
 'use client';
 import { useChat } from 'ai/react';
 import { useEffect, useRef } from 'react';
+import { Send } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { kicker } from '@/lib/typography';
 
 export function AskPanel({ suggestions, onProjectSelected }: { suggestions: string[]; onProjectSelected: (id: string) => void }) {
   const { messages, input, handleInputChange, handleSubmit, append, addToolResult } = useChat({ api: '/api/ask' });
@@ -13,21 +17,21 @@ export function AskPanel({ suggestions, onProjectSelected }: { suggestions: stri
   return (
     <div className="flex-1 min-h-0 flex flex-col border-t border-g">
       <div className="px-8 pt-3.5 pb-2 flex items-baseline gap-2 shrink-0">
-        <div className="font-heading italic text-0_8 text-g">ask about the work</div>
+        <div className={kicker}>ask about the work</div>
       </div>
 
       <div ref={resultsRef} className="flex-1 min-h-0 overflow-auto px-8 gz-scroll">
         {messages.length === 0 && (
           <div className="flex gap-2 flex-wrap pb-2">
             {suggestions.map((s) => (
-              <button
+              <Button
                 key={s}
-                type="button"
+                variant="outline"
+                className="text-0_8 px-2.5 py-1 border-g/40"
                 onClick={() => append({ role: 'user', content: s })}
-                className="font-heading italic text-0_8 px-2.5 py-1 border border-g/40 rounded-sm bg-transparent text-g cursor-pointer hover:bg-g/10"
               >
                 {s}
-              </button>
+              </Button>
             ))}
           </div>
         )}
@@ -48,9 +52,9 @@ export function AskPanel({ suggestions, onProjectSelected }: { suggestions: stri
                   <span className="font-heading italic text-0_8 mr-auto">
                     open the &ldquo;{(ti.args as { projectId: string }).projectId}&rdquo; case?
                   </span>
-                  <button
-                    type="button"
-                    className="text-0_7 px-2.5 py-1 border border-g text-g bg-transparent rounded-sm cursor-pointer"
+                  <Button
+                    variant="outline"
+                    size="sm"
                     onClick={() => {
                       const { projectId } = ti.args as { projectId: string };
                       onProjectSelected(projectId);
@@ -58,14 +62,15 @@ export function AskPanel({ suggestions, onProjectSelected }: { suggestions: stri
                     }}
                   >
                     approve
-                  </button>
-                  <button
-                    type="button"
-                    className="text-0_7 px-2.5 py-1 border border-ink/25 text-ink/55 bg-transparent rounded-sm cursor-pointer"
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-ink/25 text-ink/55 hover:bg-transparent"
                     onClick={() => addToolResult({ toolCallId: ti.toolCallId, result: 'rejected by the human.' })}
                   >
                     reject
-                  </button>
+                  </Button>
                 </div>
               ) : null
             )}
@@ -74,19 +79,17 @@ export function AskPanel({ suggestions, onProjectSelected }: { suggestions: stri
       </div>
 
       <form onSubmit={handleSubmit} className="px-8 pt-2.5 pb-4 shrink-0">
-        <div className="flex items-center gap-2.5 border border-g rounded-sm px-3.5 py-2 bg-cream">
-          <span className="font-heading italic text-g shrink-0">?</span>
-          <input
+        <div className="flex items-center gap-2.5 rounded-sm px-3.5 py-2 bg-g">
+          <span className="font-heading italic text-cream/70 shrink-0">?</span>
+          <Input
             value={input}
             onChange={handleInputChange}
             placeholder="ask something…"
-            className="flex-1 border-0 bg-transparent outline-none text-0_8"
+            className="flex-1 border-0 p-0 h-auto text-0_8 text-cream placeholder:text-cream/50"
           />
-          <button type="submit" aria-label="ask" className="bg-transparent border-0 cursor-pointer p-0 shrink-0 text-g">
-            <svg width="1.1rem" height="1.1rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-              <path d="M22 2 11 13M22 2 15 22l-4-9-9-4 20-7z" />
-            </svg>
-          </button>
+          <Button type="submit" variant="ghost" size="icon" aria-label="ask" className="text-cream hover:text-cream/80 hover:bg-transparent">
+            <Send className="h-[1.1rem] w-[1.1rem]" />
+          </Button>
         </div>
       </form>
     </div>
