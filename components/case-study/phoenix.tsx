@@ -39,7 +39,7 @@ const screenshots = [
 export function PhoenixCaseStudy() {
   return (
     <div>
-      <CaseHeader org="lega → barbri" year="2024—26" title="phoenix" role="employee #1 · architect · 0→1" />
+      <CaseHeader title="phoenix" />
 
       <CaseBody>
         <CaseHighlights items={highlights} />

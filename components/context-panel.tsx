@@ -31,17 +31,14 @@ export function ContextPanel({
         )}
       </div>
 
-      <div className="flex flex-wrap gap-1.5 mb-4.5">
+      <div className="flex flex-wrap gap-1.5 mt-auto border-g border-t pt-4">
         {project.tech.map((t) => (
           <span key={t} className="font-heading italic text-0_7 text-g border border-g/30 rounded-sm px-1.5 py-0.5">
             {t}
           </span>
         ))}
       </div>
-
-      <div className="mt-auto pt-3.5 border-t border-g/25">
-        <pre className="font-mono text-0_7 leading-relaxed text-ink/62 whitespace-pre-wrap break-words m-0">{metricsJson}</pre>
-      </div>
+      <pre className="font-mono text-0_7 leading-relaxed text-ink/62 whitespace-pre-wrap break-words m-0">{metricsJson}</pre>
     </div>
   );
 }

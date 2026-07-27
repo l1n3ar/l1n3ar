@@ -23,7 +23,7 @@ export const CaseDialog = forwardRef<CaseDialogHandle>(function CaseDialog(_prop
             <DialogClose asChild>
               <Button
                 variant="ghost"
-                className="absolute top-4 right-4 p-0 h-auto font-heading italic text-0_8 text-cream/75 hover:text-cream z-10"
+                className="absolute top-4 right-4 p-0 h-auto font-heading italic text-0_8 text-ink/45 hover:text-g z-10"
               >
                 close ×
               </Button>

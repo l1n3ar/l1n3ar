@@ -1,13 +1,9 @@
 import type { ReactNode } from 'react';
 
-export function CaseHeader({
-  org, year, title, role,
-}: { org: string; year: string; title: string; role: string }) {
+export function CaseHeader({ title }: { title: string }) {
   return (
-    <div className="relative bg-g text-cream px-8 py-10 md:px-12 md:py-12">
-      <div className="font-heading italic text-0_8 text-cream/75 mb-2">{org} · {year}</div>
-      <h1 className="font-heading font-light text-2_6 leading-none mb-3 break-words">{title}</h1>
-      <div className="font-heading italic text-0_9 text-cream/85">{role}</div>
+    <div className="px-8 pt-9 pb-6 md:px-12 rule-double-b">
+      <h1 className="font-heading font-light text-2_6 leading-none break-words">{title}</h1>
     </div>
   );
 }
