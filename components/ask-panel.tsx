@@ -18,11 +18,11 @@ export function AskPanel({
 
   return (
     <div className="flex-1 min-h-0 flex flex-col border-t border-g">
-      <div className="px-8 pt-3.5 pb-2 flex items-baseline gap-2 shrink-0">
+      <div className="px-6 pt-3.5 pb-2 flex items-baseline gap-2 shrink-0">
         <div className={kicker}>ask about <span className='underline font-bold'>{projectName}</span></div>
       </div>
 
-      <div ref={resultsRef} className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-8 gz-scroll scroll-smooth">
+      <div ref={resultsRef} className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-6 gz-scroll scroll-smooth">
         {messages.map((m) => (
           <div key={m.id} className="pb-3">
             {m.role === 'user' ? (
@@ -64,7 +64,7 @@ export function AskPanel({
       </div>
 
       {messages.length === 0 && (
-        <div className="flex flex-wrap justify-center gap-2 px-8 pb-2">
+        <div className="flex flex-wrap justify-center gap-2 px-6 pb-2">
           {suggestions.map((s) => (
             <Button
               key={s}
@@ -78,7 +78,7 @@ export function AskPanel({
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="px-8 pt-2.5 pb-4 shrink-0">
+      <form onSubmit={handleSubmit} className="px-6 pt-2.5 pb-4 shrink-0">
         <div className="flex items-center gap-2.5 rounded-sm px-3.5 py-2 bg-g">
           <span className="font-heading italic text-cream/70 shrink-0">?</span>
           <Input

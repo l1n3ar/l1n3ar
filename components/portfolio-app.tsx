@@ -54,7 +54,7 @@ export function PortfolioApp({
         <span className="ml-auto font-heading italic text-xs text-cream/65">{site.location}</span>
       </div>
 
-      <CaseDialog ref={caseDialogRef} projects={projects} />
+      <CaseDialog ref={caseDialogRef} />
     </div>
   );
 }

@@ -1,8 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
-import { remark } from 'remark';
-import remarkHtml from 'remark-html';
 import {
   projectFrontmatterSchema, workHistoryEntrySchema, recommendationSchema, siteConfigSchema,
   type Project, type WorkHistoryEntry, type Recommendation, type SiteConfig,
@@ -29,18 +27,15 @@ export function getRecommendations(): Recommendation[] {
     .sort((a, b) => a.order - b.order);
 }
 
-export async function getAllProjects(): Promise<Project[]> {
+export function getAllProjects(): Project[] {
   const dir = path.join(CONTENT_DIR, 'projects');
   const files = fs.readdirSync(dir).filter((f) => f.endsWith('.md'));
-  const projects = await Promise.all(
-    files.map(async (file) => {
-      const id = file.replace(/\.md$/, '');
-      const raw = fs.readFileSync(path.join(dir, file), 'utf8');
-      const { data, content } = matter(raw);
-      const frontmatter = projectFrontmatterSchema.parse(data);
-      const bodyHtml = (await remark().use(remarkHtml).process(content)).toString();
-      return { id, ...frontmatter, bodyHtml };
-    })
-  );
+  const projects = files.map((file) => {
+    const id = file.replace(/\.md$/, '');
+    const raw = fs.readFileSync(path.join(dir, file), 'utf8');
+    const { data } = matter(raw);
+    const frontmatter = projectFrontmatterSchema.parse(data);
+    return { id, ...frontmatter };
+  });
   return projects.sort((a, b) => a.order - b.order);
 }

@@ -20,7 +20,7 @@ export function WorkLog({
 
   return (
     <>
-      <div className="px-8 pt-5 pb-2 flex items-baseline gap-2.5 shrink-0">
+      <div className="px-6 pt-4 pb-2 flex items-center gap-2.5 shrink-0">
         <div className={`${kicker} text-0_9`}>projects</div>
         <div className="ml-auto flex gap-1">
           <Button variant="ghost" size="icon" aria-label="scroll up" disabled={cursor === 0} onClick={() => step(-1)}>
@@ -37,7 +37,7 @@ export function WorkLog({
           </Button>
         </div>
       </div>
-      <div className="flex-[1.3] min-h-0 px-8 pb-3 overflow-y-auto overflow-x-hidden scroll-smooth gz-scroll">
+      <div className="flex-[1.3] min-h-0 px-6 pb-3 overflow-y-auto overflow-x-hidden scroll-smooth gz-scroll">
         {projects.map((p, i) => (
           <ProjectRow
             key={p.id}

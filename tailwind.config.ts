@@ -23,6 +23,7 @@ export default {
         '0_9': '0.9rem',
         '1_1': '1.1rem',
         '1_2': '1.2rem',
+        '1_4': '1.4rem',
         '2_6': '2.6rem',
       },
       maxWidth: {

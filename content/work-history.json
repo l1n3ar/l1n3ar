@@ -1,5 +1,6 @@
 [
-  { "org": "barbri", "role": "full stack engineer", "range": "2026 — now", "order": 3 },
-  { "org": "lega", "role": "full stack engineer · employee #1", "range": "2024 — 2026", "order": 2 },
-  { "org": "tuteck technologies", "role": "senior software engineer", "range": "2022 — 2024", "order": 1 }
+  { "org": "barbri", "role": "full stack engineer", "range": "2026 — now", "order": 4 },
+  { "org": "lega", "role": "full stack engineer · employee #1", "range": "mar 2024 — 2026", "order": 3 },
+  { "org": "tuteck technologies", "role": "senior software engineer", "range": "jun 2022 — mar 2024", "order": 2 },
+  { "org": "conxult innovations llp", "role": "technical lead", "range": "jan 2022 — oct 2022", "order": 1 }
 ]

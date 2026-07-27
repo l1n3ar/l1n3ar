@@ -20,7 +20,6 @@ export type ProjectFrontmatter = z.infer<typeof projectFrontmatterSchema>;
 
 export type Project = ProjectFrontmatter & {
   id: string;
-  bodyHtml: string;
 };
 
 export const workHistoryEntrySchema = z.object({

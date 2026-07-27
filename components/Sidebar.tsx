@@ -46,12 +46,16 @@ export function Sidebar({
   const visibleRecs = recsExpanded ? recs : recs.slice(0, REC_INITIAL_COUNT);
 
   return (
-    <div className="gz-scroll border-r border-g py-4 px-6 flex flex-col min-h-0 min-w-0 overflow-y-auto overflow-x-hidden scroll-smooth">
-      <div className="flex justify-end mb-1">
-        <Button variant="ghost" size="icon" aria-label="collapse sidebar" onClick={onToggleOpen}>
-          <ChevronLeft className="h-4 w-4" />
-        </Button>
-      </div>
+    <div className="relative gz-scroll border-r border-g pt-4 pb-4 px-6 flex flex-col min-h-0 min-w-0 overflow-y-auto overflow-x-hidden scroll-smooth">
+      <Button
+        variant="ghost"
+        size="icon"
+        aria-label="collapse sidebar"
+        onClick={onToggleOpen}
+        className="absolute top-4 right-4 z-10"
+      >
+        <ChevronLeft className="h-4 w-4" />
+      </Button>
 
       <div className={`${kicker} mb-1.5`}>about</div>
       <p className="text-0_8 leading-relaxed mb-4 pb-3.5 border-b border-g/25 break-words">{about}</p>
@@ -61,7 +65,7 @@ export function Sidebar({
         <div className="mb-4 pb-3.5 border-b border-g/25">
           {history.map((w) => (
             <div key={w.org} className="py-1.5 border-b border-g/14 last:border-b-0">
-              <div className="flex justify-between gap-2.5">
+              <div className="flex items-baseline justify-between gap-2.5">
                 <span className="text-0_9 leading-tight break-words">{w.org}</span>
                 <span className={`${metaItalic} text-ink/48 whitespace-nowrap shrink-0`}>{w.range}</span>
               </div>
