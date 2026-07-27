@@ -4,11 +4,6 @@ export type ResolvedIcon =
   | { type: 'img'; src: string; label: string }
   | { type: 'mono'; mark: string; label: string };
 
-/**
- * Resolves a tech name to a real brand icon (via simpleicons.org) using the
- * tech-icons.json config, or a monogram fallback if unmapped. Never
- * hardcode tech->slug pairs in a component — edit content/tech-icons.json.
- */
 export function resolveIcon(tech: string, iconMap: TechIconMap): ResolvedIcon {
   const entry = iconMap[tech.toLowerCase()];
   if (entry?.slug) {

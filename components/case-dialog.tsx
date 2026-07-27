@@ -18,19 +18,18 @@ export const CaseDialog = forwardRef<CaseDialogHandle, { projects: Project[] }>(
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="border border-g shadow-lg p-0 bg-cream rounded-none w-full max-w-dialog max-h-[88vh] overflow-auto">
+      <DialogContent className="border border-g shadow-lg p-0 bg-cream rounded-none w-full max-w-dialog max-h-[88vh] overflow-y-auto overflow-x-hidden gz-scroll">
         {project && (
           <div className="px-11 py-9">
             <div className="flex items-baseline justify-between mb-4 pb-3 rule-double-b">
-              <div className={kicker}>{project.org} · {project.year}</div>
+              <div className={`${kicker} min-w-0 break-words`}>{project.org} · {project.year}</div>
               <DialogClose asChild>
-                <Button variant="ghost" className="p-0 h-auto font-heading italic text-0_8 text-ink/45 hover:text-g">
+                <Button variant="ghost" className="p-0 h-auto shrink-0 font-heading italic text-0_8 text-ink/45 hover:text-g">
                   close ×
                 </Button>
               </DialogClose>
             </div>
-            <h2 className="font-heading font-light text-2_6 leading-none mb-4">{project.name}</h2>
-            {/* Real HTML from remark, not escaped text. */}
+            <h2 className="font-heading font-light text-2_6 leading-none mb-4 break-words">{project.name}</h2>
             <div className="case-markdown text-0_9 leading-loose" dangerouslySetInnerHTML={{ __html: project.bodyHtml }} />
           </div>
         )}

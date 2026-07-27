@@ -8,7 +8,7 @@ export function Icon({ tech, iconMap }: { tech: string; iconMap: TechIconMap }) 
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Avatar className="w-5 h-5 ring-2 ring-cream -ml-2 first:ml-0 transition-transform hover:z-10 hover:scale-125 hover:-translate-y-0.5">
+        <Avatar className="w-4 h-4 transition-transform hover:z-10 hover:scale-150">
           {icon.type === 'img' ? (
             <AvatarImage src={icon.src} alt={icon.label} />
           ) : (

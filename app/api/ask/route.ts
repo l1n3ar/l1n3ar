@@ -5,8 +5,6 @@ import { getAllProjects, getWorkHistory, getSiteConfig } from '@/lib/content';
 
 export const runtime = 'nodejs';
 
-// Built from content/, not hardcoded facts — add a project/job in content/
-// and the assistant can answer about it immediately.
 async function buildSystemPrompt() {
   const site = getSiteConfig();
   const work = getWorkHistory();
@@ -42,8 +40,6 @@ export async function POST(req: Request) {
     system,
     messages,
     tools: {
-      // No `execute` — client-side tool. streamText pauses after the call so
-      // AskPanel can render an approve/reject gate before it resolves.
       openCase: tool({
         description: "Open a project's case study on the page for the visitor to read.",
         parameters: z.object({ projectId: z.enum(projectIds) }),

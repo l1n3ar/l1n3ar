@@ -24,13 +24,13 @@ export function PortfolioApp({
 
   return (
     <TooltipProvider delayDuration={100}>
-      <div className="h-screen flex flex-col bg-cream text-ink font-body">
+      <div className="h-screen overflow-hidden flex flex-col bg-cream text-ink font-body">
         <Masthead site={site} />
 
         <div className="grid grid-cols-layout flex-1 min-h-0">
           <Sidebar about={site.about} history={workHistory} recs={recommendations} />
 
-          <div className="flex flex-col min-h-0 border-r border-g">
+          <div className="flex flex-col min-h-0 min-w-0 border-r border-g">
             <WorkLog projects={projects} onSelect={setSelectedId} onOpenIndex={() => indexDialogRef.current?.open()} />
             <AskPanel suggestions={selected.asks} onProjectSelected={setSelectedId} />
           </div>

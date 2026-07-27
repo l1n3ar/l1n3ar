@@ -1,7 +1,5 @@
 import { z } from 'zod';
 
-// Generic key/value pair for the right-panel metadata block — add a fact
-// here rather than a new fixed field on the project schema.
 export const metricSchema = z.object({ key: z.string(), value: z.string() });
 
 export const projectFrontmatterSchema = z.object({
@@ -21,8 +19,8 @@ export const projectFrontmatterSchema = z.object({
 export type ProjectFrontmatter = z.infer<typeof projectFrontmatterSchema>;
 
 export type Project = ProjectFrontmatter & {
-  id: string;       // filename slug
-  bodyHtml: string; // rendered markdown case write-up
+  id: string;
+  bodyHtml: string;
 };
 
 export const workHistoryEntrySchema = z.object({

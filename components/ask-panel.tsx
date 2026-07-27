@@ -20,14 +20,14 @@ export function AskPanel({ suggestions, onProjectSelected }: { suggestions: stri
         <div className={kicker}>ask about the work</div>
       </div>
 
-      <div ref={resultsRef} className="flex-1 min-h-0 overflow-auto px-8 gz-scroll">
+      <div ref={resultsRef} className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-8 gz-scroll">
         {messages.length === 0 && (
           <div className="flex gap-2 flex-wrap pb-2">
             {suggestions.map((s) => (
               <Button
                 key={s}
                 variant="outline"
-                className="text-0_8 px-2.5 py-1 border-g/40"
+                className="font-heading italic text-0_8 px-2.5 py-1 border-g/40"
                 onClick={() => append({ role: 'user', content: s })}
               >
                 {s}
@@ -39,13 +39,11 @@ export function AskPanel({ suggestions, onProjectSelected }: { suggestions: stri
         {messages.map((m) => (
           <div key={m.id} className="pb-3">
             {m.role === 'user' ? (
-              <div className="font-heading italic text-0_9 font-semibold mb-1.5">{m.content}</div>
+              <div className="font-heading italic text-0_9 font-semibold mb-1.5 break-words">{m.content}</div>
             ) : (
-              <p className="text-0_9 leading-relaxed max-w-[60ch] m-0">{m.content}</p>
+              <p className="text-0_9 leading-relaxed max-w-[60ch] break-words m-0">{m.content}</p>
             )}
 
-            {/* openCase has no server-side execute(), so the stream pauses
-                here awaiting an approve/reject decision. */}
             {m.toolInvocations?.map((ti) =>
               ti.state === 'call' && ti.toolName === 'openCase' ? (
                 <div key={ti.toolCallId} className="border border-g border-l-[0.2rem] px-3 py-2 flex items-center gap-2.5 my-2 bg-g/8">
