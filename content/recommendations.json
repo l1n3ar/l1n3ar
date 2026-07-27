@@ -1,0 +1,8 @@
+[
+  {
+    "who": "name · title, company",
+    "quote": "drop a real line here — from a manager, a teammate, a client. paste the full linkedin recommendation; the sidebar shows a short preview and \"read more\" opens the rest.",
+    "order": 2
+  },
+  { "who": "name · title, company", "quote": "a second one, same pattern.", "order": 1 }
+]

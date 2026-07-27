@@ -1,0 +1,57 @@
+'use client';
+import { useRef } from 'react';
+import { RecDialog, type RecDialogHandle } from './RecDialog';
+import type { WorkHistoryEntry, Recommendation } from '@/lib/schema';
+
+const REC_PREVIEW_LEN = 90;
+
+export function Sidebar({ about, history, recs }: { about: string; history: WorkHistoryEntry[]; recs: Recommendation[] }) {
+  const recDialogRef = useRef<RecDialogHandle>(null);
+
+  return (
+    <div className="gz-scroll border-r border-g py-4 px-6 flex flex-col min-h-0 overflow-auto">
+      <div className="font-heading italic text-[13.5px] text-g mb-1.5">about</div>
+      <p className="text-[13.5px] leading-relaxed mb-4 pb-3.5 border-b border-g/25">{about}</p>
+
+      <div className="font-heading italic text-[13.5px] text-g mb-1.5">history</div>
+      <div>
+        {history.map((w) => (
+          <div key={w.org} className="py-1.5 border-b border-g/14">
+            <div className="flex justify-between gap-2.5">
+              <span className="text-[15px] leading-tight">{w.org}</span>
+              <span className="font-heading italic text-[11.5px] text-ink/48 whitespace-nowrap shrink-0">{w.range}</span>
+            </div>
+            <div className="font-heading italic text-[12.5px] text-g">{w.role}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="font-heading italic text-[13.5px] text-g mt-4 mb-1.5 pt-3 border-t border-g/25">recommendations</div>
+      <div className="gz-scroll flex-1 min-h-20 overflow-auto pr-0.5">
+        {recs.map((r) => {
+          const long = r.quote.length > REC_PREVIEW_LEN;
+          const short = long ? r.quote.slice(0, REC_PREVIEW_LEN) + '…' : r.quote;
+          return (
+            <div key={r.who} className="mb-3 pb-2.5 border-b border-g/12">
+              <p className="font-heading italic text-sm leading-snug mb-1">&ldquo;{short}&rdquo;</p>
+              <div className="flex items-baseline gap-2.5">
+                <span className="font-heading italic text-[11.5px] text-ink/50">— {r.who}</span>
+                {long && (
+                  <button
+                    type="button"
+                    onClick={() => recDialogRef.current?.open(r.quote, r.who)}
+                    className="font-heading italic text-[11px] text-g underline"
+                  >
+                    read more
+                  </button>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <RecDialog ref={recDialogRef} />
+    </div>
+  );
+}
