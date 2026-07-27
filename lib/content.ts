@@ -50,8 +50,3 @@ export async function getAllProjects(): Promise<Project[]> {
   );
   return projects.sort((a, b) => a.order - b.order);
 }
-
-export async function getProjectById(id: string): Promise<Project | undefined> {
-  const all = await getAllProjects();
-  return all.find((p) => p.id === id);
-}

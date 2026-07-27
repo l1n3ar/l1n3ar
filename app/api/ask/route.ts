@@ -5,10 +5,8 @@ import { getAllProjects, getWorkHistory, getSiteConfig } from '@/lib/content';
 
 export const runtime = 'nodejs';
 
-// The system prompt is built FROM CONFIG CONTENT, not hardcoded facts — add
-// a project/job/skill in content/ and it automatically becomes part of what
-// the assistant can answer about. Keep this function content-source-of-truth,
-// never paste facts directly into the prompt string.
+// Built from content/, not hardcoded facts — add a project/job in content/
+// and the assistant can answer about it immediately.
 async function buildSystemPrompt() {
   const site = getSiteConfig();
   const work = getWorkHistory();
@@ -44,10 +42,8 @@ export async function POST(req: Request) {
     system,
     messages,
     tools: {
-      // No `execute` — this makes it a CLIENT-side tool. streamText pauses
-      // after emitting the tool call; the client renders an approve/reject
-      // gate and calls addToolResult() once the human decides. This is the
-      // human-in-the-loop pattern from the design, actually wired up.
+      // No `execute` — client-side tool. streamText pauses after the call so
+      // AskPanel can render an approve/reject gate before it resolves.
       openCase: tool({
         description: "Open a project's case study on the page for the visitor to read.",
         parameters: z.object({ projectId: z.enum(projectIds) }),

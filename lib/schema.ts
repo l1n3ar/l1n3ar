@@ -1,9 +1,7 @@
 import { z } from 'zod';
 
-// Generic, extensible key/value pair — used for the right-panel JSON
-// metadata block. Add a new fact to a project by adding an entry here;
-// never add a new fixed field to the project schema just to show one more
-// figure.
+// Generic key/value pair for the right-panel metadata block — add a fact
+// here rather than a new fixed field on the project schema.
 export const metricSchema = z.object({ key: z.string(), value: z.string() });
 
 export const projectFrontmatterSchema = z.object({
@@ -52,7 +50,6 @@ export const siteConfigSchema = z.object({
   location: z.string(),
   email: z.string().email(),
   about: z.string(),
-  links: z.object({ github: z.string(), linkedin: z.string(), resume: z.string() }),
   footerLinks: z.array(z.object({ label: z.string(), href: z.string() })),
 });
 export type SiteConfig = z.infer<typeof siteConfigSchema>;

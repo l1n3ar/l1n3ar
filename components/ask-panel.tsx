@@ -13,7 +13,7 @@ export function AskPanel({ suggestions, onProjectSelected }: { suggestions: stri
   return (
     <div className="flex-1 min-h-0 flex flex-col border-t border-g">
       <div className="px-8 pt-3.5 pb-2 flex items-baseline gap-2 shrink-0">
-        <div className="font-heading italic text-[13.5px] text-g">ask about the work</div>
+        <div className="font-heading italic text-0_8 text-g">ask about the work</div>
       </div>
 
       <div ref={resultsRef} className="flex-1 min-h-0 overflow-auto px-8 gz-scroll">
@@ -24,7 +24,7 @@ export function AskPanel({ suggestions, onProjectSelected }: { suggestions: stri
                 key={s}
                 type="button"
                 onClick={() => append({ role: 'user', content: s })}
-                className="font-heading italic text-[12.5px] px-2.5 py-1 border border-g/40 rounded-sm bg-transparent text-g cursor-pointer hover:bg-g/10"
+                className="font-heading italic text-0_8 px-2.5 py-1 border border-g/40 rounded-sm bg-transparent text-g cursor-pointer hover:bg-g/10"
               >
                 {s}
               </button>
@@ -35,22 +35,22 @@ export function AskPanel({ suggestions, onProjectSelected }: { suggestions: stri
         {messages.map((m) => (
           <div key={m.id} className="pb-3">
             {m.role === 'user' ? (
-              <div className="font-heading italic text-[15px] font-semibold mb-1.5">{m.content}</div>
+              <div className="font-heading italic text-0_9 font-semibold mb-1.5">{m.content}</div>
             ) : (
-              <p className="text-[14.5px] leading-relaxed max-w-[60ch] m-0">{m.content}</p>
+              <p className="text-0_9 leading-relaxed max-w-[60ch] m-0">{m.content}</p>
             )}
 
-            {/* Human-in-the-loop gate: the openCase tool has no server-side
-                execute(), so it pauses here awaiting a decision. */}
+            {/* openCase has no server-side execute(), so the stream pauses
+                here awaiting an approve/reject decision. */}
             {m.toolInvocations?.map((ti) =>
               ti.state === 'call' && ti.toolName === 'openCase' ? (
-                <div key={ti.toolCallId} className="border border-g border-l-[3px] px-3 py-2 flex items-center gap-2.5 my-2 bg-g/8">
-                  <span className="font-heading italic text-[12.5px] mr-auto">
+                <div key={ti.toolCallId} className="border border-g border-l-[0.2rem] px-3 py-2 flex items-center gap-2.5 my-2 bg-g/8">
+                  <span className="font-heading italic text-0_8 mr-auto">
                     open the &ldquo;{(ti.args as { projectId: string }).projectId}&rdquo; case?
                   </span>
                   <button
                     type="button"
-                    className="text-[11px] px-2.5 py-1 border border-g text-g bg-transparent rounded-sm cursor-pointer"
+                    className="text-0_7 px-2.5 py-1 border border-g text-g bg-transparent rounded-sm cursor-pointer"
                     onClick={() => {
                       const { projectId } = ti.args as { projectId: string };
                       onProjectSelected(projectId);
@@ -61,7 +61,7 @@ export function AskPanel({ suggestions, onProjectSelected }: { suggestions: stri
                   </button>
                   <button
                     type="button"
-                    className="text-[11px] px-2.5 py-1 border border-ink/25 text-ink/55 bg-transparent rounded-sm cursor-pointer"
+                    className="text-0_7 px-2.5 py-1 border border-ink/25 text-ink/55 bg-transparent rounded-sm cursor-pointer"
                     onClick={() => addToolResult({ toolCallId: ti.toolCallId, result: 'rejected by the human.' })}
                   >
                     reject
@@ -80,10 +80,10 @@ export function AskPanel({ suggestions, onProjectSelected }: { suggestions: stri
             value={input}
             onChange={handleInputChange}
             placeholder="ask something…"
-            className="flex-1 border-0 bg-transparent outline-none text-[13px]"
+            className="flex-1 border-0 bg-transparent outline-none text-0_8"
           />
           <button type="submit" aria-label="ask" className="bg-transparent border-0 cursor-pointer p-0 shrink-0 text-g">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+            <svg width="1.1rem" height="1.1rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
               <path d="M22 2 11 13M22 2 15 22l-4-9-9-4 20-7z" />
             </svg>
           </button>

@@ -15,14 +15,14 @@ export const RecDialog = forwardRef<RecDialogHandle>(function RecDialog(_props, 
   }));
 
   return (
-    <dialog ref={dialogRef} className="border border-g shadow-lg p-0 bg-cream rounded-none w-[min(520px,92vw)]">
+    <dialog ref={dialogRef} className="border border-g shadow-lg p-0 bg-cream rounded-none w-full max-w-dialog-sm">
       <div className="p-8">
         <div className="flex justify-end mb-2">
           <button type="button" onClick={() => dialogRef.current?.close()} className="font-heading italic text-xs text-ink/45 hover:text-g">
             close ×
           </button>
         </div>
-        <p className="font-heading italic text-[17px] leading-relaxed mb-3">&ldquo;{rec?.quote}&rdquo;</p>
+        <p className="font-heading italic text-1_1 leading-relaxed mb-3">&ldquo;{rec?.quote}&rdquo;</p>
         <div className="font-heading italic text-sm text-g">— {rec?.who}</div>
       </div>
     </dialog>

@@ -17,8 +17,25 @@ export default {
         body: ['Lora', 'serif'],
         mono: ['"IBM Plex Mono"', 'monospace'],
       },
+      fontSize: {
+        '0_6': '0.6rem',
+        '0_7': '0.7rem',
+        '0_8': '0.8rem',
+        '0_9': '0.9rem',
+        '1_1': '1.1rem',
+        '1_2': '1.2rem',
+        '2_6': '2.6rem',
+      },
+      maxWidth: {
+        dialog: 'min(47.5rem, 92vw)',
+        'dialog-md': 'min(40rem, 92vw)',
+        'dialog-sm': 'min(32.5rem, 92vw)',
+      },
+      gridTemplateColumns: {
+        layout: '18.75rem 1fr 18.75rem',
+      },
       boxShadow: {
-        lg: '0 12px 32px rgba(11, 26, 19, 0.22)', // the design system's one "whisper" elevation
+        lg: '0 0.75rem 2rem rgba(11, 26, 19, 0.22)', // the one "whisper" elevation
       },
     },
   },

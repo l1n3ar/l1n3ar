@@ -1,4 +1,4 @@
-import { PortfolioApp } from '@/components/PortfolioApp';
+import { PortfolioApp } from '@/components/portfolio-app';
 import { getAllProjects, getWorkHistory, getRecommendations, getTechIconMap, getSiteConfig } from '@/lib/content';
 
 export default async function Page() {

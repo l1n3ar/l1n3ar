@@ -4,7 +4,6 @@
   "location": "brooklyn, ny",
   "email": "mehulchattopadhyaywork@gmail.com",
   "about": "building ai systems at barbri — previously lega, acquired by barbri. rag, agents, and the governance that keeps them honest.",
-  "links": { "github": "https://bit.ly/mehulCodes", "linkedin": "#", "resume": "#" },
   "footerLinks": [
     { "label": "email", "href": "mailto:mehulchattopadhyaywork@gmail.com" },
     { "label": "github", "href": "https://bit.ly/mehulCodes" },

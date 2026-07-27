@@ -10,7 +10,7 @@ export function Icon({ tech, iconMap }: { tech: string; iconMap: TechIconMap }) 
   return (
     <span
       title={icon.label}
-      className="inline-flex items-center justify-center w-6 h-6 rounded-full border border-g/40 font-heading italic text-[9.5px] text-g"
+      className="inline-flex items-center justify-center w-6 h-6 rounded-full border border-g/40 font-heading italic text-0_6 text-g"
     >
       {icon.mark}
     </span>
