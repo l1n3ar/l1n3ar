@@ -4,7 +4,7 @@
 
 full stack ai systems engineer.
 
-tech @ BARBRI · previously employee #1 @ lega, acquired by barbri
+tech @ BARBRI · previously employee #1 @ lega, acquired by BARBRI
 
 [mehulchattopadhyaywork@gmail.com](mailto-mehulchattopadhyaywork@gmail.com) · [linkedin](https-//www.linkedin.com/in/mehulchattopadhyay/)
 
