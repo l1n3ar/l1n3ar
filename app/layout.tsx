@@ -3,7 +3,7 @@ import './globals.css';
 import site from '@/content/site.json';
 
 export const metadata: Metadata = {
-  title: `${site.name} — ${site.role}`,
+  title: `${site.name} · ${site.role}`,
   description: site.about,
 };
 

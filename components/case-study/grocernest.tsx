@@ -1,9 +1,9 @@
-import { CaseHeader, CaseBody, CaseHighlights, CaseSection } from './base';
+import { CaseHeader, CaseBody, CaseHighlights, CaseSection, CaseCode, CaseImage } from './base';
 
 const highlights = [
   {
     label: 'whatsapp as a real channel',
-    body: 'OTP login, order-status updates, delivery-assignment pings, and invoice links all go out over WhatsApp — the channel customers already check, not an app notification they’ve muted.',
+    body: 'OTP login, order-status updates, delivery-assignment pings, and invoice links all go out over WhatsApp, the channel customers already check, not an app notification they’ve muted.',
   },
   {
     label: 'rewards that run themselves',
@@ -26,12 +26,18 @@ export function GrocernestCaseStudy() {
         <CaseSection heading="the brief">
           <p>
             Grocernest needed to be a grocery e-commerce storefront and a real retail operation at the
-            same time — the same backend had to run online checkout, in-store point-of-sale, inventory and
+            same time. The same backend had to run online checkout, in-store point-of-sale, inventory and
             goods-receipt tracking, delivery-staff scheduling, and a milk-style subscription line, all
             talking to the same product catalog and the same customer wallet. I led a backend team of four
             building it.
           </p>
         </CaseSection>
+
+        <CaseImage
+          src="/case-media/grocernest/mockup.png"
+          alt="Grocernest storefront homepage: category navigation, a quality-focused hero banner, and a fresh-veggies promotional callout."
+          border = {false}
+        />
 
         <CaseSection heading="whatsapp, not just an app">
           <p>
@@ -45,36 +51,59 @@ export function GrocernestCaseStudy() {
 
         <CaseSection heading="the rewards engine">
           <p>
-            Retention ran on four scheduled jobs, each solving a different version of the same problem —
-            paying customers back automatically instead of manually: a nightly referral job that credits
-            both sides of a referral once the referred customer completes their first delivered order; a
-            cashback job that settles per-item cashback on orders delivered in the trailing window; a
-            parallel job doing the same for in-store POS purchases; and a promotional &ldquo;special
-            wallet&rdquo; job that evaluates per-item strategies — including checking whether this is
-            genuinely a customer&rsquo;s first purchase of that item before paying out a first-buy
-            incentive. Every run reports its own success or failure back over WhatsApp, so a broken job
-            doesn&rsquo;t fail silently overnight.
+            Retention ran on four scheduled jobs, each solving a different version of the same problem:
+            paying customers back automatically instead of manually. The most involved of the four
+            evaluates a table of promotional strategies against every item in every recently-delivered
+            order, and specifically checks whether this is genuinely the customer&rsquo;s first purchase
+            of that item before paying out a first-buy incentive, not just their first order overall:
           </p>
         </CaseSection>
+
+        <CaseCode>{`if (isItemAvailable >= 0) {
+  if (!currentStrategy.first_buy) {
+    wallet_amt = current_item.quantity *
+      ((current_item.sale_price / 100) * currentStrategy.amount_of_discount)
+  }
+  // first_buy strategies additionally check order history before crediting
+}`}</CaseCode>
 
         <CaseSection heading="one catalog, four operating modes">
           <p>
             Online checkout, POS sales, inventory movement, and goods-receipt from suppliers all draw down
             and top up the same inventory records, so a sale on the storefront and a sale at the counter
             can&rsquo;t both oversell the same stock. Coupons, referral codes, and promotional offers are
-            centralized in one rules engine rather than re-implemented per sales channel — a discount
+            centralized in one rules engine rather than re-implemented per sales channel. A discount
             works the same way whether it was applied online or at checkout in-store.
           </p>
+
+          <CaseImage
+            src="/case-media/grocernest/one-catalog.svg"
+            alt="One catalog and customer wallet shared across four operating modes: online checkout and subscriptions, in-store POS, inventory/GRN, and delivery operations, with WhatsApp handling OTPs, order updates, and invoices."
+          />
         </CaseSection>
 
         <CaseSection heading="what I'd tighten up">
           <p>
-            The parts of the system built earliest — checkout and wallet crediting — update balances with
-            a read-then-write rather than an atomic, transaction-wrapped operation, which is fine at
-            moderate concurrency but is exactly the kind of thing I&rsquo;d harden before pushing volume
-            much higher. The inventory and goods-receipt side, built later, already does this properly with
-            real database sequences and foreign keys — it&rsquo;s a good example of the second version of a
-            system being visibly more careful than the first.
+            The parts of the system built earliest, checkout and wallet crediting, update balances with
+            a read-then-write rather than an atomic, transaction-wrapped operation. Wallet credits also
+            build their SQL by string interpolation instead of parameter binding:
+          </p>
+        </CaseSection>
+
+        <CaseCode>{`await sequelize.query(\`
+  UPDATE t_wallet
+  SET balance = (SELECT balance FROM t_wallet WHERE cust_no="\${cust_no}") + \${amount}
+  WHERE cust_no = "\${cust_no}"
+\`)`}</CaseCode>
+
+        <CaseSection heading="and the other thing">
+          <p>
+            Safe as long as every caller upstream already validated <code>cust_no</code> and{' '}
+            <code>amount</code>, which was true everywhere it was actually called, but it&rsquo;s not a
+            pattern I&rsquo;d repeat, and it&rsquo;s exactly the kind of thing that&rsquo;s fine right up
+            until it isn&rsquo;t. The inventory and goods-receipt side, built later, already does this more
+            carefully with real database sequences and foreign keys, a good example of the second version
+            of a system being visibly more careful than the first.
           </p>
         </CaseSection>
       </CaseBody>

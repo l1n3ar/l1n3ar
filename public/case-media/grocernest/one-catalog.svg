@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" font-family="Lora, serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0b3d2e" />
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="900" height="380" fill="#f6f1e4" />
+
+  <!-- Shared core -->
+  <rect x="350" y="150" width="200" height="90" rx="2" fill="#0b3d2e" />
+  <text x="450" y="184" text-anchor="middle" fill="#f6f1e4" font-size="14" font-style="italic">product catalog</text>
+  <text x="450" y="204" text-anchor="middle" fill="#f6f1e4" font-size="14" font-style="italic">+ customer wallet</text>
+  <text x="450" y="224" text-anchor="middle" fill="#f6f1e4" font-size="10" opacity="0.75">one shared source of truth</text>
+
+  <!-- Four spokes -->
+  <rect x="60" y="30" width="180" height="72" rx="2" fill="none" stroke="#0b3d2e" stroke-width="1.5" />
+  <text x="150" y="62" text-anchor="middle" fill="#1b2420" font-size="13" font-style="italic">online checkout</text>
+  <text x="150" y="82" text-anchor="middle" fill="#1b2420" font-size="10" opacity="0.6">storefront + subscriptions</text>
+
+  <rect x="660" y="30" width="180" height="72" rx="2" fill="none" stroke="#0b3d2e" stroke-width="1.5" />
+  <text x="750" y="62" text-anchor="middle" fill="#1b2420" font-size="13" font-style="italic">in-store POS</text>
+  <text x="750" y="82" text-anchor="middle" fill="#1b2420" font-size="10" opacity="0.6">counter sales</text>
+
+  <rect x="60" y="278" width="180" height="72" rx="2" fill="none" stroke="#0b3d2e" stroke-width="1.5" />
+  <text x="150" y="310" text-anchor="middle" fill="#1b2420" font-size="13" font-style="italic">inventory / GRN</text>
+  <text x="150" y="330" text-anchor="middle" fill="#1b2420" font-size="10" opacity="0.6">supplier receipts</text>
+
+  <rect x="660" y="278" width="180" height="72" rx="2" fill="none" stroke="#0b3d2e" stroke-width="1.5" />
+  <text x="750" y="310" text-anchor="middle" fill="#1b2420" font-size="13" font-style="italic">delivery ops</text>
+  <text x="750" y="330" text-anchor="middle" fill="#1b2420" font-size="10" opacity="0.6">rider assignment</text>
+
+  <!-- Connectors -->
+  <path d="M240,86 L400,168" stroke="#0b3d2e" stroke-width="1.5" fill="none" />
+  <path d="M660,86 L500,168" stroke="#0b3d2e" stroke-width="1.5" fill="none" />
+  <path d="M240,300 L400,222" stroke="#0b3d2e" stroke-width="1.5" fill="none" />
+  <path d="M660,300 L500,222" stroke="#0b3d2e" stroke-width="1.5" fill="none" />
+
+  <!-- WhatsApp channel -->
+  <rect x="350" y="290" width="200" height="60" rx="2" fill="none" stroke="#0b3d2e" stroke-width="1.5" stroke-dasharray="4 3" />
+  <text x="450" y="316" text-anchor="middle" fill="#1b2420" font-size="12" font-style="italic">whatsapp</text>
+  <text x="450" y="334" text-anchor="middle" fill="#1b2420" font-size="9.5" opacity="0.6">otp · order updates · invoices</text>
+  <path d="M450,290 L450,242" stroke="#0b3d2e" stroke-width="1.5" marker-end="url(#arrow)" fill="none" />
+
+  <text x="450" y="20" text-anchor="middle" fill="#0b3d2e" font-size="12" font-style="italic" opacity="0.7">four operating modes, one catalog — a sale in one channel can't oversell stock in another</text>
+</svg>

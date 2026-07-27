@@ -27,7 +27,7 @@ export const RecDialog = forwardRef<RecDialogHandle>(function RecDialog(_props, 
             </DialogClose>
           </div>
           <p className="font-heading italic text-1_1 leading-relaxed mb-3 break-words">&ldquo;{rec?.quote}&rdquo;</p>
-          <div className="font-heading italic text-sm text-g break-words">— {rec?.who}</div>
+          <div className="font-heading italic text-sm text-g break-words">· {rec?.who}</div>
         </div>
       </DialogContent>
     </Dialog>

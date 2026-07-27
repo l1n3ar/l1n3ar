@@ -17,6 +17,7 @@ export function PortfolioApp({
   const [selectedId, setSelectedId] = useState(projects[0]?.id);
   const selected = projects.find((p) => p.id === selectedId) ?? projects[0];
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [askOpen, setAskOpen] = useState(false);
 
   const caseDialogRef = useRef<CaseDialogHandle>(null);
 
@@ -37,9 +38,20 @@ export function PortfolioApp({
           onToggleOpen={() => setSidebarOpen((o) => !o)}
         />
 
-        <div className="flex flex-col min-h-0 min-w-0 border-r border-g">
+        <div
+          className={`grid min-h-0 min-w-0 border-r border-g transition-[grid-template-rows] duration-300 ease-in-out ${
+            askOpen
+              ? 'grid-rows-[auto_minmax(0,1.3fr)_auto_minmax(0,1fr)]'
+              : 'grid-rows-[auto_minmax(0,1fr)_auto_minmax(0,0fr)]'
+          }`}
+        >
           <WorkLog projects={projects} selectedId={selectedId} onSelect={setSelectedId} />
-          <AskPanel projectName={selected.name} suggestions={selected.asks} onProjectSelected={setSelectedId} />
+          <AskPanel
+            projectName={selected.name}
+            suggestions={selected.asks}
+            open={askOpen}
+            onToggleOpen={() => setAskOpen((o) => !o)}
+          />
         </div>
 
         <ContextPanel project={selected} onOpenCase={(id) => caseDialogRef.current?.open(id)} />
@@ -47,7 +59,7 @@ export function PortfolioApp({
 
       <div className="bg-g text-cream px-6 py-3 flex items-baseline gap-6">
         {site.footerLinks.map((l) => (
-          <a key={l.label} href={l.href} className="font-heading italic text-0_8 text-cream/90 hover:text-cream">
+          <a key={l.label} href={l.href} target='_blank' className="font-heading italic text-0_8 text-cream/90 hover:text-cream">
             {l.label}
           </a>
         ))}

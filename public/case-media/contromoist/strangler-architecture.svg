@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 320" font-family="Lora, serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0b3d2e" />
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="900" height="320" fill="#f6f1e4" />
+
+  <!-- Legacy ERP -->
+  <rect x="40" y="70" width="330" height="200" rx="2" fill="none" stroke="#0b3d2e" stroke-width="1.5" />
+  <text x="205" y="102" text-anchor="middle" fill="#1b2420" font-size="15" font-style="italic">legacy ERP</text>
+  <text x="205" y="122" text-anchor="middle" fill="#1b2420" font-size="10.5" opacity="0.6">existing, live, never taken down</text>
+  <line x1="70" y1="138" x2="340" y2="138" stroke="#0b3d2e" stroke-width="1" opacity="0.25" />
+  <text x="205" y="164" text-anchor="middle" fill="#1b2420" font-size="12">leads · quotes</text>
+  <text x="205" y="188" text-anchor="middle" fill="#1b2420" font-size="12">bills of materials</text>
+  <text x="205" y="212" text-anchor="middle" fill="#1b2420" font-size="12">purchase orders · GRN</text>
+  <text x="205" y="236" text-anchor="middle" fill="#1b2420" font-size="12">rate contracts</text>
+
+  <!-- New backend -->
+  <rect x="530" y="70" width="330" height="200" rx="2" fill="#0b3d2e" />
+  <text x="695" y="102" text-anchor="middle" fill="#f6f1e4" font-size="15" font-style="italic">new backend</text>
+  <text x="695" y="122" text-anchor="middle" fill="#f6f1e4" font-size="10.5" opacity="0.75">solo build, own tables</text>
+  <line x1="560" y1="138" x2="830" y2="138" stroke="#f6f1e4" stroke-width="1" opacity="0.25" />
+  <text x="695" y="164" text-anchor="middle" fill="#f6f1e4" font-size="12">project management</text>
+  <text x="695" y="188" text-anchor="middle" fill="#f6f1e4" font-size="12">quality inspections</text>
+  <text x="695" y="212" text-anchor="middle" fill="#f6f1e4" font-size="12">travel expense claims</text>
+  <text x="695" y="236" text-anchor="middle" fill="#f6f1e4" font-size="12">field-engineer assignment</text>
+
+  <!-- Connector -->
+  <path d="M370,170 L528,170" stroke="#0b3d2e" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)" fill="none" />
+  <text x="450" y="158" text-anchor="middle" fill="#0b3d2e" font-size="10.5" font-style="italic" opacity="0.7">runs alongside,</text>
+  <text x="450" y="186" text-anchor="middle" fill="#0b3d2e" font-size="10.5" font-style="italic" opacity="0.7">no cutover</text>
+
+  <text x="450" y="24" text-anchor="middle" fill="#0b3d2e" font-size="12" font-style="italic" opacity="0.7">strangler-fig migration: new capability added piece by piece, both systems live at once</text>
+</svg>

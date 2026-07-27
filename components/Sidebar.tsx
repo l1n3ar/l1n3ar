@@ -1,29 +1,14 @@
 'use client';
 import { useRef, useState } from 'react';
-import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { RecDialog, type RecDialogHandle } from './rec-dialog';
+import { SectionHeader } from './section-header';
 import type { WorkHistoryEntry, Recommendation } from '@/lib/schema';
 import { Button } from '@/components/ui/button';
 import { kicker, metaItalic, linkButtonClass } from '@/lib/typography';
-import { cn } from '@/lib/utils';
 
 const REC_PREVIEW_LEN = 90;
 const REC_INITIAL_COUNT = 3;
-
-function SectionHeader({
-  label, open, onToggle, className,
-}: { label: string; open: boolean; onToggle: () => void; className?: string }) {
-  return (
-    <button
-      type="button"
-      onClick={onToggle}
-      className={cn(kicker, 'flex items-center gap-1 w-full text-left', className)}
-    >
-      {label}
-      <ChevronDown className={cn('h-3 w-3 transition-transform duration-200', open ? '' : '-rotate-90')} />
-    </button>
-  );
-}
 
 export function Sidebar({
   about, history, recs, open, onToggleOpen,
@@ -85,7 +70,7 @@ export function Sidebar({
               <div key={r.who} className="mb-3 pb-2.5 border-b border-g/12">
                 <p className="font-heading italic text-sm leading-snug mb-1 break-words">&ldquo;{short}&rdquo;</p>
                 <div className="flex items-baseline gap-2.5">
-                  <span className={`${metaItalic} text-ink/50`}>— {r.who}</span>
+                  <span className={`${metaItalic} text-ink/50`}>· {r.who}</span>
                   {long && (
                     <Button
                       variant="link"

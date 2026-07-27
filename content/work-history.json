@@ -1,6 +1,6 @@
 [
-  { "org": "BARBRI", "role": "full stack engineer", "range": "2026 — now", "order": 4 },
-  { "org": "lega.ai", "role": "full stack engineer · acquired by BARBRI", "range": "2024 — 2026", "order": 3 },
-  { "org": "TuTeck Technologies", "role": "senior software engineer", "range": "2022 —  2024", "order": 2 },
+  { "org": "BARBRI", "role": "full stack engineer", "range": "2026 – now", "order": 4 },
+  { "org": "lega.ai", "role": "full stack engineer · acquired by BARBRI", "range": "2024 – 2026", "order": 3 },
+  { "org": "TuTeck Technologies", "role": "senior software engineer", "range": "2022 – 2024", "order": 2 },
   { "org": "Conxult Innovations LLP", "role": "technical lead", "range": "2022", "order": 1 }
 ]

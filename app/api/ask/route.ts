@@ -10,7 +10,7 @@ async function buildSystemPrompt() {
   const work = getWorkHistory();
   const projects = await getAllProjects();
 
-  const workBlock = work.map((w) => `- ${w.org} — ${w.role} (${w.range})`).join('\n');
+  const workBlock = work.map((w) => `- ${w.org} · ${w.role} (${w.range})`).join('\n');
   const projectsBlock = projects
     .map((p) => `- ${p.name} (${p.org}, ${p.year}): ${p.line} [tech: ${p.tech.join(', ')}]`)
     .join('\n');
@@ -25,7 +25,7 @@ ${workBlock}
 Projects:
 ${projectsBlock}
 
-If asked about a specific project by name, call the openCase tool with that project's id so the page can open it — but only after the human approves (the client shows an approve/reject control; you'll get the result back). Never claim a tool ran if you haven't received its result. If something isn't covered above, say so plainly and point at ${site.email}.`;
+If asked about a specific project by name, call the openCase tool with that project's id so the page can open it, but only after the human approves (the client shows an approve/reject control; you'll get the result back). Never claim a tool ran if you haven't received its result. If something isn't covered above, say so plainly and point at ${site.email}.`;
 }
 
 export async function POST(req: Request) {

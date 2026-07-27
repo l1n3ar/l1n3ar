@@ -38,18 +38,18 @@ export function CaseSection({ heading, children }: { heading: string; children: 
 
 export function CaseCode({ children }: { children: ReactNode }) {
   return (
-    <pre className="font-mono bg-codeBg text-codeInk rounded-sm px-5 py-4 text-0_8 leading-relaxed overflow-x-auto gz-scroll mb-6">
+    <pre className="font-mono bg-codeBg text-cream rounded-sm px-5 py-4 text-0_8 leading-relaxed overflow-x-auto gz-scroll mb-6">
       <code>{children}</code>
     </pre>
   );
 }
 
-export function CaseImage({ src, alt }: { src: string; alt: string }) {
+export function CaseImage({ src, alt,border = true }: { src: string; alt: string; border? : boolean }) {
   return (
     <img
       src={src}
       alt={alt}
-      className="w-full border-[0.375rem] border-cream outline outline-[0.06rem] outline-g/20 mb-6"
+      className={`w-full border-[0.375rem] border-cream  ${border ? 'outline-g/20 outline outline-[0.06rem]' : ''} mb-6`}
     />
   );
 }

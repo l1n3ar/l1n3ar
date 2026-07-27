@@ -4,7 +4,7 @@ org: conxult innovations
 year: "2022"
 role: technical lead
 line: blockchain notarization for trademarks and copyrights.
-description: a provenance system that gives a trademark or copyright filing an immutable, timestamped proof of ownership on Polygon — hashing the asset (or the mark's text, for word marks), anchoring that hash on-chain, and issuing a verifiable certificate, without ever putting the underlying document on a public ledger.
+description: i built a provenance system that gives a trademark or copyright filing an immutable, timestamped proof of ownership on Polygon. it hashes the asset (or the mark's text, for word marks), anchors that hash on-chain, and issues a verifiable certificate, without ever putting the underlying document on a public ledger.
 tech: [node.js, express, web3.js, polygon, mongodb, redis]
 github: https://github.com/l1n3ar/Registrum-API
 metrics:

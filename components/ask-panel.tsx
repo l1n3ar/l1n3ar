@@ -1,97 +1,56 @@
 'use client';
 import { useChat } from 'ai/react';
-import { useEffect, useRef } from 'react';
 import { Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { kicker } from '@/lib/typography';
+import { SectionHeader } from './section-header';
 
 export function AskPanel({
-  projectName, suggestions, onProjectSelected,
-}: { projectName: string; suggestions: string[]; onProjectSelected: (id: string) => void }) {
-  const { messages, input, handleInputChange, handleSubmit, append, addToolResult } = useChat({ api: '/api/ask' });
-  const resultsRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    resultsRef.current?.scrollTo({ top: resultsRef.current.scrollHeight });
-  }, [messages]);
+  projectName, suggestions, open, onToggleOpen,
+}: { projectName: string; suggestions: string[]; open: boolean; onToggleOpen: () => void }) {
+  const { input, handleInputChange, handleSubmit } = useChat({ api: '/api/ask' });
 
   return (
-    <div className="flex-1 min-h-0 flex flex-col border-t border-g">
-      <div className="px-6 pt-3.5 pb-2 flex items-baseline gap-2 shrink-0">
-        <div className={kicker}>ask about <span className='underline font-bold'>{projectName}</span></div>
+    <>
+      <div className="px-6 pt-3.5 pb-2 border-t border-g">
+        <SectionHeader
+          label={<>ask about <span className="underline font-bold">{projectName}</span></>}
+          open={open}
+          onToggle={onToggleOpen}
+        />
       </div>
 
-      <div ref={resultsRef} className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-6 gz-scroll scroll-smooth">
-        {messages.map((m) => (
-          <div key={m.id} className="pb-3">
-            {m.role === 'user' ? (
-              <div className="font-heading italic text-0_9 font-semibold mb-1.5 break-words">{m.content}</div>
-            ) : (
-              <p className="text-0_9 leading-relaxed max-w-[60ch] break-words m-0">{m.content}</p>
-            )}
-
-            {m.toolInvocations?.map((ti) =>
-              ti.state === 'call' && ti.toolName === 'openCase' ? (
-                <div key={ti.toolCallId} className="border border-g border-l-[0.2rem] px-3 py-2 flex items-center gap-2.5 my-2 bg-g/8">
-                  <span className="font-heading italic text-0_8 mr-auto">
-                    open the &ldquo;{(ti.args as { projectId: string }).projectId}&rdquo; case?
-                  </span>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      const { projectId } = ti.args as { projectId: string };
-                      onProjectSelected(projectId);
-                      addToolResult({ toolCallId: ti.toolCallId, result: `approved: ${projectId} case opened` });
-                    }}
-                  >
-                    approve
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="border-ink/25 text-ink/55 hover:bg-transparent"
-                    onClick={() => addToolResult({ toolCallId: ti.toolCallId, result: 'rejected by the human.' })}
-                  >
-                    reject
-                  </Button>
-                </div>
-              ) : null
-            )}
+      <div className="min-h-0 overflow-hidden flex flex-col" inert={!open}>
+        <div className="flex-1 min-h-0 flex flex-col items-center justify-center gap-2 px-6 text-center">
+          <div className="font-heading italic text-1_1 text-g">coming soon</div>
+          <p className="text-0_8 text-ink/55 max-w-[34ch] leading-snug">
+            a live assistant that can answer questions about my work :)
+          </p>
+          <div className="flex flex-wrap justify-center gap-2 pt-2">
+            {suggestions.map((s) => (
+              <Button key={s} variant="outline" className="font-heading italic text-0_8 px-2.5 py-1 border-g/40">
+                {s}
+              </Button>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
 
-      {messages.length === 0 && (
-        <div className="flex flex-wrap justify-center gap-2 px-6 pb-2">
-          {suggestions.map((s) => (
-            <Button
-              key={s}
-              variant="outline"
-              className="font-heading italic text-0_8 px-2.5 py-1 border-g/40"
-              onClick={() => append({ role: 'user', content: s })}
-            >
-              {s}
+        <form onSubmit={handleSubmit} className="px-6 pt-2.5 pb-4 shrink-0 opacity-40">
+          <div className="flex items-center gap-2.5 rounded-sm px-3.5 py-2 bg-g">
+            <span className="font-heading italic text-cream/70 shrink-0">?</span>
+            <Input
+              value={input}
+              onChange={handleInputChange}
+              placeholder="ask something…"
+              className="flex-1 border-0 p-0 h-auto text-0_8 text-cream placeholder:text-cream/50"
+              disabled
+            />
+            <Button type="submit" variant="ghost" size="icon" aria-label="ask" className="text-cream hover:text-cream/80 hover:bg-transparent">
+              <Send className="h-[1.1rem] w-[1.1rem]" />
             </Button>
-          ))}
-        </div>
-      )}
-
-      <form onSubmit={handleSubmit} className="px-6 pt-2.5 pb-4 shrink-0">
-        <div className="flex items-center gap-2.5 rounded-sm px-3.5 py-2 bg-g">
-          <span className="font-heading italic text-cream/70 shrink-0">?</span>
-          <Input
-            value={input}
-            onChange={handleInputChange}
-            placeholder="ask something…"
-            className="flex-1 border-0 p-0 h-auto text-0_8 text-cream placeholder:text-cream/50"
-          />
-          <Button type="submit" variant="ghost" size="icon" aria-label="ask" className="text-cream hover:text-cream/80 hover:bg-transparent">
-            <Send className="h-[1.1rem] w-[1.1rem]" />
-          </Button>
-        </div>
-      </form>
-    </div>
+          </div>
+        </form>
+      </div>
+    </>
   );
 }

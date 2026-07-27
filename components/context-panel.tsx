@@ -1,15 +1,30 @@
+'use client';
+import { useEffect, useState } from 'react';
 import type { Project } from '@/lib/schema';
 import { Button } from '@/components/ui/button';
 import { kicker } from '@/lib/typography';
+import { cn } from '@/lib/utils';
 import { caseStudies } from '@/components/case-study/registry';
 
 export function ContextPanel({
   project, onOpenCase,
 }: { project: Project; onOpenCase: (id: string) => void }) {
   const metricsJson = JSON.stringify(Object.fromEntries(project.metrics.map((m) => [m.key, m.value])), null, 2);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    setVisible(false);
+    const t = setTimeout(() => setVisible(true), 20);
+    return () => clearTimeout(t);
+  }, [project.id]);
 
   return (
-    <div className="px-6 pt-4 pb-4 flex flex-col min-h-0 min-w-0 overflow-y-auto overflow-x-hidden scroll-smooth">
+    <div
+      className={cn(
+        'gz-scroll px-6 pt-4 pb-4 flex flex-col min-h-0 min-w-0 overflow-y-auto overflow-x-hidden scroll-smooth transition-opacity duration-300 ease-in-out',
+        visible ? 'opacity-100' : 'opacity-0',
+      )}
+    >
       <div className={`${kicker} text-1_2 mb-2`}>{project.name}</div>
       <div className="text-xs leading-snug mb-4 break-words">{project.description}</div>
 
@@ -32,13 +47,14 @@ export function ContextPanel({
       </div>
 
       <div className="flex flex-wrap gap-1.5 mt-auto border-g border-t pt-4">
+      
         {project.tech.map((t) => (
           <span key={t} className="font-heading italic text-0_7 text-g border border-g/30 rounded-sm px-1.5 py-0.5">
             {t}
           </span>
         ))}
       </div>
-      <pre className="font-mono text-0_7 leading-relaxed text-ink/62 whitespace-pre-wrap break-words m-0">{metricsJson}</pre>
+      <pre className="font-mono text-0_7 leading-relaxed text-ink/62 whitespace-pre-wrap break-words mt-4">{metricsJson}</pre>
     </div>
   );
 }

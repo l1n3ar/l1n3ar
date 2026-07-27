@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" font-family="Lora, serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0b3d2e" />
+    </marker>
+    <marker id="arrow-dash" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0b3d2e" fill-opacity="0.55" />
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="900" height="340" fill="#f6f1e4" />
+
+  <!-- Filing / word mark -->
+  <rect x="24" y="128" width="164" height="84" rx="2" fill="none" stroke="#0b3d2e" stroke-width="1.5" />
+  <text x="106" y="160" text-anchor="middle" fill="#1b2420" font-size="13" font-style="italic">filing or</text>
+  <text x="106" y="180" text-anchor="middle" fill="#1b2420" font-size="13" font-style="italic">word mark</text>
+  <text x="106" y="200" text-anchor="middle" fill="#1b2420" font-size="10" opacity="0.65">file, or just text</text>
+
+  <!-- SHA-256 -->
+  <rect x="228" y="128" width="164" height="84" rx="2" fill="#0b3d2e" />
+  <text x="310" y="164" text-anchor="middle" fill="#f6f1e4" font-size="14" font-style="italic">SHA-256</text>
+  <text x="310" y="184" text-anchor="middle" fill="#f6f1e4" font-size="10.5" opacity="0.8">asset hash</text>
+
+  <!-- Canonical proof -->
+  <rect x="432" y="128" width="188" height="84" rx="2" fill="#0b3d2e" />
+  <text x="526" y="158" text-anchor="middle" fill="#f6f1e4" font-size="13" font-style="italic">canonical JSON</text>
+  <text x="526" y="178" text-anchor="middle" fill="#f6f1e4" font-size="10.5" opacity="0.8">owner · type · date</text>
+  <text x="526" y="196" text-anchor="middle" fill="#f6f1e4" font-size="10.5" opacity="0.8">→ proof hash</text>
+
+  <!-- Smart contract -->
+  <rect x="660" y="40" width="212" height="80" rx="2" fill="none" stroke="#0b3d2e" stroke-width="1.5" />
+  <text x="766" y="72" text-anchor="middle" fill="#1b2420" font-size="13" font-style="italic">smart contract</text>
+  <text x="766" y="92" text-anchor="middle" fill="#1b2420" font-size="10.5" opacity="0.7">polygon · both hashes</text>
+  <text x="766" y="108" text-anchor="middle" fill="#1b2420" font-size="10" opacity="0.55">register · verify · transfer</text>
+
+  <!-- Object storage -->
+  <rect x="660" y="216" width="212" height="80" rx="2" fill="none" stroke="#0b3d2e" stroke-width="1.5" stroke-dasharray="4 3" />
+  <text x="766" y="248" text-anchor="middle" fill="#1b2420" font-size="13" font-style="italic">encrypted storage</text>
+  <text x="766" y="268" text-anchor="middle" fill="#1b2420" font-size="10.5" opacity="0.7">original file — never on-chain</text>
+
+  <!-- Arrows -->
+  <path d="M188,170 L226,170" stroke="#0b3d2e" stroke-width="1.5" marker-end="url(#arrow)" fill="none" />
+  <path d="M392,170 L430,170" stroke="#0b3d2e" stroke-width="1.5" marker-end="url(#arrow)" fill="none" />
+  <path d="M620,150 L658,100" stroke="#0b3d2e" stroke-width="1.5" marker-end="url(#arrow)" fill="none" />
+  <path d="M310,212 L310,256 L658,256" stroke="#0b3d2e" stroke-width="1.5" stroke-opacity="0.55" stroke-dasharray="3 3" marker-end="url(#arrow-dash)" fill="none" />
+
+  <text x="450" y="20" text-anchor="middle" fill="#0b3d2e" font-size="12" font-style="italic" opacity="0.7">only the two hashes ever leave the server for the chain — the asset itself never does</text>
+</svg>

@@ -2,9 +2,9 @@
 name: contromoist
 org: tuteck
 year: "2024"
-role: backend engineer · sole owner
+role: backend engineer
 line: process-automation backend for an AC installation business.
-description: project management, template-driven quality inspections, and travel expense claims for an air-conditioning installation business, re-platformed piece by piece off an existing legacy ERP without taking its live database offline. i owned the entire backend myself.
+description: "i owned the entire backend for an air-conditioning installation business: project management, template-driven quality inspections, and travel expense claims, re-platformed piece by piece off an existing legacy ERP without taking its live database offline."
 tech: [node.js, express, sequelize, mysql, jwt]
 github: https://github.com/l1n3ar/Contromoist-PA
 metrics:
@@ -13,7 +13,7 @@ metrics:
   - key: year
     value: "2024"
   - key: role
-    value: "backend engineer · sole owner"
+    value: "backend engineer"
 order: 5
 asks:
   - "how do you replace part of a live legacy system without breaking it?"

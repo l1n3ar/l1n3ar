@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" font-family="Lora, serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0b3d2e" />
+    </marker>
+    <marker id="arrow-dash" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0b3d2e" fill-opacity="0.55" />
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="900" height="340" fill="#f6f1e4" />
+
+  <!-- Holder -->
+  <rect x="24" y="120" width="200" height="120" rx="2" fill="#0b3d2e" />
+  <text x="124" y="152" text-anchor="middle" fill="#f6f1e4" font-size="15" font-style="italic">holder</text>
+  <text x="124" y="172" text-anchor="middle" fill="#f6f1e4" font-size="10.5" opacity="0.8">the wallet — my code</text>
+  <text x="124" y="196" text-anchor="middle" fill="#f6f1e4" font-size="10.5" opacity="0.8">generate serial,</text>
+  <text x="124" y="212" text-anchor="middle" fill="#f6f1e4" font-size="10.5" opacity="0.8">blind, unblind, store</text>
+
+  <!-- Issuer -->
+  <rect x="350" y="30" width="200" height="110" rx="2" fill="none" stroke="#0b3d2e" stroke-width="1.5" />
+  <text x="450" y="62" text-anchor="middle" fill="#1b2420" font-size="15" font-style="italic">issuer</text>
+  <text x="450" y="82" text-anchor="middle" fill="#1b2420" font-size="10.5" opacity="0.65">central bank</text>
+  <text x="450" y="104" text-anchor="middle" fill="#1b2420" font-size="10.5" opacity="0.65">signs blinded coin</text>
+
+  <!-- Verifier -->
+  <rect x="350" y="200" width="200" height="110" rx="2" fill="none" stroke="#0b3d2e" stroke-width="1.5" />
+  <text x="450" y="232" text-anchor="middle" fill="#1b2420" font-size="15" font-style="italic">verifier</text>
+  <text x="450" y="252" text-anchor="middle" fill="#1b2420" font-size="10.5" opacity="0.65">merchant</text>
+  <text x="450" y="274" text-anchor="middle" fill="#1b2420" font-size="10.5" opacity="0.65">checks coin at payment</text>
+
+  <!-- Crypto library -->
+  <rect x="676" y="115" width="200" height="130" rx="2" fill="none" stroke="#0b3d2e" stroke-width="1.5" stroke-dasharray="4 3" />
+  <text x="776" y="147" text-anchor="middle" fill="#1b2420" font-size="13" font-style="italic">post-quantum</text>
+  <text x="776" y="167" text-anchor="middle" fill="#1b2420" font-size="13" font-style="italic">blind-sig library</text>
+  <text x="776" y="192" text-anchor="middle" fill="#1b2420" font-size="10" opacity="0.6">specialist team built,</text>
+  <text x="776" y="208" text-anchor="middle" fill="#1b2420" font-size="10" opacity="0.6">exposed as primitives</text>
+
+  <!-- Arrows -->
+  <path d="M210,140 L360,90" stroke="#0b3d2e" stroke-width="1.5" marker-end="url(#arrow)" fill="none" />
+  <text x="270" y="102" text-anchor="middle" fill="#0b3d2e" font-size="10.5" font-style="italic" opacity="0.7">1. blind &amp; request</text>
+
+  <path d="M360,120 L212,178" stroke="#0b3d2e" stroke-width="1.5" marker-end="url(#arrow)" fill="none" />
+  <text x="290" y="175" text-anchor="middle" fill="#0b3d2e" font-size="10.5" font-style="italic" opacity="0.7">2. signed, unblind</text>
+
+  <path d="M212,222 L360,262" stroke="#0b3d2e" stroke-width="1.5" marker-end="url(#arrow)" fill="none" />
+  <text x="280" y="258" text-anchor="middle" fill="#0b3d2e" font-size="10.5" font-style="italic" opacity="0.7">3. spend coin</text>
+
+  <path d="M550,80 L674,150" stroke="#0b3d2e" stroke-width="1.5" stroke-opacity="0.55" stroke-dasharray="3 3" marker-end="url(#arrow-dash)" fill="none" />
+  <path d="M674,200 L550,240" stroke="#0b3d2e" stroke-width="1.5" stroke-opacity="0.55" stroke-dasharray="3 3" marker-end="url(#arrow-dash)" fill="none" />
+
+  <text x="450" y="20" text-anchor="middle" fill="#0b3d2e" font-size="12" font-style="italic" opacity="0.7">a coin is signed blind — the issuer never sees which serial it just certified</text>
+</svg>

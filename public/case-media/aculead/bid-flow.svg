@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" font-family="Lora, serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0b3d2e" />
+    </marker>
+    <marker id="arrow-dash" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0b3d2e" fill-opacity="0.55" />
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="900" height="360" fill="#f6f1e4" />
+
+  <!-- Carrier bid -->
+  <rect x="24" y="140" width="150" height="72" rx="2" fill="none" stroke="#0b3d2e" stroke-width="1.5" />
+  <text x="99" y="172" text-anchor="middle" fill="#1b2420" font-size="14" font-style="italic">carrier</text>
+  <text x="99" y="192" text-anchor="middle" fill="#1b2420" font-size="14" font-style="italic">submits bid</text>
+
+  <!-- Decrement check -->
+  <rect x="222" y="128" width="176" height="96" rx="2" fill="none" stroke="#0b3d2e" stroke-width="1.5" stroke-dasharray="4 3" />
+  <text x="310" y="160" text-anchor="middle" fill="#1b2420" font-size="13" font-style="italic">beats lowest by</text>
+  <text x="310" y="178" text-anchor="middle" fill="#1b2420" font-size="13" font-style="italic">the decrement?</text>
+  <text x="310" y="200" text-anchor="middle" fill="#1b2420" font-size="10" opacity="0.65">flat amount or %</text>
+
+  <!-- Rejected -->
+  <text x="310" y="256" text-anchor="middle" fill="#1b2420" font-size="11.5" opacity="0.7">no → rejected before insert</text>
+
+  <!-- Bid log -->
+  <rect x="446" y="40" width="188" height="80" rx="2" fill="#0b3d2e" />
+  <text x="540" y="70" text-anchor="middle" fill="#f6f1e4" font-size="14" font-style="italic">append-only</text>
+  <text x="540" y="90" text-anchor="middle" fill="#f6f1e4" font-size="14" font-style="italic">bid log</text>
+  <text x="540" y="108" text-anchor="middle" fill="#f6f1e4" font-size="10.5" opacity="0.8">postgres</text>
+
+  <!-- Redis leaderboard -->
+  <rect x="446" y="150" width="188" height="88" rx="2" fill="#0b3d2e" />
+  <text x="540" y="180" text-anchor="middle" fill="#f6f1e4" font-size="14" font-style="italic">redis sorted set</text>
+  <text x="540" y="200" text-anchor="middle" fill="#f6f1e4" font-size="10.5" opacity="0.8">score = rate +</text>
+  <text x="540" y="216" text-anchor="middle" fill="#f6f1e4" font-size="10.5" opacity="0.8">timestamp tie-break</text>
+
+  <!-- Websocket broadcast -->
+  <rect x="446" y="268" width="188" height="72" rx="2" fill="none" stroke="#0b3d2e" stroke-width="1.5" />
+  <text x="540" y="298" text-anchor="middle" fill="#1b2420" font-size="13" font-style="italic">broadcast</text>
+  <text x="540" y="316" text-anchor="middle" fill="#1b2420" font-size="10.5" opacity="0.7">websocket → all watchers</text>
+
+  <!-- Shipper decision -->
+  <rect x="700" y="140" width="176" height="80" rx="2" fill="none" stroke="#0b3d2e" stroke-width="1.5" />
+  <text x="788" y="172" text-anchor="middle" fill="#1b2420" font-size="13" font-style="italic">shipper reviews</text>
+  <text x="788" y="192" text-anchor="middle" fill="#1b2420" font-size="13" font-style="italic">ranked list, awards</text>
+
+  <!-- Arrows -->
+  <path d="M174,176 L220,176" stroke="#0b3d2e" stroke-width="1.5" marker-end="url(#arrow)" fill="none" />
+  <path d="M398,160 L444,110" stroke="#0b3d2e" stroke-width="1.5" marker-end="url(#arrow)" fill="none" />
+  <path d="M310,224 L310,246" stroke="#0b3d2e" stroke-width="1.5" stroke-opacity="0.55" stroke-dasharray="3 3" />
+  <path d="M540,120 L540,148" stroke="#0b3d2e" stroke-width="1.5" marker-end="url(#arrow)" fill="none" />
+  <path d="M540,238 L540,266" stroke="#0b3d2e" stroke-width="1.5" marker-end="url(#arrow)" fill="none" />
+  <path d="M634,304 L698,190" stroke="#0b3d2e" stroke-width="1.5" marker-end="url(#arrow)" fill="none" />
+
+  <text x="450" y="20" text-anchor="middle" fill="#0b3d2e" font-size="12" font-style="italic" opacity="0.7">every accepted bid: insert into the log, update the leaderboard, then broadcast</text>
+</svg>
