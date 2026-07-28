@@ -1,10 +1,12 @@
 'use client';
 import { useEffect, useState } from 'react';
 import type { Project } from '@/lib/schema';
+import { Share } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { kicker } from '@/lib/typography';
 import { cn } from '@/lib/utils';
 import { caseStudies } from '@/components/case-study/registry';
+import { CopyButton } from '@/components/copy-button';
 
 export function ContextPanel({
   project, onOpenCase,
@@ -25,7 +27,15 @@ export function ContextPanel({
         visible ? 'opacity-100' : 'opacity-0',
       )}
     >
-      <div className={`${kicker} text-1_2 mb-2`}>{project.name}</div>
+      <div className="flex items-center gap-2 mb-2">
+        <div className={`${kicker} text-1_2`}>{project.name}</div>
+        <CopyButton
+          text={() => `${window.location.origin}${window.location.pathname}?project=${project.id}`}
+          label="copy link to this project"
+          icon={Share}
+          className="h-6 w-6 text-ink/35 hover:text-g"
+        />
+      </div>
       <div className="text-xs leading-snug mb-4 break-words">{project.description}</div>
 
       <div className="flex flex-col gap-2 mb-4.5">

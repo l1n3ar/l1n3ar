@@ -1,4 +1,6 @@
+'use client';
 import type { ReactNode } from 'react';
+import { CopyButton } from '@/components/copy-button';
 
 export function CaseHeader({ title }: { title: string }) {
   return (
@@ -36,11 +38,18 @@ export function CaseSection({ heading, children }: { heading: string; children: 
   );
 }
 
-export function CaseCode({ children }: { children: ReactNode }) {
+export function CaseCode({ children }: { children: string }) {
   return (
-    <pre className="font-mono bg-codeBg text-cream rounded-sm px-5 py-4 text-0_8 leading-relaxed overflow-x-auto gz-scroll mb-6">
-      <code>{children}</code>
-    </pre>
+    <div className="relative group mb-6">
+      <pre className="font-mono bg-codeBg text-cream rounded-sm px-5 py-4 text-0_8 leading-relaxed overflow-x-auto gz-scroll">
+        <code>{children}</code>
+      </pre>
+      <CopyButton
+        text={children}
+        label="copy code"
+        className="absolute top-2 right-2 text-cream/40 hover:text-cream hover:bg-cream/10 opacity-0 group-hover:opacity-100 transition-opacity"
+      />
+    </div>
   );
 }
 

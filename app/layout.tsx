@@ -7,7 +7,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: `${site.name} · ${site.role}`,
+  title: `${site.name}`,
   description: site.about,
   openGraph: {
     title: `${site.name} · ${site.role}`,

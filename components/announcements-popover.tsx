@@ -5,20 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { Badge } from '@/components/ui/badge';
 import { getDeployments, type Deployment } from '@/actions/deployments';
-import { commitMessage, commitRef, commitSha } from '@/lib/deployment-meta';
+import { commitMessage, commitRef, commitSha, timeAgo, stateDotClass } from '@/lib/deployment-meta';
 import { cn } from '@/lib/utils';
-
-function timeAgo(input: string | number) {
-  const then = typeof input === 'number' ? input : Number(input);
-  const seconds = Math.max(0, Math.floor((Date.now() - then) / 1000));
-  if (seconds < 60) return 'just now';
-  const minutes = Math.floor(seconds / 60);
-  if (minutes < 60) return `${minutes}m ago`;
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours}h ago`;
-  const days = Math.floor(hours / 24);
-  return `${days}d ago`;
-}
 
 function stateBadgeVariant(state?: string): 'default' | 'destructive' | 'secondary' {
   switch (state) {
@@ -29,18 +17,6 @@ function stateBadgeVariant(state?: string): 'default' | 'destructive' | 'seconda
       return 'destructive';
     default:
       return 'secondary';
-  }
-}
-
-function stateDotClass(state?: string) {
-  switch (state) {
-    case 'READY':
-      return 'bg-primary';
-    case 'ERROR':
-    case 'CANCELED':
-      return 'bg-destructive';
-    default:
-      return 'bg-muted-foreground';
   }
 }
 
