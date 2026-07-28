@@ -1,5 +1,6 @@
 'use client';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Masthead } from './masthead';
 import { Sidebar } from './sidebar';
 import { WorkLog } from './work-log';
@@ -11,18 +12,25 @@ import { CommandPalette } from './command-palette';
 import type { Project, WorkHistoryEntry, Recommendation, SiteConfig } from '@/lib/schema';
 
 export function PortfolioApp({
-  site, workHistory, recommendations, projects,
+  site, workHistory, recommendations, projects, initialProjectId,
 }: {
   site: SiteConfig; workHistory: WorkHistoryEntry[]; recommendations: Recommendation[];
-  projects: Project[];
+  projects: Project[]; initialProjectId?: string;
 }) {
-  const [selectedId, setSelectedId] = useState(projects[0]?.id);
+  const validInitialId = projects.some((p) => p.id === initialProjectId) ? initialProjectId : undefined;
+
+  const router = useRouter();
+  const [selectedId, setSelectedId] = useState(validInitialId ?? projects[0]?.id);
   const selected = projects.find((p) => p.id === selectedId) ?? projects[0];
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [askOpen, setAskOpen] = useState(false);
-  const [mobileTab, setMobileTab] = useState<MobileTab>('projects');
+  const [mobileTab, setMobileTab] = useState<MobileTab>(validInitialId ? 'details' : 'projects');
 
   const caseDialogRef = useRef<CaseDialogHandle>(null);
+
+  useEffect(() => {
+    if (selectedId) router.replace(`?project=${selectedId}`, { scroll: false });
+  }, [selectedId, router]);
 
   const selectOnMobile = (id: string) => {
     setSelectedId(id);
