@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 export function CaseHeader({ title }: { title: string }) {
   return (
-    <div className="px-8 pt-9 pb-6 md:px-12 rule-double-b">
+    <div className="px-8 pt-9 pb-6 md:px-12 border-b-2 border-g  ">
       <h1 className="font-heading font-light text-2_6 leading-none break-words">{title}</h1>
     </div>
   );

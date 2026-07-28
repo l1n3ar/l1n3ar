@@ -2,14 +2,15 @@ import type { Config } from 'tailwindcss';
 
 export default {
   content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}'],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        g: '#0b3d2e',
-        cream: '#f6f1e4',
-        ink: '#1b2420',
-        codeBg: '#0b1a13',
-        codeInk: '#e8e3d8',
+        g: 'rgb(var(--color-g) / <alpha-value>)',
+        cream: 'rgb(var(--color-cream) / <alpha-value>)',
+        ink: 'rgb(var(--color-ink) / <alpha-value>)',
+        codeBg: 'rgb(var(--color-codeBg) / <alpha-value>)',
+        codeInk: 'rgb(var(--color-codeInk) / <alpha-value>)',
       },
       fontFamily: {
         heading: ['"Cormorant Garamond"', 'serif'],
