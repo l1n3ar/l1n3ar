@@ -9,13 +9,15 @@ import { ContextPanel } from './context-panel';
 import { CaseDialog, type CaseDialogHandle } from './case-dialog';
 import { MobileTabBar, type MobileTab } from './mobile-tab-bar';
 import { CommandPalette } from './command-palette';
+import { cn } from '@/lib/utils';
 import type { Project, WorkHistoryEntry, Recommendation, SiteConfig } from '@/lib/schema';
 
 export function PortfolioApp({
-  site, workHistory, recommendations, projects, initialProjectId,
+  site, workHistory, recommendations, projects, initialProjectId, buildInfo,
 }: {
   site: SiteConfig; workHistory: WorkHistoryEntry[]; recommendations: Recommendation[];
   projects: Project[]; initialProjectId?: string;
+  buildInfo?: { sha: string; url?: string; message?: string; branch?: string };
 }) {
   const validInitialId = projects.some((p) => p.id === initialProjectId) ? initialProjectId : undefined;
 
@@ -125,7 +127,26 @@ export function PortfolioApp({
             {l.label}
           </a>
         ))}
-        <span className="ml-auto font-body text-xs text-cream/65">{site.alterEgo}</span>
+        {buildInfo && (
+          buildInfo.url ? (
+            <a
+              href={buildInfo.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={buildInfo.message}
+              className="ml-auto font-mono text-0_7 text-cream/50 hover:text-cream/80"
+            >
+              build {buildInfo.sha}
+              {buildInfo.branch && ` · ${buildInfo.branch}`}
+            </a>
+          ) : (
+            <span title={buildInfo.message} className="ml-auto font-mono text-0_7 text-cream/50">
+              build {buildInfo.sha}
+              {buildInfo.branch && ` · ${buildInfo.branch}`}
+            </span>
+          )
+        )}
+        <span className={cn('font-body text-xs text-cream/65', !buildInfo && 'ml-auto')}>{site.alterEgo}</span>
       </div>
 
       <CaseDialog ref={caseDialogRef} />
