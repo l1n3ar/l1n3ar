@@ -7,6 +7,7 @@ import { AskPanel } from './ask-panel';
 import { ContextPanel } from './context-panel';
 import { CaseDialog, type CaseDialogHandle } from './case-dialog';
 import { MobileTabBar, type MobileTab } from './mobile-tab-bar';
+import { CommandPalette } from './command-palette';
 import type { Project, WorkHistoryEntry, Recommendation, SiteConfig } from '@/lib/schema';
 
 export function PortfolioApp({
@@ -120,6 +121,13 @@ export function PortfolioApp({
       </div>
 
       <CaseDialog ref={caseDialogRef} />
+
+      <CommandPalette
+        projects={projects}
+        site={site}
+        onSelectProject={selectOnMobile}
+        onOpenCase={(id) => caseDialogRef.current?.open(id)}
+      />
     </div>
   );
 }
