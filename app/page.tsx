@@ -1,7 +1,7 @@
 import { PortfolioApp } from '@/components/portfolio-app';
 import { getAllProjects, getWorkHistory, getRecommendations, getSiteConfig } from '@/lib/content';
 
-export default function Page() {
+export default async function Page() {
   return (
     <PortfolioApp
       site={getSiteConfig()}

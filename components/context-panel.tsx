@@ -30,17 +30,17 @@ export function ContextPanel({
 
       <div className="flex flex-col gap-2 mb-4.5">
         {project.github && (
-          <Button variant="outline" asChild className="justify-center font-heading italic">
-            <a href={project.github}>view code →</a>
+          <Button variant="outline" render={<a href={project.github} />} className="justify-center font-heading italic">
+            view code →
           </Button>
         )}
         {project.demo && (
-          <Button variant="outline" asChild className="justify-center font-heading italic">
-            <a href={project.demo}>view demo →</a>
+          <Button variant="outline" render={<a href={project.demo} />} className="justify-center font-heading italic">
+            view demo →
           </Button>
         )}
         {caseStudies[project.id] && (
-          <Button variant="solid" className="font-heading italic" onClick={() => onOpenCase(project.id)}>
+          <Button variant="default" className="font-heading italic" onClick={() => onOpenCase(project.id)}>
             read the full case →
           </Button>
         )}
