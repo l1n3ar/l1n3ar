@@ -1,7 +1,6 @@
 import type { SiteConfig } from '@/lib/schema';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { AnnouncementsPopover } from '@/components/announcements-popover';
-import { DeployStatus } from '@/components/deploy-status';
 
 export function Masthead({ site }: { site: SiteConfig }) {
   return (

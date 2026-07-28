@@ -9,15 +9,16 @@ import { ContextPanel } from './context-panel';
 import { CaseDialog, type CaseDialogHandle } from './case-dialog';
 import { MobileTabBar, type MobileTab } from './mobile-tab-bar';
 import { CommandPalette } from './command-palette';
-import { HoverCard, HoverCardTrigger, HoverCardContent } from '@/components/ui/hover-card';
+import { DeployStatus } from '@/components/deploy-status';
+import { Tag } from 'lucide-react';
 import type { Project, WorkHistoryEntry, Recommendation, SiteConfig } from '@/lib/schema';
 
 export function PortfolioApp({
-  site, workHistory, recommendations, projects, initialProjectId, buildInfo,
+  site, workHistory, recommendations, projects, initialProjectId, release,
 }: {
   site: SiteConfig; workHistory: WorkHistoryEntry[]; recommendations: Recommendation[];
   projects: Project[]; initialProjectId?: string;
-  buildInfo?: { sha: string; url?: string; message?: string; branch?: string };
+  release?: { tag: string; name: string | null; url: string; publishedAt: string };
 }) {
   const validInitialId = projects.some((p) => p.id === initialProjectId) ? initialProjectId : undefined;
 
@@ -127,29 +128,20 @@ export function PortfolioApp({
             {l.label}
           </a>
         ))}
-        {buildInfo && (
-          <HoverCard>
-            <HoverCardTrigger
-              render={buildInfo.url ? <a href={buildInfo.url} target="_blank" rel="noopener noreferrer" /> : <span />}
-              className="ml-auto font-mono text-0_7 text-cream/50 hover:text-cream/80"
+        <div className="ml-auto flex items-center gap-3">
+          {release && (
+            <a
+              href={release.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 font-mono text-0_7 text-cream/50 hover:text-cream/80"
             >
-              {buildInfo.sha}
-              {buildInfo.branch && ` · ${buildInfo.branch}`}
-            </HoverCardTrigger>
-            <HoverCardContent align="end" className="w-72">
-              {buildInfo.message && (
-                <div className="font-body text-0_8 text-ink leading-snug mb-1.5 break-words">
-                  {buildInfo.message}
-                </div>
-              )}
-              <div className="font-mono text-0_7 text-ink/50">
-                {buildInfo.sha}
-                {buildInfo.branch && ` · ${buildInfo.branch}`}
-              </div>
-            </HoverCardContent>
-          </HoverCard>
-        )}
-        {/* <span className={cn('font-body text-xs text-cream/65', !buildInfo && 'ml-auto')}>{site.alterEgo}</span> */}
+              <Tag className="h-3 w-3" />
+              {release.tag}
+            </a>
+          )}
+          {/* <DeployStatus className="text-cream/45" /> */}
+        </div>
       </div>
 
       <CaseDialog ref={caseDialogRef} />

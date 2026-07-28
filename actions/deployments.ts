@@ -1,5 +1,6 @@
 'use server';
 import { z } from 'zod';
+import { apiFetch } from '@/lib/api-client';
 
 const deploymentSchema = z.object({
   uid: z.string(),
@@ -25,27 +26,16 @@ export async function getDeployments(limit = 5): Promise<GetDeploymentsResult> {
 
   const params = new URLSearchParams({ limit: String(limit) });
 
-  let response: Response;
-  try {
-    response = await fetch(`https://api.vercel.com/v6/deployments?${params}`, {
+  const result = await apiFetch(`https://api.vercel.com/v6/deployments?${params}`, {
+    init: {
       headers: { Authorization: `Bearer ${token}` },
       next: { revalidate: 60 },
-    });
-  } catch {
-    return { ok: false, error: 'Could not reach the Vercel API' };
-  }
+    },
+    schema: z.object({ deployments: z.array(deploymentSchema) }),
+    errorMessage: (body, status) =>
+      (body as { error?: { message?: string } } | null)?.error?.message ?? `Vercel API returned ${status}`,
+  });
 
-  const body = await response.json().catch(() => null);
-
-  if (!response.ok) {
-    const message = body?.error?.message ?? `Vercel API returned ${response.status}`;
-    return { ok: false, error: message };
-  }
-
-  const parsed = z.object({ deployments: z.array(deploymentSchema) }).safeParse(body);
-  if (!parsed.success) {
-    return { ok: false, error: 'Unexpected response shape from the Vercel API' };
-  }
-
-  return { ok: true, deployments: parsed.data.deployments };
+  if (!result.ok) return result;
+  return { ok: true, deployments: result.data.deployments };
 }

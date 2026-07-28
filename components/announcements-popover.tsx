@@ -1,10 +1,9 @@
 'use client';
-import { useState } from 'react';
 import { Megaphone, Loader2, GitBranch, GitCommitHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { Badge } from '@/components/ui/badge';
-import { getDeployments, type Deployment } from '@/actions/deployments';
+import { useDeploymentsStore, useDeploymentsPolling } from '@/lib/deployments-store';
 import { commitMessage, commitRef, commitSha, timeAgo, stateDotClass } from '@/lib/deployment-meta';
 import { cn } from '@/lib/utils';
 
@@ -21,25 +20,11 @@ function stateBadgeVariant(state?: string): 'default' | 'destructive' | 'seconda
 }
 
 export function AnnouncementsPopover({ className }: { className?: string }) {
-  const [status, setStatus] = useState<'idle' | 'loading' | 'error' | 'ready'>('idle');
-  const [deployments, setDeployments] = useState<Deployment[]>([]);
-  const [error, setError] = useState('');
-
-  const load = async () => {
-    if (status === 'loading' || status === 'ready') return;
-    setStatus('loading');
-    const result = await getDeployments();
-    if (result.ok) {
-      setDeployments(result.deployments);
-      setStatus('ready');
-    } else {
-      setError(result.error);
-      setStatus('error');
-    }
-  };
+  useDeploymentsPolling();
+  const { deployments, status, error, refresh } = useDeploymentsStore();
 
   return (
-    <Popover onOpenChange={(open) => open && load()}>
+    <Popover onOpenChange={(open) => open && refresh()}>
       <PopoverTrigger
         render={
           <Button variant="ghost" size="icon" aria-label="announcements" className={className} />
