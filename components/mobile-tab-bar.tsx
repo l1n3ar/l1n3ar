@@ -4,8 +4,9 @@ import { cn } from '@/lib/utils';
 const TABS = [
   { id: 'about', label: 'about' },
   { id: 'projects', label: 'projects' },
-  { id: 'ask', label: 'ask' },
   { id: 'details', label: 'details' },
+  { id: 'ask', label: 'ask' },
+
 ] as const;
 
 export type MobileTab = (typeof TABS)[number]['id'];

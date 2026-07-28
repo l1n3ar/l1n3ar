@@ -2,8 +2,8 @@ import type { ReactNode } from 'react';
 
 export function CaseHeader({ title }: { title: string }) {
   return (
-    <div className="px-5 pt-7 pb-5 md:px-12 md:pt-9 md:pb-6 border-b-2 border-g  ">
-      <h1 className="font-heading font-light text-2xl md:text-2_6 leading-none break-words">{title}</h1>
+    <div className="sticky top-0 z-10 bg-cream/80 backdrop-blur-sm px-5 pt-7 pb-5 md:px-12 md:pt-9 md:pb-6 border-b-2 border-g  ">
+      <h1 className="font-heading font-light text-2xl md:text-2_6 leading-none pr-10">{title}</h1>
     </div>
   );
 }

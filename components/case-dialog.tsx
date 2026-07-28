@@ -19,7 +19,7 @@ export const CaseDialog = forwardRef<CaseDialogHandle>(function CaseDialog(_prop
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
         showCloseButton={false}
-        className="shadow-lg p-0 bg-cream rounded-none w-[90vw] h-dialog-safe max-w-5xl overflow-y-auto overflow-x-hidden gz-scroll"
+        className="shadow-lg p-0 bg-cream rounded-none w-[90vw] h-dialog-safe max-w-5xl overflow-hidden"
       >
         {CaseStudyComponent && (
           <>
@@ -27,13 +27,17 @@ export const CaseDialog = forwardRef<CaseDialogHandle>(function CaseDialog(_prop
               render={
                 <Button
                   variant="ghost"
-                  className="absolute top-4 right-4 p-0 h-auto font-heading italic text-0_8 text-ink/45 hover:text-g z-10"
+                  className="absolute top-4 right-4 p-0 h-auto font-heading italic text-0_8 text-ink/45 hover:text-g z-20"
                 />
               }
             >
               close ×
             </DialogClose>
-            <CaseStudyComponent />
+            <div className="h-full w-full overflow-y-auto overflow-x-hidden gz-scroll">
+              <div className="min-w-0 w-full">
+                <CaseStudyComponent />
+              </div>
+            </div>
           </>
         )}
       </DialogContent>

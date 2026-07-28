@@ -86,6 +86,10 @@ export function PortfolioApp({
           </div>
         )}
 
+               {mobileTab === 'details' && (
+          <ContextPanel project={selected} onOpenCase={(id) => caseDialogRef.current?.open(id)} />
+        )}
+
         {mobileTab === 'ask' && (
           <div className="flex-1 min-h-0 flex flex-col">
             <AskPanel
@@ -98,9 +102,7 @@ export function PortfolioApp({
           </div>
         )}
 
-        {mobileTab === 'details' && (
-          <ContextPanel project={selected} onOpenCase={(id) => caseDialogRef.current?.open(id)} />
-        )}
+ 
       </div>
 
       <div className="bg-g text-cream px-6 py-3 flex flex-wrap items-baseline gap-x-4 gap-y-1 md:gap-6">
