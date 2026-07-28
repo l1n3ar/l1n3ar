@@ -12,7 +12,7 @@ export const ProjectRow = forwardRef<HTMLButtonElement, {
       variant="ghost"
       onClick={() => onSelect(project.id)}
       className={cn(
-        'block w-full text-ink text-left h-auto rounded-none border-0 border-b border-g/16 border-l-4 py-2 px-3 transition-colors duration-200',
+        'block w-full whitespace-normal text-ink text-left h-auto rounded-none border-0 border-b border-g/16 border-l-4 py-2 px-3 transition-colors duration-200',
         selected ? 'border-l-g' : 'border-l-transparent hover:bg-g/6 hover:border-l-g/30'
       )}
     >

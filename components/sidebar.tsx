@@ -11,14 +11,17 @@ const REC_PREVIEW_LEN = 90;
 const REC_INITIAL_COUNT = 3;
 
 export function Sidebar({
-  about, history, recs, open, onToggleOpen,
-}: { about: string; history: WorkHistoryEntry[]; recs: Recommendation[]; open: boolean; onToggleOpen: () => void }) {
+  about, history, recs, open, onToggleOpen, collapsible = true,
+}: {
+  about: string; history: WorkHistoryEntry[]; recs: Recommendation[]; open: boolean; onToggleOpen: () => void;
+  collapsible?: boolean;
+}) {
   const recDialogRef = useRef<RecDialogHandle>(null);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [recsOpen, setRecsOpen] = useState(false);
   const [recsExpanded, setRecsExpanded] = useState(false);
 
-  if (!open) {
+  if (collapsible && !open) {
     return (
       <div className="border-r border-g flex flex-col items-center pt-4">
         <Button variant="ghost" size="icon" aria-label="expand sidebar" onClick={onToggleOpen}>
@@ -31,16 +34,18 @@ export function Sidebar({
   const visibleRecs = recsExpanded ? recs : recs.slice(0, REC_INITIAL_COUNT);
 
   return (
-    <div className="relative gz-scroll border-r border-g pt-4 pb-4 px-6 flex flex-col min-h-0 min-w-0 overflow-y-auto overflow-x-hidden scroll-smooth">
-      <Button
-        variant="ghost"
-        size="icon"
-        aria-label="collapse sidebar"
-        onClick={onToggleOpen}
-        className="absolute top-4 right-4 z-10"
-      >
-        <ChevronLeft className="h-4 w-4" />
-      </Button>
+    <div className="flex-1 relative gz-scroll border-r border-g pt-4 pb-4 px-6 flex flex-col min-h-0 min-w-0 overflow-y-auto overflow-x-hidden scroll-smooth">
+      {collapsible && (
+        <Button
+          variant="ghost"
+          size="icon"
+          aria-label="collapse sidebar"
+          onClick={onToggleOpen}
+          className="absolute top-4 right-4 z-10"
+        >
+          <ChevronLeft className="h-4 w-4" />
+        </Button>
+      )}
 
       <div className={`${kicker} mb-1.5`}>about</div>
       <p className="text-0_8 leading-relaxed mb-4 pb-3.5 border-b border-g/25 break-words">{about}</p>

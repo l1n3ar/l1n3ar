@@ -6,6 +6,7 @@ import { WorkLog } from './work-log';
 import { AskPanel } from './ask-panel';
 import { ContextPanel } from './context-panel';
 import { CaseDialog, type CaseDialogHandle } from './case-dialog';
+import { MobileTabBar, type MobileTab } from './mobile-tab-bar';
 import type { Project, WorkHistoryEntry, Recommendation, SiteConfig } from '@/lib/schema';
 
 export function PortfolioApp({
@@ -18,15 +19,21 @@ export function PortfolioApp({
   const selected = projects.find((p) => p.id === selectedId) ?? projects[0];
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [askOpen, setAskOpen] = useState(false);
+  const [mobileTab, setMobileTab] = useState<MobileTab>('projects');
 
   const caseDialogRef = useRef<CaseDialogHandle>(null);
+
+  const selectOnMobile = (id: string) => {
+    setSelectedId(id);
+    setMobileTab('details');
+  };
 
   return (
     <div className="h-screen overflow-hidden flex flex-col bg-cream text-ink font-body">
       <Masthead site={site} />
 
       <div
-        className={`grid flex-1 min-h-0 transition-[grid-template-columns] duration-300 ${
+        className={`hidden md:grid flex-1 min-h-0 transition-[grid-template-columns] duration-300 ${
           sidebarOpen ? 'grid-cols-layout' : 'grid-cols-[3rem_1fr_20%]'
         }`}
       >
@@ -57,7 +64,46 @@ export function PortfolioApp({
         <ContextPanel project={selected} onOpenCase={(id) => caseDialogRef.current?.open(id)} />
       </div>
 
-      <div className="bg-g text-cream px-6 py-3 flex items-baseline gap-6">
+      <div className="flex flex-col flex-1 min-h-0 md:hidden">
+        <MobileTabBar active={mobileTab} onChange={setMobileTab} />
+
+        {mobileTab === 'about' && (
+          <div className="flex-1 min-h-0 flex flex-col">
+            <Sidebar
+              about={site.about}
+              history={workHistory}
+              recs={recommendations}
+              open
+              onToggleOpen={() => {}}
+              collapsible={false}
+            />
+          </div>
+        )}
+
+        {mobileTab === 'projects' && (
+          <div className="flex-1 min-h-0 flex flex-col">
+            <WorkLog projects={projects} selectedId={selectedId} onSelect={selectOnMobile} />
+          </div>
+        )}
+
+        {mobileTab === 'ask' && (
+          <div className="flex-1 min-h-0 flex flex-col">
+            <AskPanel
+              projectName={selected.name}
+              suggestions={selected.asks}
+              open
+              onToggleOpen={() => {}}
+              collapsible={false}
+            />
+          </div>
+        )}
+
+        {mobileTab === 'details' && (
+          <ContextPanel project={selected} onOpenCase={(id) => caseDialogRef.current?.open(id)} />
+        )}
+      </div>
+
+      <div className="bg-g text-cream px-6 py-3 flex flex-wrap items-baseline gap-x-4 gap-y-1 md:gap-6">
         {site.footerLinks.map((l) => (
           <a
             key={l.label}

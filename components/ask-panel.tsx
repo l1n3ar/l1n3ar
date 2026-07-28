@@ -4,23 +4,31 @@ import { Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { SectionHeader } from './section-header';
+import { kicker } from '@/lib/typography';
 
 export function AskPanel({
-  projectName, suggestions, open, onToggleOpen,
-}: { projectName: string; suggestions: string[]; open: boolean; onToggleOpen: () => void }) {
+  projectName, suggestions, open, onToggleOpen, collapsible = true,
+}: {
+  projectName: string; suggestions: string[]; open: boolean; onToggleOpen: () => void;
+  collapsible?: boolean;
+}) {
   const { input, handleInputChange, handleSubmit } = useChat({ api: '/api/ask' });
 
   return (
     <>
       <div className="px-6 pt-3.5 pb-2 border-t border-g">
-        <SectionHeader
-          label={<>ask about <span className="underline font-bold">{projectName}</span></>}
-          open={open}
-          onToggle={onToggleOpen}
-        />
+        {collapsible ? (
+          <SectionHeader
+            label={<>ask about <span className="underline font-bold">{projectName}</span></>}
+            open={open}
+            onToggle={onToggleOpen}
+          />
+        ) : (
+          <div className={kicker}>ask about <span className="underline font-bold">{projectName}</span></div>
+        )}
       </div>
 
-      <div className="min-h-0 overflow-hidden flex flex-col" inert={!open}>
+      <div className="flex-1 min-h-0 overflow-hidden flex flex-col" inert={!open}>
         <div className="flex-1 min-h-0 flex flex-col items-center justify-center gap-2 px-6 text-center">
           <div className="font-heading italic text-1_1 text-g">coming soon</div>
           <p className="text-0_8 text-ink/55 max-w-[34ch] leading-snug">

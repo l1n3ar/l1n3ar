@@ -9,10 +9,10 @@ const highlights = [
     label: 'templates, not one-off checklists',
     body: 'Quality inspections work off a reusable template: define the checklist once, then instantiate it onto any project with one bulk insert. Write the pattern once, reuse it everywhere a checklist is needed.',
   },
-  {
-    label: 'solo, three weeks',
-    body: 'Owned and built the entire backend alone, from schema to shipped API, in about three weeks, including the parts that had to coexist with someone else’s existing system.',
-  },
+  // {
+  //   label: 'solo, three weeks',
+  //   body: 'Owned and built the entire backend alone, from schema to shipped API, in about three weeks, including the parts that had to coexist with someone else’s existing system.',
+  // },
 ];
 
 export function ContromoistPACaseStudy() {
@@ -21,7 +21,10 @@ export function ContromoistPACaseStudy() {
       <CaseHeader title="contromoist" />
 
       <CaseBody>
-        <CaseHighlights items={highlights} />
+        <div className='flex items-center justify-center'>       
+           <CaseHighlights items={highlights} />
+        </div>
+
 
         <CaseSection heading="the brief">
           <p>

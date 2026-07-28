@@ -37,7 +37,7 @@ export function WorkLog({
           </Button>
         </div>
       </div>
-      <div className="min-h-0 px-6 pb-3 overflow-y-auto overflow-x-hidden scroll-smooth gz-scroll">
+      <div className="flex-1 min-h-0 px-6 pb-3 overflow-y-auto overflow-x-hidden scroll-smooth gz-scroll">
         {projects.map((p, i) => (
           <ProjectRow
             key={p.id}

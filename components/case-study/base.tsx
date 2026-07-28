@@ -2,14 +2,14 @@ import type { ReactNode } from 'react';
 
 export function CaseHeader({ title }: { title: string }) {
   return (
-    <div className="px-8 pt-9 pb-6 md:px-12 border-b-2 border-g  ">
-      <h1 className="font-heading font-light text-2_6 leading-none break-words">{title}</h1>
+    <div className="px-5 pt-7 pb-5 md:px-12 md:pt-9 md:pb-6 border-b-2 border-g  ">
+      <h1 className="font-heading font-light text-2xl md:text-2_6 leading-none break-words">{title}</h1>
     </div>
   );
 }
 
 export function CaseBody({ children }: { children: ReactNode }) {
-  return <div className="max-w-3xl mx-auto px-8 md:px-12 py-10">{children}</div>;
+  return <div className="max-w-3xl mx-auto px-5 md:px-12 py-6 md:py-10">{children}</div>;
 }
 
 export function CaseHighlights({ items }: { items: { label: string; body: string }[] }) {

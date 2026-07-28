@@ -21,7 +21,7 @@ export function ContextPanel({
   return (
     <div
       className={cn(
-        'gz-scroll px-6 pt-4 pb-4 flex flex-col min-h-0 min-w-0 overflow-y-auto overflow-x-hidden scroll-smooth transition-opacity duration-300 ease-in-out',
+        'flex-1 gz-scroll px-6 pt-4 pb-4 flex flex-col min-h-0 min-w-0 overflow-y-auto overflow-x-hidden scroll-smooth transition-opacity duration-300 ease-in-out',
         visible ? 'opacity-100' : 'opacity-0',
       )}
     >
