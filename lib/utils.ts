@@ -20,13 +20,12 @@ export function getBuildInfo() {
   const owner = process.env.VERCEL_GIT_REPO_OWNER;
   const slug = process.env.VERCEL_GIT_REPO_SLUG;
   const url = owner && slug ? `https://github.com/${owner}/${slug}/commit/${sha}` : undefined;
-  const ref = process.env.VERCEL_GIT_COMMIT_REF;
   const isProduction = process.env.VERCEL_ENV === 'production';
 
   return {
     sha: sha.slice(0, 7),
     url,
     message: process.env.VERCEL_GIT_COMMIT_MESSAGE,
-    branch: !isProduction ? ref : undefined,
+    branch: !isProduction ? process.env.VERCEL_GIT_COMMIT_REF : undefined,
   };
 }

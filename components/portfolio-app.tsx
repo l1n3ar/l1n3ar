@@ -9,7 +9,7 @@ import { ContextPanel } from './context-panel';
 import { CaseDialog, type CaseDialogHandle } from './case-dialog';
 import { MobileTabBar, type MobileTab } from './mobile-tab-bar';
 import { CommandPalette } from './command-palette';
-import { cn } from '@/lib/utils';
+import { HoverCard, HoverCardTrigger, HoverCardContent } from '@/components/ui/hover-card';
 import type { Project, WorkHistoryEntry, Recommendation, SiteConfig } from '@/lib/schema';
 
 export function PortfolioApp({
@@ -128,23 +128,26 @@ export function PortfolioApp({
           </a>
         ))}
         {buildInfo && (
-          buildInfo.url ? (
-            <a
-              href={buildInfo.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              title={buildInfo.message}
+          <HoverCard>
+            <HoverCardTrigger
+              render={buildInfo.url ? <a href={buildInfo.url} target="_blank" rel="noopener noreferrer" /> : <span />}
               className="ml-auto font-mono text-0_7 text-cream/50 hover:text-cream/80"
             >
-              build {buildInfo.sha}
+              {buildInfo.sha}
               {buildInfo.branch && ` · ${buildInfo.branch}`}
-            </a>
-          ) : (
-            <span title={buildInfo.message} className="ml-auto font-mono text-0_7 text-cream/50">
-              build {buildInfo.sha}
-              {buildInfo.branch && ` · ${buildInfo.branch}`}
-            </span>
-          )
+            </HoverCardTrigger>
+            <HoverCardContent align="end" className="w-72">
+              {buildInfo.message && (
+                <div className="font-body text-0_8 text-ink leading-snug mb-1.5 break-words">
+                  {buildInfo.message}
+                </div>
+              )}
+              <div className="font-mono text-0_7 text-ink/50">
+                {buildInfo.sha}
+                {buildInfo.branch && ` · ${buildInfo.branch}`}
+              </div>
+            </HoverCardContent>
+          </HoverCard>
         )}
         {/* <span className={cn('font-body text-xs text-cream/65', !buildInfo && 'ml-auto')}>{site.alterEgo}</span> */}
       </div>
