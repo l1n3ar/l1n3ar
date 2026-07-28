@@ -29,7 +29,7 @@ export function PortfolioApp({
   };
 
   return (
-    <div className="h-screen overflow-hidden flex flex-col bg-cream text-ink font-body">
+    <div className="h-[100vh] overflow-hidden flex flex-col bg-cream text-ink font-body">
       <Masthead site={site} />
 
       <div
