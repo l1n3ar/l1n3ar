@@ -21,9 +21,9 @@ export function ContromoistPACaseStudy() {
       <CaseHeader title="contromoist" />
 
       <CaseBody>
-        <div className='flex items-center justify-center'>       
+          
            <CaseHighlights items={highlights} />
-        </div>
+
 
 
         <CaseSection heading="the brief">
