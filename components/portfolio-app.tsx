@@ -146,7 +146,7 @@ export function PortfolioApp({
             </span>
           )
         )}
-        <span className={cn('font-body text-xs text-cream/65', !buildInfo && 'ml-auto')}>{site.alterEgo}</span>
+        {/* <span className={cn('font-body text-xs text-cream/65', !buildInfo && 'ml-auto')}>{site.alterEgo}</span> */}
       </div>
 
       <CaseDialog ref={caseDialogRef} />
