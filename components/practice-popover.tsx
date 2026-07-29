@@ -31,8 +31,8 @@ function CodeforcesPanel({ handle }: { handle: string }) {
 
   return (
     <div>
-      <div className="flex items-baseline gap-3 mb-4 pb-3 border-b border-g/20">
-        <span className="font-heading italic text-1_2 text-g">{p.rating ?? '—'}</span>
+      <div className="flex justify-end  mb-1  ">
+        <span className="font-heading italic text-1_2 text-g">{p.rating ?? ''}</span>
         <span className={`${metaItalic} text-ink/55`}>{p.rank ?? 'unrated'}</span>
         {p.maxRating !== undefined && <span className={`${metaItalic} text-ink/40 ml-auto`}>max {p.maxRating}</span>}
       </div>
@@ -66,16 +66,8 @@ function LeetcodePanel({ handle }: { handle: string }) {
 
   return (
     <div>
-      <div className="flex items-baseline gap-3 mb-4 pb-3 border-b border-g/20">
-        <span className="font-heading italic text-1_2 text-g">{total}</span>
-        <span className={`${metaItalic} text-ink/55`}>solved</span>
-        <div className="ml-auto flex gap-2">
-          {p.solvedByDifficulty.map((d) => (
-            <span key={d.difficulty} className="text-0_7 text-ink/45">
-              {d.difficulty[0]}:{d.count}
-            </span>
-          ))}
-        </div>
+      <div className="flex justify-end  mb-1   border-g/20">
+        <span className={`${metaItalic} text-ink/55 text-sm font-light`}> showing 10 of <span className='font-medium text-md'>{total}</span> solved</span>
       </div>
       {/* <div className={`${kicker} mb-2`}>recently solved</div> */}
       {p.recentSolved.length === 0 && <p className="text-0_8 text-ink/50">no recent accepted submissions found.</p>}

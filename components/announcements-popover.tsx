@@ -1,5 +1,5 @@
 'use client';
-import { Megaphone, Loader2, GitBranch, GitCommitHorizontal } from 'lucide-react';
+import { Megaphone, Loader2, GitBranch, GitCommitHorizontal, RotateCcwClock, RotateCw, RotateCwFadingClock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { Badge } from '@/components/ui/badge';
@@ -26,10 +26,10 @@ export function AnnouncementsPopover({ className }: { className?: string }) {
     <Popover onOpenChange={(open) => { if (open && isStale) refetch(); }}>
       <PopoverTrigger
         render={
-          <Button variant="ghost" size="icon" aria-label="announcements" className={className} />
+          <Button variant='ghost' size="icon" aria-label="announcements" className={className} />
         }
       >
-        <Megaphone className="h-4 w-4" />
+        <RotateCwFadingClock className="h-4 w-4 " />
       </PopoverTrigger>
 
       <PopoverContent className="w-80 max-h-[70vh] overflow-y-auto gz-scroll" align="end">
