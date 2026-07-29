@@ -95,14 +95,15 @@ export function OffTheClockPopover({
             <MusicEntryCard key={entry.band} entry={entry} />
           ))}
 
-          <button
+          {/* <button
             type="button"
             onClick={onTriggerSiu}
             className="w-full mt-3 pt-3 border-t border-g/20 flex items-center justify-center gap-2 font-heading italic text-0_8 text-g hover:text-g/70"
           >
             hit the siu
             <span className={`${metaItalic} text-ink/35`}>⌘7</span>
-          </button>
+          </button> */}
+          
         </div>
       </PopoverContent>
     </Popover>
