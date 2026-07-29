@@ -26,11 +26,9 @@ export async function getDeployments(limit = 5): Promise<GetDeploymentsResult> {
 
   const params = new URLSearchParams({ limit: String(limit) });
 
-  const result = await apiFetch(`https://api.vercel.com/v6/deployments?${params}`, {
-    init: {
-      headers: { Authorization: `Bearer ${token}` },
-      next: { revalidate: 60 },
-    },
+  const result = await apiFetch({
+    url: `https://api.vercel.com/v6/deployments?${params}`,
+    headers: { Authorization: `Bearer ${token}` },
     schema: z.object({ deployments: z.array(deploymentSchema) }),
     errorMessage: (body, status) =>
       (body as { error?: { message?: string } } | null)?.error?.message ?? `Vercel API returned ${status}`,

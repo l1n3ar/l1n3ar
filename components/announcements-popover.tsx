@@ -3,7 +3,7 @@ import { Megaphone, Loader2, GitBranch, GitCommitHorizontal } from 'lucide-react
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { Badge } from '@/components/ui/badge';
-import { useDeploymentsStore, useDeploymentsPolling } from '@/lib/deployments-store';
+import { useDeployments } from '@/lib/queries/deployments';
 import { commitMessage, commitRef, commitSha, timeAgo, stateDotClass } from '@/lib/deployment-meta';
 import { cn } from '@/lib/utils';
 
@@ -20,11 +20,10 @@ function stateBadgeVariant(state?: string): 'default' | 'destructive' | 'seconda
 }
 
 export function AnnouncementsPopover({ className }: { className?: string }) {
-  useDeploymentsPolling();
-  const { deployments, status, error, refresh } = useDeploymentsStore();
+  const { data: deployments, isLoading, isError, error, refetch, isStale } = useDeployments();
 
   return (
-    <Popover onOpenChange={(open) => open && refresh()}>
+    <Popover onOpenChange={(open) => { if (open && isStale) refetch(); }}>
       <PopoverTrigger
         render={
           <Button variant="ghost" size="icon" aria-label="announcements" className={className} />
@@ -38,25 +37,25 @@ export function AnnouncementsPopover({ className }: { className?: string }) {
           deployments
         </div>
 
-        {status === 'loading' && (
+        {isLoading && (
           <div className="flex justify-center py-3">
             <Loader2 className="animate-spin h-4 w-4 text-g" />
           </div>
         )}
 
-        {status === 'error' && (
-          <div className="text-0_8 text-destructive px-1 py-3 break-words">{error}</div>
+        {isError && (
+          <div className="text-0_8 text-destructive px-1 py-3 break-words">{error.message}</div>
         )}
 
-        {status === 'ready' && deployments.length === 0 && (
+        {!isLoading && !isError && deployments?.length === 0 && (
           <div className="text-0_8 text-ink/55 px-1 py-3">no deployments found.</div>
         )}
 
-        {status === 'ready' && deployments.map((d, i) => {
+        {!isLoading && !isError && deployments?.map((d, i, arr) => {
           const message = commitMessage(d.meta);
           const ref = commitRef(d.meta);
           const sha = commitSha(d.meta);
-          const isLast = i === deployments.length - 1;
+          const isLast = i === arr.length - 1;
           return (
             <div key={d.uid} className="flex gap-2.5 px-1">
               {/* the connecting rail: dot + line down to the next commit */}

@@ -10,16 +10,17 @@ import { CaseDialog, type CaseDialogHandle } from './case-dialog';
 import { MobileTabBar, type MobileTab } from './mobile-tab-bar';
 import { CommandPalette } from './command-palette';
 import { DeployStatus } from '@/components/deploy-status';
+import { useRelease } from '@/lib/queries/release';
 import { Tag } from 'lucide-react';
 import type { Project, WorkHistoryEntry, Recommendation, SiteConfig } from '@/lib/schema';
 
 export function PortfolioApp({
-  site, workHistory, recommendations, projects, initialProjectId, release,
+  site, workHistory, recommendations, projects, initialProjectId,
 }: {
   site: SiteConfig; workHistory: WorkHistoryEntry[]; recommendations: Recommendation[];
   projects: Project[]; initialProjectId?: string;
-  release?: { tag: string; name: string | null; url: string; publishedAt: string };
 }) {
+  const { data: release } = useRelease();
   const validInitialId = projects.some((p) => p.id === initialProjectId) ? initialProjectId : undefined;
 
   const router = useRouter();
@@ -55,6 +56,7 @@ export function PortfolioApp({
           recs={recommendations}
           open={sidebarOpen}
           onToggleOpen={() => setSidebarOpen((o) => !o)}
+          codingProfiles={site.codingProfiles}
         />
 
         <div

@@ -2,8 +2,9 @@
 import { useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { RecDialog, type RecDialogHandle } from './rec-dialog';
+import { PracticePopover } from './practice-popover';
 import { SectionHeader } from './section-header';
-import type { WorkHistoryEntry, Recommendation } from '@/lib/schema';
+import type { WorkHistoryEntry, Recommendation, CodingProfiles } from '@/lib/schema';
 import { Button } from '@/components/ui/button';
 import { kicker, metaItalic, linkButtonClass } from '@/lib/typography';
 
@@ -11,10 +12,10 @@ const REC_PREVIEW_LEN = 90;
 const REC_INITIAL_COUNT = 3;
 
 export function Sidebar({
-  about, history, recs, open, onToggleOpen, collapsible = true,
+  about, history, recs, open, onToggleOpen, collapsible = true, codingProfiles,
 }: {
   about: string; history: WorkHistoryEntry[]; recs: Recommendation[]; open: boolean; onToggleOpen: () => void;
-  collapsible?: boolean;
+  collapsible?: boolean; codingProfiles?: CodingProfiles;
 }) {
   const recDialogRef = useRef<RecDialogHandle>(null);
   const [historyOpen, setHistoryOpen] = useState(false);
@@ -34,7 +35,7 @@ export function Sidebar({
   const visibleRecs = recsExpanded ? recs : recs.slice(0, REC_INITIAL_COUNT);
 
   return (
-    <div className="flex-1 relative gz-scroll border-r border-g pt-4 pb-4 px-6 flex flex-col min-h-0 min-w-0 overflow-y-auto overflow-x-hidden scroll-smooth">
+    <div className="flex-1 relative border-r border-g flex flex-col min-h-0 min-w-0">
       {collapsible && (
         <Button
           variant="ghost"
@@ -47,6 +48,7 @@ export function Sidebar({
         </Button>
       )}
 
+      <div className="gz-scroll flex-1 min-h-0 pt-4 pb-4 px-6 flex flex-col overflow-y-auto overflow-x-hidden scroll-smooth">
       <div className={`${kicker} mb-1.5`}>about</div>
       <p className="text-0_8 leading-relaxed mb-4 pb-3.5 border-b border-g/25 break-words">{about}</p>
 
@@ -96,6 +98,9 @@ export function Sidebar({
           )}
         </div>
       )}
+      </div>
+
+      <PracticePopover profiles={codingProfiles} />
 
       <RecDialog ref={recDialogRef} />
     </div>

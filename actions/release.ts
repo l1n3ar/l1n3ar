@@ -38,11 +38,9 @@ export async function getLatestRelease(): Promise<GetLatestReleaseResult> {
   }
   const { owner, slug } = repo;
 
-  const result = await apiFetch(`https://api.github.com/repos/${owner}/${slug}/releases/latest`, {
-    init: {
-      headers: { Accept: 'application/vnd.github+json' },
-      next: { revalidate: 3600 },
-    },
+  const result = await apiFetch({
+    url: `https://api.github.com/repos/${owner}/${slug}/releases/latest`,
+    headers: { Accept: 'application/vnd.github+json' },
     schema: releaseSchema,
     errorMessage: (body, status) =>
       (body as { message?: string } | null)?.message ?? `GitHub API returned ${status}`,

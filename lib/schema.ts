@@ -37,6 +37,13 @@ export const recommendationSchema = z.object({
 });
 export type Recommendation = z.infer<typeof recommendationSchema>;
 
+export const codingProfilesSchema = z.object({
+  codeforces: z.string().optional(),
+  leetcode: z.string().optional(),
+  atcoder: z.string().optional(),
+});
+export type CodingProfiles = z.infer<typeof codingProfilesSchema>;
+
 export const siteConfigSchema = z.object({
   name: z.string(),
   role: z.string(),
@@ -44,6 +51,7 @@ export const siteConfigSchema = z.object({
   email: z.string().email(),
   about: z.string(),
   footerLinks: z.array(z.object({ label: z.string(), href: z.string() })),
-  alterEgo : z.string()
+  alterEgo : z.string(),
+  codingProfiles: codingProfilesSchema.optional(),
 });
 export type SiteConfig = z.infer<typeof siteConfigSchema>;

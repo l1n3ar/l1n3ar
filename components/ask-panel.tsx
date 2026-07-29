@@ -16,7 +16,7 @@ export function AskPanel({
 
   return (
     <>
-      <div className="px-6 pt-3.5 pb-2 border-t border-g">
+      <div className="px-6 py-2 pb-2 border-t border-g">
         {collapsible ? (
           <SectionHeader
             label={<>ask about <span className="underline font-bold">{projectName}</span></>}
