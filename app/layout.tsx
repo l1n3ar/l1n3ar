@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import site from '@/content/site.json';
 import { QueryProvider } from '@/components/query-provider';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
   ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
@@ -33,7 +34,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: noFlashScript }} />
       </head>
       <body>
-        <QueryProvider>{children}</QueryProvider>
+        <TooltipProvider>
+          <QueryProvider>{children}</QueryProvider>
+        </TooltipProvider>
+
       </body>
     </html>
   );

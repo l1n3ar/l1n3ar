@@ -3,8 +3,6 @@ import { execSync } from 'node:child_process';
 import { z } from 'zod';
 import { apiFetch } from '@/lib/api-client';
 
-/** Resolves owner/slug for wherever this is running: Vercel's build env in production,
- *  or the local git remote in dev — same repo identity, discovered differently per environment. */
 function getRepoOwnerAndSlug(): { owner: string; slug: string } | undefined {
   const vercelOwner = process.env.VERCEL_GIT_REPO_OWNER;
   const vercelSlug = process.env.VERCEL_GIT_REPO_SLUG;

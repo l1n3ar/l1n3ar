@@ -52,7 +52,7 @@ export const SiuTakeover = forwardRef<SiuTakeoverHandle>(function SiuTakeover(_p
       <Dialog open={open} onOpenChange={(o) => (o ? setOpen(true) : close())}>
         <DialogContent
           showCloseButton={false}
-          className="p-0 border-0 ring-0 shadow-none bg-ink w-screen h-screen max-w-none rounded-none flex items-center justify-center"
+          className="p-0 border-0 ring-0 shadow-none bg-transparent w-screen h-screen max-w-none rounded-none flex items-center justify-center"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import type { Project } from '@/lib/schema';
-import { Share } from 'lucide-react';
+import { Link2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { kicker } from '@/lib/typography';
 import { cn } from '@/lib/utils';
@@ -32,7 +32,8 @@ export function ContextPanel({
         <CopyButton
           text={() => `${window.location.origin}${window.location.pathname}?project=${project.id}`}
           label="copy link to this project"
-          icon={Share}
+          tooltip="copy link"
+          icon={Link2}
           className="h-6 w-6 text-ink/35 hover:text-g"
         />
       </div>
