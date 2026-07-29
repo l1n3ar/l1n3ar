@@ -1,5 +1,5 @@
 'use client';
-import { Loader2, Music2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { metaItalic } from '@/lib/typography';
 import { useNowPlaying } from '@/lib/queries/spotify';
 
@@ -27,20 +27,18 @@ export function NowPlaying() {
   }
 
   return (
-    <a href={data.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 py-1 group">
-      {data.albumArt ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={data.albumArt} alt="" className="h-10 w-10 rounded-sm object-cover shrink-0" />
-      ) : (
-        <div className="h-10 w-10 rounded-sm bg-g/10 flex items-center justify-center shrink-0">
-          <Music2 className="h-4 w-4 text-g" />
-        </div>
-      )}
-      <div className="min-w-0">
-        <div className={`${metaItalic} text-ink/45 mb-0.5`}>{data.isPlaying ? 'listening now' : 'last played'}</div>
-        <div className="text-0_8 truncate group-hover:text-g">{data.track}</div>
-        <div className="text-0_7 text-ink/50 truncate">{data.artist}</div>
-      </div>
-    </a>
+    <div className="py-1">
+      <div className={`${metaItalic} text-ink/45 mb-1.5`}>{data.isPlaying ? 'listening now' : 'last played'}</div>
+      <iframe
+        key={data.embedUrl}
+        src={data.embedUrl}
+        title={`${data.track} — ${data.artist}`}
+        width="100%"
+        height="80"
+        loading="lazy"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        className="rounded-sm"
+      />
+    </div>
   );
 }

@@ -9,6 +9,8 @@ const RECENTLY_PLAYED_URL = 'https://api.spotify.com/v1/me/player/recently-playe
 const tokenResponseSchema = z.object({ access_token: z.string() });
 
 const trackSchema = z.object({
+  id: z.string(),
+  type: z.string().default('track'),
   name: z.string(),
   external_urls: z.object({ spotify: z.string() }),
   album: z.object({ images: z.array(z.object({ url: z.string() })) }),
@@ -34,6 +36,7 @@ export type NowPlaying = {
   artist: string;
   albumArt?: string;
   url: string;
+  embedUrl: string;
   isPlaying: boolean;
 };
 
@@ -47,6 +50,7 @@ function toNowPlaying(t: z.infer<typeof trackSchema>, isPlaying: boolean): NowPl
     artist: t.artists.map((a) => a.name).join(', '),
     albumArt: t.album.images[0]?.url,
     url: t.external_urls.spotify,
+    embedUrl: `https://open.spotify.com/embed/${t.type}/${t.id}`,
     isPlaying,
   };
 }
