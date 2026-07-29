@@ -1,5 +1,5 @@
 import { PortfolioApp } from '@/components/portfolio-app';
-import { getAllProjects, getWorkHistory, getRecommendations, getSiteConfig } from '@/lib/content';
+import { getAllProjects, getWorkHistory, getRecommendations, getSiteConfig, getOffTheClock } from '@/lib/content';
 
 export default async function Page({
   searchParams,
@@ -13,6 +13,7 @@ export default async function Page({
       recommendations={getRecommendations()}
       projects={getAllProjects()}
       initialProjectId={searchParams.project}
+      offTheClock={getOffTheClock()}
     />
   );
 }

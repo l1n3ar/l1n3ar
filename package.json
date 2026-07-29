@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "spotify:auth": "node scripts/get-spotify-refresh-token.mjs"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^0.0.50",

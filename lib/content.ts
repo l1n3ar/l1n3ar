@@ -2,8 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
 import {
-  projectFrontmatterSchema, workHistoryEntrySchema, recommendationSchema, siteConfigSchema,
-  type Project, type WorkHistoryEntry, type Recommendation, type SiteConfig,
+  projectFrontmatterSchema, workHistoryEntrySchema, recommendationSchema, siteConfigSchema, offTheClockSchema,
+  type Project, type WorkHistoryEntry, type Recommendation, type SiteConfig, type OffTheClock,
 } from './schema';
 
 const CONTENT_DIR = path.join(process.cwd(), 'content');
@@ -25,6 +25,11 @@ export function getRecommendations(): Recommendation[] {
   return (JSON.parse(raw) as unknown[])
     .map((e) => recommendationSchema.parse(e))
     .sort((a, b) => a.order - b.order);
+}
+
+export function getOffTheClock(): OffTheClock {
+  const raw = fs.readFileSync(path.join(CONTENT_DIR, 'off-the-clock.json'), 'utf8');
+  return offTheClockSchema.parse(JSON.parse(raw));
 }
 
 export function getAllProjects(): Project[] {

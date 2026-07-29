@@ -44,6 +44,26 @@ export const codingProfilesSchema = z.object({
 });
 export type CodingProfiles = z.infer<typeof codingProfilesSchema>;
 
+export const offTheClockLinkSchema = z.object({
+  label: z.string(),
+  href: z.string().url(),
+  kind: z.enum(['youtube', 'spotify', 'instagram', 'link']).default('link'),
+});
+export type OffTheClockLink = z.infer<typeof offTheClockLinkSchema>;
+
+export const musicEntrySchema = z.object({
+  band: z.string(),
+  tagline: z.string(),
+  now: z.string().optional(),
+  links: z.array(offTheClockLinkSchema).default([]),
+});
+export type MusicEntry = z.infer<typeof musicEntrySchema>;
+
+export const offTheClockSchema = z.object({
+  music: z.array(musicEntrySchema).default([]),
+});
+export type OffTheClock = z.infer<typeof offTheClockSchema>;
+
 export const siteConfigSchema = z.object({
   name: z.string(),
   role: z.string(),

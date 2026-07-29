@@ -7,18 +7,19 @@ import { WorkLog } from './work-log';
 import { AskPanel } from './ask-panel';
 import { ContextPanel } from './context-panel';
 import { CaseDialog, type CaseDialogHandle } from './case-dialog';
+import { SiuTakeover, type SiuTakeoverHandle } from './siu-takeover';
 import { MobileTabBar, type MobileTab } from './mobile-tab-bar';
 import { CommandPalette } from './command-palette';
 import { DeployStatus } from '@/components/deploy-status';
 import { useRelease } from '@/lib/queries/release';
 import { Tag } from 'lucide-react';
-import type { Project, WorkHistoryEntry, Recommendation, SiteConfig } from '@/lib/schema';
+import type { Project, WorkHistoryEntry, Recommendation, SiteConfig, OffTheClock } from '@/lib/schema';
 
 export function PortfolioApp({
-  site, workHistory, recommendations, projects, initialProjectId,
+  site, workHistory, recommendations, projects, initialProjectId, offTheClock,
 }: {
   site: SiteConfig; workHistory: WorkHistoryEntry[]; recommendations: Recommendation[];
-  projects: Project[]; initialProjectId?: string;
+  projects: Project[]; initialProjectId?: string; offTheClock: OffTheClock;
 }) {
   const { data: release } = useRelease();
   const validInitialId = projects.some((p) => p.id === initialProjectId) ? initialProjectId : undefined;
@@ -31,6 +32,8 @@ export function PortfolioApp({
   const [mobileTab, setMobileTab] = useState<MobileTab>(validInitialId ? 'details' : 'projects');
 
   const caseDialogRef = useRef<CaseDialogHandle>(null);
+  const siuRef = useRef<SiuTakeoverHandle>(null);
+  const triggerSiu = () => siuRef.current?.open();
 
   useEffect(() => {
     if (selectedId) router.replace(`?project=${selectedId}`, { scroll: false });
@@ -57,6 +60,8 @@ export function PortfolioApp({
           open={sidebarOpen}
           onToggleOpen={() => setSidebarOpen((o) => !o)}
           codingProfiles={site.codingProfiles}
+          offTheClock={offTheClock}
+          onTriggerSiu={triggerSiu}
         />
 
         <div
@@ -90,6 +95,9 @@ export function PortfolioApp({
               open
               onToggleOpen={() => {}}
               collapsible={false}
+              codingProfiles={site.codingProfiles}
+              offTheClock={offTheClock}
+              onTriggerSiu={triggerSiu}
             />
           </div>
         )}
@@ -147,6 +155,7 @@ export function PortfolioApp({
       </div>
 
       <CaseDialog ref={caseDialogRef} />
+      <SiuTakeover ref={siuRef} />
 
       <CommandPalette
         projects={projects}

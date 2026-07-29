@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { ZodType } from 'zod';
+import type { ZodType, ZodTypeDef } from 'zod';
 
 export type ApiResult<T> = { ok: true; data: T } | { ok: false; error: string };
 
@@ -8,7 +8,9 @@ export async function apiFetch<T>(options: {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   headers?: Record<string, string>;
   body?: unknown;
-  schema: ZodType<T>;
+  // Input left as `any` (not tied to T) so schemas built with z.preprocess —
+  // whose input type legitimately differs from their output type T — still infer T correctly.
+  schema: ZodType<T, ZodTypeDef, any>;
   errorMessage?: (body: unknown, status: number) => string;
 }): Promise<ApiResult<T>> {
   const method = options.method ?? 'GET';

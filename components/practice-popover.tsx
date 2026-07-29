@@ -123,7 +123,7 @@ export function PracticePopover({ profiles }: { profiles?: CodingProfiles }) {
 
       <PopoverContent
         side="top"
-        align="start"
+        align="center"
         sideOffset={8}
         className="w-[22rem] max-h-[65vh] p-0 flex flex-col overflow-hidden"
       >
