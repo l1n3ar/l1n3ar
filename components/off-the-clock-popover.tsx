@@ -41,9 +41,9 @@ function MusicLinkCard({ link }: { link: OffTheClockLink }) {
   );
 }
 
-function MusicEntryCard({ entry }: { entry: MusicEntry }) {
+function MusicEntryCard({ entry, isFirst }: { entry: MusicEntry; isFirst?: boolean }) {
   return (
-    <div className="py-3 border-t border-g/20 first:border-t-0 first:pt-0">
+    <div className={`pb-3 ${isFirst ? '' : 'border-t border-g/20 pt-3'}`}>
       <span className="font-heading italic text-0_95">{entry.band}</span>
       <p className="text-0_75 text-ink/60 leading-snug mt-0.5">{entry.tagline}</p>
       {entry.now && (
@@ -91,8 +91,12 @@ export function OffTheClockPopover({
         <div className="gz-scroll flex-1 overflow-y-auto overflow-x-hidden px-4 pb-4">
           <NowPlaying />
 
-          {content.music.map((entry) => (
-            <MusicEntryCard key={entry.band} entry={entry} />
+          {content.music.length > 0 && (
+            <div className="font-heading italic text-0_8 text-ink/45 mt-3 pt-3 mb-3 border-t border-g/20">bands i am in</div>
+          )}
+
+          {content.music.map((entry, i) => (
+            <MusicEntryCard key={entry.band} entry={entry} isFirst={i === 0} />
           ))}
 
           {/* <button

@@ -22,7 +22,7 @@ export function MobileTabBar({
           type="button"
           onClick={() => onChange(t.id)}
           className={cn(
-            'flex-1 py-2.5 font-heading italic text-0_8 text-center border-b-2 -mb-px transition-colors duration-200',
+            'flex-1 py-2.5 font-heading italic text-0_9 text-center border-b-2 -mb-px transition-colors duration-200',
             active === t.id ? 'border-g text-g' : 'border-transparent text-ink/50',
           )}
         >

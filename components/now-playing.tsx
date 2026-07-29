@@ -1,6 +1,5 @@
 'use client';
 import { Loader2 } from 'lucide-react';
-import { metaItalic } from '@/lib/typography';
 import { useNowPlaying } from '@/lib/queries/spotify';
 
 export function NowPlaying() {
@@ -28,7 +27,7 @@ export function NowPlaying() {
 
   return (
     <div className="py-1">
-      <div className={`${metaItalic} text-ink/45 mb-1.5`}>{data.isPlaying ? 'listening now' : 'last played'}</div>
+      <div className="font-heading italic text-0_8 text-ink/45 mb-1.5">{data.isPlaying ? 'listening now' : 'last played'}</div>
       <iframe
         key={data.embedUrl}
         src={data.embedUrl}
