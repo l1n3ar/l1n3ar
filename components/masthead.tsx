@@ -10,8 +10,8 @@ export function Masthead({ site }: { site: SiteConfig }) {
  
       <div className="flex-1 min-w-0 text-left md:text-center">
         <div className="font-heading text-lg md:text-3xl tracking-wide leading-tight">{site.name}</div>
-        <div className="font-heading italic text-0_6 md:text-0_8 text-ink/60 mt-1">
-          {site.role} · {site.location}
+        <div className="font-heading italic text-0_6 md:text-0_8 text-ink/60">
+          {site.role}
         </div>
       </div>
 

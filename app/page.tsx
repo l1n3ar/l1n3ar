@@ -1,3 +1,4 @@
+
 import { PortfolioApp } from '@/components/portfolio-app';
 import { getAllProjects, getWorkHistory, getRecommendations, getSiteConfig, getOffTheClock } from '@/lib/content';
 
