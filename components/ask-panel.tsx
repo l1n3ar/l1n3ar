@@ -23,23 +23,23 @@ function getCitations(message: Message): Citation[] {
 function CitationsMarker({ citations }: { citations: Citation[] }) {
   const [expanded, setExpanded] = useState(false);
   return (
-    <div className="max-w-[80%] ml-7 mb-2 border border-g/20 border-l-2 border-l-g rounded-sm px-2 py-1">
-      <button type="button" onClick={() => setExpanded((e) => !e)} className="block w-full text-left">
+    <div className="max-w-[80%] ml-7  rounded-sm py-1">
+      <Button variant='ghost' onClick={() => setExpanded((e) => !e)} className="w-fit text-left" size='sm'>
         <Marker className="text-0_6">
-          <MarkerIcon>
-            <ChevronDown className={`h-3 w-3 transition-transform duration-200 ${expanded ? '' : '-rotate-90'}`} />
-          </MarkerIcon>
+          {/* <MarkerIcon> */}
+            {/* <ChevronDown className={`h-2 w-2 transition-transform duration-200 ${expanded ? '' : '-rotate-90'}`} /> */}
+          {/* </MarkerIcon> */}
           <MarkerContent>
             reading {citations.length} source{citations.length === 1 ? '' : 's'}
           </MarkerContent>
         </Marker>
-      </button>
+      </Button>
       {expanded && (
-        <div className="flex flex-wrap gap-1 pt-1.5 max-h-28 overflow-y-auto gz-scroll">
+        <div className="flex flex-col gap-1 pt-1.5 max-h-28 pl-2  border-l-2 border-g overflow-y-auto gz-scroll">
           {citations.map((c) => (
             <span
               key={c.source}
-              className="text-0_6 text-ink/50 italic bg-g/5 rounded-sm px-1.5 py-0.5"
+              className="text-0_6 text-ink/50 italic rounded-sm px-1.5 py-0.5"
             >
               {c.label}
             </span>
@@ -155,7 +155,7 @@ export function AskPanel({
                     )}
                     <div
                       className={`text-0_7 leading-snug max-w-[80%] rounded-sm px-3 py-2 ${
-                        m.role === 'user' ? 'bg-g text-cream' : 'case-markdown bg-g/10 text-ink'
+                        m.role === 'user' ? 'bg-g text-cream' : 'case-markdown  text-ink'
                       }`}
                     >
                       {m.role === 'assistant' ? (

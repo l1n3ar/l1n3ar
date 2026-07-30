@@ -48,23 +48,28 @@ export function PortfolioApp({
     // before React commits the state update from pointerdown, dropping the first move(s).
     if (!isResizingAskRef.current || !workColumnRef.current) return;
     const containerRect = workColumnRef.current.getBoundingClientRect();
+
     const headerEl = workColumnRef.current.querySelector('[data-ask-panel-header]');
     const headerHeight = headerEl?.getBoundingClientRect().height ?? 0;
     // The dragged distance covers the header + body together — only the body portion
     // is the dynamic grid row, so the header's real height must be subtracted out,
     // otherwise the panel ends up taller than the cursor position implies.
     const desiredBodyHeight = containerRect.bottom - e.clientY - headerHeight;
-    const minHeight = DEFAULT_ASK_PANEL_HEIGHT;
-    const HANDLE_HEIGHT = 6; // must match the literal '6px' track in gridTemplateRows below
+
+    const handleEl = workColumnRef.current.querySelector('.cursor-row-resize');
+    const handleHeight = handleEl?.getBoundingClientRect().height ?? 0;
+
+    // Cap growth at a real, visible landmark — "WorkLog shows just its header plus its
+    // first project" — measured directly off the rendered DOM, rather than assembled from
+    // separately measured/guessed heights that can drift out of sync with each other.
     const workLogHeaderEl = workColumnRef.current.querySelector('[data-worklog-header]');
-    const workLogHeaderHeight = workLogHeaderEl?.getBoundingClientRect().height ?? 60;
-    // Every non-flexible row in the grid has to be subtracted, not just the WorkLog header —
-    // the handle and the AskPanel header also sit between the cursor and the body row. Leaving
-    // either out overstates how much room the body can safely take, so the grid's total row
-    // height exceeds the container by that missing amount once the drag reaches this ceiling,
-    // and the input (the last thing in the body) is what gets clipped off by overflow-hidden.
-    const maxHeight = containerRect.height - workLogHeaderHeight - HANDLE_HEIGHT - headerHeight;
-    setAskPanelHeight(Math.min(Math.max(desiredBodyHeight, minHeight), maxHeight));
+    const firstProjectEl = workLogHeaderEl?.nextElementSibling?.firstElementChild;
+    const firstProjectBottom = firstProjectEl?.getBoundingClientRect().bottom
+      ?? workLogHeaderEl?.getBoundingClientRect().bottom
+      ?? containerRect.top;
+    const maxHeight = containerRect.bottom - firstProjectBottom - handleHeight - headerHeight;
+
+    setAskPanelHeight(Math.min(Math.max(desiredBodyHeight, DEFAULT_ASK_PANEL_HEIGHT), maxHeight));
   };
   const endAskResize = () => {
     isResizingAskRef.current = false;
@@ -119,7 +124,7 @@ export function PortfolioApp({
               onPointerDown={startAskResize}
               onPointerMove={onAskResizeMove}
               onPointerUp={endAskResize}
-              className="cursor-row-resize touch-none bg-g/10 hover:bg-g/25 transition-colors"
+              className="cursor-row-resize touch-none bg-cream hover:bg-g/25 transition-colors"
             />
           )}
           <AskPanel
