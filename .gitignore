@@ -4,3 +4,5 @@ tsconfig.tsbuildinfo
 archive/
 makefile
 .env.local
+docs/case-studies/
+scripts/

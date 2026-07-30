@@ -7,9 +7,9 @@ import { SectionHeader } from './section-header';
 import { kicker } from '@/lib/typography';
 
 export function AskPanel({
-  projectName, suggestions, open, onToggleOpen, collapsible = true,
+   suggestions, open, onToggleOpen, collapsible = true,
 }: {
-  projectName: string; suggestions: string[]; open: boolean; onToggleOpen: () => void;
+ suggestions: string[]; open: boolean; onToggleOpen: () => void;
   collapsible?: boolean;
 }) {
   const { input, handleInputChange, handleSubmit } = useChat({ api: '/api/ask' });
@@ -19,12 +19,12 @@ export function AskPanel({
       <div className="px-6 py-2 pb-2 border-t border-g">
         {collapsible ? (
           <SectionHeader
-            label={<>ask about <span className="underline font-bold">{projectName}</span></>}
+            label={<>ask about my work</>}
             open={open}
             onToggle={onToggleOpen}
           />
         ) : (
-          <div className={kicker}>ask about <span className="underline font-bold">{projectName}</span></div>
+          <div className={kicker}>ask about my work</div>
         )}
       </div>
 
