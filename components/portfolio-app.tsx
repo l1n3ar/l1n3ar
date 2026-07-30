@@ -73,7 +73,6 @@ export function PortfolioApp({
         >
           <WorkLog projects={projects} selectedId={selectedId} onSelect={setSelectedId} />
           <AskPanel
-            projectName={selected.name}
             suggestions={selected.asks}
             open={askOpen}
             onToggleOpen={() => setAskOpen((o) => !o)}
@@ -115,7 +114,6 @@ export function PortfolioApp({
         {mobileTab === 'ask' && (
           <div className="flex-1 min-h-0 flex flex-col">
             <AskPanel
-              projectName={selected.name}
               suggestions={selected.asks}
               open
               onToggleOpen={() => {}}
