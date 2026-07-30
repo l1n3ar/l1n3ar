@@ -20,7 +20,7 @@ export function WorkLog({
 
   return (
     <>
-      <div className="px-6 pt-4 pb-2 flex items-center gap-2.5">
+      <div data-worklog-header className="px-6 pt-4 pb-2 flex items-center gap-2.5">
         <div className={`${kicker} text-0_9`}>projects</div>
         <div className="ml-auto flex gap-1">
           <Button variant="ghost" size="icon" aria-label="scroll up" disabled={cursor === 0} onClick={() => step(-1)}>

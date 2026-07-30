@@ -1,13 +1,54 @@
 'use client';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { useChat } from 'ai/react';
+import { useChat, type Message } from 'ai/react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Send, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Marker, MarkerIcon, MarkerContent } from '@/components/ui/marker';
 import { SectionHeader } from './section-header';
 import { kicker } from '@/lib/typography';
+
+type Citation = { source: string; label: string };
+
+function getCitations(message: Message): Citation[] {
+  const annotation = message.annotations?.find(
+    (a): a is { citations: Citation[] } =>
+      typeof a === 'object' && a !== null && 'citations' in a,
+  );
+  return annotation?.citations ?? [];
+}
+
+function CitationsMarker({ citations }: { citations: Citation[] }) {
+  const [expanded, setExpanded] = useState(false);
+  return (
+    <div className="max-w-[80%] ml-7 mb-2 border border-g/20 border-l-2 border-l-g rounded-sm px-2 py-1">
+      <button type="button" onClick={() => setExpanded((e) => !e)} className="block w-full text-left">
+        <Marker className="text-0_6">
+          <MarkerIcon>
+            <ChevronDown className={`h-3 w-3 transition-transform duration-200 ${expanded ? '' : '-rotate-90'}`} />
+          </MarkerIcon>
+          <MarkerContent>
+            reading {citations.length} source{citations.length === 1 ? '' : 's'}
+          </MarkerContent>
+        </Marker>
+      </button>
+      {expanded && (
+        <div className="flex flex-wrap gap-1 pt-1.5 max-h-28 overflow-y-auto gz-scroll">
+          {citations.map((c) => (
+            <span
+              key={c.source}
+              className="text-0_6 text-ink/50 italic bg-g/5 rounded-sm px-1.5 py-0.5"
+            >
+              {c.label}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function AskPanel({
    suggestions, open, onToggleOpen, collapsible = true,
@@ -64,7 +105,7 @@ export function AskPanel({
 
   return (
     <>
-      <div className="px-6 py-2 pb-2 border-t border-g">
+      <div data-ask-panel-header className="px-6 py-2 pb-2 border-t border-g">
         {collapsible ? (
           <SectionHeader
             label={<>ask about my work</>}
@@ -76,13 +117,13 @@ export function AskPanel({
         )}
       </div>
 
-      <div className="flex-1 min-h-0 overflow-hidden flex flex-col" inert={!open}>
+      <div className="flex-1 min-h-0 overflow-hidden flex flex-col">
         {messages.length === 0 ? (
           <div className="flex-1 min-h-0 flex flex-col items-center justify-center gap-2 px-6 text-center">
             <div className="font-heading italic text-1_1 text-g">ask me anything</div>
-            <p className="text-0_8 text-ink/55 max-w-[34ch] leading-snug">
+            {/* <p className="text-0_8 text-ink/55 max-w-[34ch] leading-snug">
               a live assistant that can answer questions about my work
-            </p>
+            </p> */}
             <div className="flex flex-wrap justify-center gap-2 pt-2">
               {suggestions.map((s) => (
                 <Button
@@ -104,31 +145,36 @@ export function AskPanel({
               className="h-full overflow-y-auto gz-scroll px-6 py-4 flex flex-col gap-3"
             >
               {messages.map((m) => (
-                <div key={m.id} className={`flex gap-2 ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  {m.role === 'assistant' && (
-                    <img src="/icon" alt="" className="h-5 w-5 rounded-sm shrink-0 mt-1" />
+                <div key={m.id} className="flex flex-col gap-1">
+                  {m.role === 'assistant' && getCitations(m).length > 0 && (
+                    <CitationsMarker citations={getCitations(m)} />
                   )}
-                  <div
-                    className={`text-0_8 leading-snug max-w-[80%] rounded-sm px-3 py-2 ${
-                      m.role === 'user' ? 'bg-g text-cream' : 'case-markdown bg-g/10 text-ink'
-                    }`}
-                  >
-                    {m.role === 'assistant' ? (
-                      <ReactMarkdown remarkPlugins={[remarkGfm]}>{m.content}</ReactMarkdown>
-                    ) : (
-                      m.content
+                  <div className={`flex gap-2 ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                    {m.role === 'assistant' && (
+                      <img src="/icon" alt="" className="h-5 w-5 rounded-sm shrink-0 mt-1" />
                     )}
+                    <div
+                      className={`text-0_7 leading-snug max-w-[80%] rounded-sm px-3 py-2 ${
+                        m.role === 'user' ? 'bg-g text-cream' : 'case-markdown bg-g/10 text-ink'
+                      }`}
+                    >
+                      {m.role === 'assistant' ? (
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{m.content}</ReactMarkdown>
+                      ) : (
+                        m.content
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
               {isWaitingForFirstToken && (
                 <div className="flex gap-2 justify-start">
                   <img src="/icon" alt="" className="h-5 w-5 rounded-sm shrink-0 mt-1" />
-                  <div className="text-0_8 text-ink/50 italic px-3 py-2">thinking…</div>
+                  <div className="text-0_7 text-ink/50 italic px-3 py-2">thinking…</div>
                 </div>
               )}
               {error && (
-                <div className="text-0_8 text-red-600/80 italic px-3 py-2">
+                <div className="text-0_7 text-red-600/80 italic px-3 py-2">
                   something went wrong — try again in a moment.
                 </div>
               )}

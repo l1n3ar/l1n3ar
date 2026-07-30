@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type PointerEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { Masthead } from './masthead';
 import { Sidebar } from './sidebar';
@@ -30,6 +30,46 @@ export function PortfolioApp({
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [askOpen, setAskOpen] = useState(false);
   const [mobileTab, setMobileTab] = useState<MobileTab>(validInitialId ? 'details' : 'projects');
+
+  // The panel's default open height also doubles as the resize floor — dragging can only grow it.
+  const DEFAULT_ASK_PANEL_HEIGHT = 340;
+  const [askPanelHeight, setAskPanelHeight] = useState(DEFAULT_ASK_PANEL_HEIGHT);
+  const [isResizingAsk, setIsResizingAsk] = useState(false);
+  const isResizingAskRef = useRef(false);
+  const workColumnRef = useRef<HTMLDivElement>(null);
+
+  const startAskResize = (e: PointerEvent) => {
+    isResizingAskRef.current = true;
+    setIsResizingAsk(true);
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
+  };
+  const onAskResizeMove = (e: PointerEvent) => {
+    // Gate on a ref, not the isResizingAsk state — a fast drag can fire pointermove
+    // before React commits the state update from pointerdown, dropping the first move(s).
+    if (!isResizingAskRef.current || !workColumnRef.current) return;
+    const containerRect = workColumnRef.current.getBoundingClientRect();
+    const headerEl = workColumnRef.current.querySelector('[data-ask-panel-header]');
+    const headerHeight = headerEl?.getBoundingClientRect().height ?? 0;
+    // The dragged distance covers the header + body together — only the body portion
+    // is the dynamic grid row, so the header's real height must be subtracted out,
+    // otherwise the panel ends up taller than the cursor position implies.
+    const desiredBodyHeight = containerRect.bottom - e.clientY - headerHeight;
+    const minHeight = DEFAULT_ASK_PANEL_HEIGHT;
+    const HANDLE_HEIGHT = 6; // must match the literal '6px' track in gridTemplateRows below
+    const workLogHeaderEl = workColumnRef.current.querySelector('[data-worklog-header]');
+    const workLogHeaderHeight = workLogHeaderEl?.getBoundingClientRect().height ?? 60;
+    // Every non-flexible row in the grid has to be subtracted, not just the WorkLog header —
+    // the handle and the AskPanel header also sit between the cursor and the body row. Leaving
+    // either out overstates how much room the body can safely take, so the grid's total row
+    // height exceeds the container by that missing amount once the drag reaches this ceiling,
+    // and the input (the last thing in the body) is what gets clipped off by overflow-hidden.
+    const maxHeight = containerRect.height - workLogHeaderHeight - HANDLE_HEIGHT - headerHeight;
+    setAskPanelHeight(Math.min(Math.max(desiredBodyHeight, minHeight), maxHeight));
+  };
+  const endAskResize = () => {
+    isResizingAskRef.current = false;
+    setIsResizingAsk(false);
+  };
 
   const caseDialogRef = useRef<CaseDialogHandle>(null);
   const siuRef = useRef<SiuTakeoverHandle>(null);
@@ -65,13 +105,23 @@ export function PortfolioApp({
         />
 
         <div
-          className={`grid min-h-0 min-w-0 border-r border-g transition-[grid-template-rows] duration-300 ease-in-out ${
-            askOpen
-              ? 'grid-rows-[auto_minmax(0,1.3fr)_auto_minmax(0,1fr)]'
-              : 'grid-rows-[auto_minmax(0,1fr)_auto_minmax(0,0fr)]'
-          }`}
+          ref={workColumnRef}
+          className={`grid min-h-0 min-w-0 overflow-hidden border-r border-g ${isResizingAsk ? '' : 'transition-[grid-template-rows] duration-300 ease-in-out'}`}
+          style={{
+            gridTemplateRows: askOpen
+              ? `auto minmax(0,1fr) 6px auto ${askPanelHeight}px`
+              : 'auto minmax(0,1fr) auto minmax(0,0fr)',
+          }}
         >
           <WorkLog projects={projects} selectedId={selectedId} onSelect={setSelectedId} />
+          {askOpen && (
+            <div
+              onPointerDown={startAskResize}
+              onPointerMove={onAskResizeMove}
+              onPointerUp={endAskResize}
+              className="cursor-row-resize touch-none bg-g/10 hover:bg-g/25 transition-colors"
+            />
+          )}
           <AskPanel
             suggestions={selected.asks}
             open={askOpen}
