@@ -114,6 +114,7 @@ export function PortfolioApp({
         {mobileTab === 'ask' && (
           <div className="flex-1 min-h-0 flex flex-col">
             <AskPanel
+            
               suggestions={selected.asks}
               open
               onToggleOpen={() => {}}
