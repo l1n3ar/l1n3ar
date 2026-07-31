@@ -49,6 +49,14 @@ function getClientIp(req: Request): string {
   return req.headers.get('x-real-ip') ?? 'unknown';
 }
 
+/** Times an async operation and records it under `kind`, without changing the value it resolves to. */
+async function timed<T>(kind: string, fn: () => Promise<T>): Promise<T> {
+  const start = Date.now();
+  const result = await fn();
+  await recordValue(kind, Date.now() - start);
+  return result;
+}
+
 export async function POST(req: Request) {
   const requestStart = Date.now();
   const { messages } = await req.json();
@@ -72,26 +80,26 @@ export async function POST(req: Request) {
   try {
     const retrievalStart = Date.now();
 
-    const embedStart = Date.now();
-    const { embedding } = await embed({
-      model: openai.embedding(EMBEDDING_MODEL),
-      value: lastUserMessage.content,
-    });
-    await recordValue('embedding_call', Date.now() - embedStart);
+    // getSiteConfig() doesn't depend on the embedding or the retrieved chunks — running it
+    // alongside them instead of after them is pure wall-clock savings, not just measurement.
+    const [{ embedding }, site] = await Promise.all([
+      timed('embedding_call', () => embed({
+        model: openai.embedding(EMBEDDING_MODEL),
+        value: lastUserMessage.content,
+      })),
+      timed('site_config_call', () => getSiteConfig()),
+    ]);
 
     const vectorLiteral = `[${embedding.join(',')}]`;
 
-    const dbStart = Date.now();
-    const chunks = (await sql`
+    const chunks = await timed('db_query', async () => (await sql`
       SELECT source, content, embedding <=> ${vectorLiteral}::vector AS distance
       FROM documents
       ORDER BY distance
       LIMIT ${TOP_K}
-    `) as DocumentRow[];
-    await recordValue('db_query', Date.now() - dbStart);
+    `) as DocumentRow[]);
     await recordValue('retrieval_total', Date.now() - retrievalStart);
 
-    const site = await getSiteConfig();
     const context = chunks.map((c) => `[${c.source}]\n${c.content}`).join('\n\n---\n\n');
 
     const system = `You are a helpful assistant on ${site.name}'s portfolio site, answering visitor questions about ${site.name}'s background, work history, and projects.
@@ -111,21 +119,32 @@ ${context}`;
       score: 1 - c.distance,
     }));
     if (citations.length > 0) {
-      const avgConfidence = citations.reduce((sum, c) => sum + c.score, 0) / citations.length;
-      await recordValue('citation_confidence', avgConfidence);
+      const avgScore = citations.reduce((sum, c) => sum + c.score, 0) / citations.length;
+      await recordValue('citation_relevance', avgScore);
     }
 
     const data = new StreamData();
     data.appendMessageAnnotation({ citations });
 
+    let firstTokenAt: number | null = null;
+
     const result = await streamText({
       model: anthropic('claude-haiku-4-5-20251001'),
       system,
       messages,
+      onChunk: ({ chunk }) => {
+        if (firstTokenAt === null && chunk.type === 'text-delta') {
+          firstTokenAt = Date.now();
+        }
+      },
       onFinish: async ({ usage }) => {
         data.close();
+        if (firstTokenAt !== null) {
+          await recordValue('time_to_first_token', firstTokenAt - requestStart);
+        }
         await recordValue('end_to_end', Date.now() - requestStart);
-        await incrementCounter('tokens', usage.totalTokens);
+        await incrementCounter('prompt_tokens', usage.promptTokens);
+        await incrementCounter('completion_tokens', usage.completionTokens);
         await incrementCounter('questions_answered');
       },
     });
