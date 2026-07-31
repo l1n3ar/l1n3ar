@@ -60,7 +60,7 @@ export function PracticePopover({ profiles }: { profiles?: CodingProfiles }) {
 
   return (
     <SidebarPopover
-      label="practice"
+      label="coding practice"
       trailing={
         <div className="ml-auto flex gap-1">
           {platforms.map((key) => (

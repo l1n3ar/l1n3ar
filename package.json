@@ -18,6 +18,8 @@
     "@sanity/image-url": "^2.1.1",
     "@sanity/vision": "^5.31.1",
     "@tanstack/react-query": "^5.101.4",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.38.1",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "ai": "^3.4.33",

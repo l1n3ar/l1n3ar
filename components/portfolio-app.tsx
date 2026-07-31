@@ -12,6 +12,7 @@ import { MobileTabBar, type MobileTab } from './mobile-tab-bar';
 import { CommandPalette } from './command-palette';
 import { useRelease } from '@/hooks/release';
 import { useAskPanelResize } from '@/hooks/use-ask-panel-resize';
+import { usePresenceHeartbeat } from '@/hooks/use-presence-heartbeat';
 import { Tag } from 'lucide-react';
 import type { Project, WorkHistoryEntry, Recommendation, SiteConfig, OffTheClock } from '@/lib/types';
 
@@ -22,6 +23,7 @@ export function PortfolioApp({
   projects: Project[]; initialProjectId?: string; offTheClock: OffTheClock;
 }) {
   const { data: release } = useRelease();
+  usePresenceHeartbeat();
   const validInitialId = projects.some((p) => p.id === initialProjectId) ? initialProjectId : undefined;
 
   const router = useRouter();

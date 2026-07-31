@@ -1,6 +1,6 @@
 import type { SiteConfig } from '@/lib/types';
 import { ThemeToggle } from '@/components/theme-toggle';
-import { AnnouncementsPopover } from '@/components/announcements-popover';
+import { SystemStatusPopover } from '@/components/system-status-popover';
 
 export function Masthead({ site }: { site: SiteConfig }) {
   return (
@@ -17,7 +17,7 @@ export function Masthead({ site }: { site: SiteConfig }) {
 
       <div className="flex items-center md:flex-1 justify-end gap-2 md:gap-1.5 shrink-0">
      
-        <AnnouncementsPopover />
+        <SystemStatusPopover />
         <ThemeToggle />
       </div>
     </div>
