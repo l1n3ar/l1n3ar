@@ -1,8 +1,6 @@
 'use client';
 import type { Message } from 'ai/react';
-import { ChevronDown } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
-import { useAutoScroll } from '@/hooks/use-auto-scroll';
 
 export type Citation = { source: string; label: string; score: number };
 
@@ -15,7 +13,7 @@ export function getCitations(message: Message): Citation[] {
 }
 
 export function CitationsMarker({ citations }: { citations: Citation[] }) {
-  const { scrollRef, showScrollButton, handleScroll, scrollToBottom } = useAutoScroll(citations);
+
 
   return (
     <div className="relative max-w-[80%] ml-7 rounded-sm py-1 pl-2 border-l-2 border-g">
@@ -25,10 +23,7 @@ export function CitationsMarker({ citations }: { citations: Citation[] }) {
       </div>
 
       <div
-        ref={scrollRef}
-        onScroll={handleScroll}
-        className="flex flex-col max-h-28 overflow-y-auto gz-scroll"
-      >
+        className="flex flex-col max-h-28 overflow-y-auto gz-scroll">
         {citations.map((c) => {
           const pct = Math.round(c.score * 100);
           return (
@@ -41,16 +36,6 @@ export function CitationsMarker({ citations }: { citations: Citation[] }) {
         })}
       </div>
 
-      {showScrollButton && (
-        <button
-          type="button"
-          onClick={scrollToBottom}
-          aria-label="scroll to bottom of sources"
-          className="absolute bottom-1 right-1 h-5 w-5 rounded-full bg-g text-cream flex items-center justify-center shadow-md hover:bg-g/90"
-        >
-          <ChevronDown className="h-3 w-3" />
-        </button>
-      )}
     </div>
   );
 }
