@@ -8,13 +8,17 @@ export default async function Page({
   searchParams: { project?: string };
 }) {
   return (
-    <PortfolioApp
-      site={getSiteConfig()}
-      workHistory={getWorkHistory()}
-      recommendations={getRecommendations()}
-      projects={getAllProjects()}
-      initialProjectId={searchParams.project}
-      offTheClock={getOffTheClock()}
-    />
+    <>
+
+      <PortfolioApp
+        site={getSiteConfig()}
+        workHistory={getWorkHistory()}
+        recommendations={getRecommendations()}
+        projects={getAllProjects()}
+        initialProjectId={searchParams.project}
+        offTheClock={getOffTheClock()}
+      />
+
+    </>
   );
 }
