@@ -1,77 +1,64 @@
-import { z } from 'zod';
+export type Metric = { key: string; value: string };
 
-export const metricSchema = z.object({ key: z.string(), value: z.string() });
+export type CaseImageBlock = {
+  _type: 'caseImage';
+  _key: string;
+  alt: string;
+  border?: boolean;
+  [key: string]: unknown;
+};
+export type CodeBlockBlock = { _type: 'codeBlock'; _key: string; code: string; language?: string };
+export type CaseSectionBlock = { _type: 'caseSection'; _key: string; heading: string; body?: unknown[] };
+export type TableBlockBlock = {
+  _type: 'tableBlock';
+  _key: string;
+  rows: { label: string; description: string; count: number }[];
+};
+export type VideoEmbedBlock = { _type: 'videoEmbed'; _key: string; url: string; title: string };
+export type CaseBodyBlock = CaseSectionBlock | CodeBlockBlock | CaseImageBlock | TableBlockBlock | VideoEmbedBlock;
 
-export const projectFrontmatterSchema = z.object({
-  name: z.string(),
-  org: z.string(),
-  year: z.string(),
-  role: z.string(),
-  line: z.string(),
-  description: z.string(),
-  tech: z.array(z.string()).default([]),
-  github: z.string().url().optional(),
-  demo: z.string().url().optional(),
-  metrics: z.array(metricSchema).default([]),
-  order: z.number().default(0),
-  asks: z.array(z.string()).default([]),
-});
-export type ProjectFrontmatter = z.infer<typeof projectFrontmatterSchema>;
+export type Highlight = { label: string; body: string };
+
+export type ProjectFrontmatter = {
+  name: string;
+  org: string;
+  year: string;
+  role: string;
+  line: string;
+  description: string;
+  tech: string[];
+  github?: string;
+  demo?: string;
+  metrics: Metric[];
+  order: number;
+  asks: string[];
+};
 
 export type Project = ProjectFrontmatter & {
   id: string;
+  highlights?: Highlight[];
+  body?: CaseBodyBlock[];
 };
 
-export const workHistoryEntrySchema = z.object({
-  org: z.string(),
-  role: z.string(),
-  range: z.string(),
-  order: z.number().default(0),
-});
-export type WorkHistoryEntry = z.infer<typeof workHistoryEntrySchema>;
+export type WorkHistoryEntry = { org: string; role: string; range: string; order: number };
 
-export const recommendationSchema = z.object({
-  who: z.string(),
-  quote: z.string(),
-  order: z.number().default(0),
-});
-export type Recommendation = z.infer<typeof recommendationSchema>;
+export type Recommendation = { who: string; quote: string; order: number };
 
-export const codingProfilesSchema = z.object({
-  codeforces: z.string().optional(),
-  leetcode: z.string().optional(),
-  atcoder: z.string().optional(),
-});
-export type CodingProfiles = z.infer<typeof codingProfilesSchema>;
+export type CodingProfiles = { codeforces?: string; leetcode?: string; atcoder?: string };
 
-export const offTheClockLinkSchema = z.object({
-  label: z.string(),
-  href: z.string().url(),
-  kind: z.enum(['youtube', 'spotify', 'instagram', 'link']).default('link'),
-});
-export type OffTheClockLink = z.infer<typeof offTheClockLinkSchema>;
+export type OffTheClockLink = { label: string; href: string; kind: 'youtube' | 'spotify' | 'instagram' | 'link' };
 
-export const musicEntrySchema = z.object({
-  band: z.string(),
-  tagline: z.string(),
-  now: z.string().optional(),
-  links: z.array(offTheClockLinkSchema).default([]),
-});
-export type MusicEntry = z.infer<typeof musicEntrySchema>;
+export type MusicEntry = { band: string; tagline: string; now?: string; links: OffTheClockLink[] };
 
-export const offTheClockSchema = z.object({
-  music: z.array(musicEntrySchema).default([]),
-});
-export type OffTheClock = z.infer<typeof offTheClockSchema>;
+export type OffTheClock = { music: MusicEntry[] };
 
-export const siteConfigSchema = z.object({
-  name: z.string(),
-  role: z.string(),
-  location: z.string(),
-  email: z.string().email(),
-  about: z.string(),
-  footerLinks: z.array(z.object({ label: z.string(), href: z.string() })),
-  alterEgo : z.string(),
-  codingProfiles: codingProfilesSchema.optional(),
-});
-export type SiteConfig = z.infer<typeof siteConfigSchema>;
+export type SiteConfig = {
+  name: string;
+  role: string;
+  location: string;
+  email: string;
+  about: string;
+  footerLinks: { label: string; href: string }[];
+  alterEgo: string;
+  codingProfiles?: CodingProfiles;
+};

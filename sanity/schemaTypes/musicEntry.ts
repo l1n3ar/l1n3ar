@@ -1,0 +1,39 @@
+import { defineField, defineType } from 'sanity';
+
+export default defineType({
+  name: 'musicEntry',
+  title: 'Music Entry',
+  type: 'document',
+  fields: [
+    defineField({ name: 'band', type: 'string', validation: (Rule) => Rule.required() }),
+    defineField({ name: 'tagline', type: 'string', validation: (Rule) => Rule.required() }),
+    defineField({ name: 'now', title: 'Currently (optional)', type: 'string' }),
+    defineField({ name: 'order', type: 'number', initialValue: 0 }),
+    defineField({
+      name: 'links',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'musicLink',
+          fields: [
+            defineField({ name: 'label', type: 'string' }),
+            defineField({ name: 'href', type: 'url' }),
+            defineField({
+              name: 'kind',
+              type: 'string',
+              options: { list: ['youtube', 'spotify', 'instagram', 'link'] },
+              initialValue: 'link',
+            }),
+          ],
+        },
+      ],
+    }),
+  ],
+  orderings: [
+    { title: 'Order, ascending', name: 'orderAsc', by: [{ field: 'order', direction: 'asc' }] },
+  ],
+  preview: {
+    select: { title: 'band', subtitle: 'tagline' },
+  },
+});

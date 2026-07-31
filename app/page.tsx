@@ -8,18 +8,22 @@ export default async function Page(
   }
 ) {
   const searchParams = await props.searchParams;
+  const [site, workHistory, recommendations, projects, offTheClock] = await Promise.all([
+    getSiteConfig(),
+    getWorkHistory(),
+    getRecommendations(),
+    getAllProjects(),
+    getOffTheClock(),
+  ]);
+
   return (
-    <>
-
-      <PortfolioApp
-        site={getSiteConfig()}
-        workHistory={getWorkHistory()}
-        recommendations={getRecommendations()}
-        projects={getAllProjects()}
-        initialProjectId={searchParams.project}
-        offTheClock={getOffTheClock()}
-      />
-
-    </>
+    <PortfolioApp
+      site={site}
+      workHistory={workHistory}
+      recommendations={recommendations}
+      projects={projects}
+      initialProjectId={searchParams.project}
+      offTheClock={offTheClock}
+    />
   );
 }

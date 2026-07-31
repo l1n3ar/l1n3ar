@@ -75,7 +75,7 @@ export async function POST(req: Request) {
       LIMIT ${TOP_K}
     `) as DocumentRow[];
 
-    const site = getSiteConfig();
+    const site = await getSiteConfig();
     const context = chunks.map((c) => `[${c.source}]\n${c.content}`).join('\n\n---\n\n');
 
     const system = `You are a helpful assistant on ${site.name}'s portfolio site, answering visitor questions about ${site.name}'s background, work history, and projects.
