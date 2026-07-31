@@ -29,7 +29,7 @@ export function PortfolioApp({
   const selected = projects.find((p) => p.id === selectedId) ?? projects[0];
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [askOpen, setAskOpen] = useState(false);
-  const [mobileTab, setMobileTab] = useState<MobileTab>(validInitialId ? 'details' : 'projects');
+  const [mobileTab, setMobileTab] = useState<MobileTab>(validInitialId ? 'details' : 'about');
 
   const {
     workColumnRef, askPanelHeight, isResizingAsk, startAskResize, onAskResizeMove, endAskResize,
