@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { Waypoints, GitBranch, GitCommitHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { PanelLoading, PanelError } from '@/components/ui/query-state';
@@ -10,7 +11,7 @@ import { useSystemMetrics } from '@/hooks/system-metrics';
 import { useDeployments } from '@/hooks/deployments';
 import { commitMessage, commitRef, commitSha, timeAgo, stateDotClass, stateBadgeVariant } from '@/lib/deployment-meta';
 import { cn } from '@/lib/utils';
-import { kicker } from '@/lib/typography';
+import { kicker, metaItalic } from '@/lib/typography';
 
 function formatMs(ms: number | null): string {
   return ms === null ? '—' : `${Math.round(ms)}ms`;
@@ -210,11 +211,18 @@ function DeploymentsTab() {
 export function SystemStatusPopover({ className }: { className?: string }) {
   return (
     <Popover>
-      <PopoverTrigger
-        render={<Button variant="ghost" size="icon" aria-label="system status" className={className} />}
-      >
-        <Waypoints className="h-4 w-4" />
-      </PopoverTrigger>
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <PopoverTrigger
+              render={<Button variant="ghost" size="icon" aria-label="system status" className={className} />}
+            />
+          }
+        >
+          <Waypoints className="h-4 w-4" />
+        </TooltipTrigger>
+        <TooltipContent className={metaItalic}>system status</TooltipContent>
+      </Tooltip>
 
       <PopoverContent className="w-96 max-h-[70vh] gz-scroll" align="end">
         <Tabs defaultValue="deployments">

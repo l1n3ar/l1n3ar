@@ -2,7 +2,9 @@
 import { useEffect, useState } from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { getTheme, setTheme } from '@/lib/theme';
+import { metaItalic } from '@/lib/typography';
 
 export function ThemeToggle({ className }: { className?: string }) {
   const [dark, setDark] = useState<boolean | null>(null);
@@ -20,8 +22,13 @@ export function ThemeToggle({ className }: { className?: string }) {
   if (dark === null) return <div className={className} aria-hidden />;
 
   return (
-    <Button variant="ghost" size="icon" aria-label="toggle theme" onClick={toggle} className={className}>
-      {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-    </Button>
+    <Tooltip>
+      <TooltipTrigger
+        render={<Button variant="ghost" size="icon" aria-label="toggle theme" onClick={toggle} className={className} />}
+      >
+        {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+      </TooltipTrigger>
+      <TooltipContent className={metaItalic}>toggle theme</TooltipContent>
+    </Tooltip>
   );
 }
