@@ -1,6 +1,6 @@
 'use client';
 import type { ReactNode } from 'react';
-import { Activity, GitBranch, GitCommitHorizontal, Waypoints } from 'lucide-react';
+import { Waypoints, GitBranch, GitCommitHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { Badge } from '@/components/ui/badge';
@@ -20,20 +20,65 @@ function formatPct(value: number | null): string {
   return value === null ? '—' : `${Math.round(value * 100)}%`;
 }
 
-function StatRow({ label, value }: { label: string; value: ReactNode }) {
+function SectionLabel({ children }: { children: ReactNode }) {
+  return <div className={`${kicker} mb-1.5 pb-1 border-b border-g/20`}>{children}</div>;
+}
+
+function LiveDot() {
   return (
-    <div className="flex items-baseline justify-between gap-2 py-1 text-0_7">
-      <span className="text-ink/55">{label}</span>
-      <span className="font-mono text-ink/80 text-right">{value}</span>
+    <span className="relative inline-flex h-1.5 w-1.5 mr-1.5">
+      <span className="absolute inline-flex h-full w-full rounded-full bg-g opacity-60 animate-ping" />
+      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-g" />
+    </span>
+  );
+}
+
+function Hero({ label, value, live }: { label: string; value: ReactNode; live?: boolean }) {
+  return (
+    <div>
+      <div className="font-mono text-1_4 text-g leading-none text-center">{value}</div>
+      <div className="flex items-center text-0_6 text-ink/45 uppercase tracking-wide mb-0.5">
+        {live && <LiveDot />}
+        {label}
+      </div>
+      
     </div>
   );
 }
 
-function StatGroup({ title, children }: { title: string; children: ReactNode }) {
+function LatencyTable({ rows }: { rows: { label: string; p50: string; p95: string }[] }) {
   return (
-    <div className="mb-3 last:mb-0">
-      <div className={`${kicker} mb-1`}>{title}</div>
-      <div className="divide-y divide-g/10">{children}</div>
+    <div>
+      <div className="flex items-center gap-2 text-0_6 text-ink/35 uppercase tracking-wide pb-1">
+        <span className="flex-1">metric</span>
+        <span className="w-14 text-right">p50</span>
+        <span className="w-14 text-right">p95</span>
+      </div>
+      {rows.map((r) => (
+        <div key={r.label} className="flex items-center gap-2 py-1 text-0_7 border-t border-g/10">
+          <span className="flex-1 text-ink/65">{r.label}</span>
+          <span className="font-mono text-ink/85 w-14 text-right">{r.p50}</span>
+          <span className="font-mono text-ink/40 w-14 text-right">{r.p95}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function StatusLine({ ok, label }: { ok: boolean; label: string }) {
+  return (
+    <div className="flex items-center gap-1.5 text-0_7 text-ink/65">
+      <span className={cn('h-1.5 w-1.5 rounded-full shrink-0', ok ? 'bg-primary' : 'bg-destructive')} />
+      {label}
+    </div>
+  );
+}
+
+function DataRow({ label, value }: { label: string; value: ReactNode }) {
+  return (
+    <div className="flex items-center justify-between text-0_7 text-ink/55">
+      <span>{label}</span>
+      <span className="font-mono text-ink/80">{value}</span>
     </div>
   );
 }
@@ -45,41 +90,59 @@ function MetricsTab() {
   if (isError || !data) return <PanelError className="px-1 py-3" message={error?.message ?? 'something went wrong'} />;
 
   return (
-    <div className="px-1">
-      <StatGroup title="traffic">
-        <StatRow label="live visitors" value={data.traffic.liveVisitors} />
-        <StatRow label="questions today" value={data.traffic.questionsToday} />
-      </StatGroup>
+    <div className="px-1 flex flex-col gap-4">
+      <div className="flex justify-between">
+        <Hero label="live visitors" value={data.traffic.liveVisitors} live />
+        <Hero label="questions today" value={data.traffic.questionsToday} />
+      </div>
 
-      <StatGroup title="rag performance">
-        <StatRow
-          label="retrieval p50 / p95"
-          value={`${formatMs(data.ragPerformance.retrieval.p50)} / ${formatMs(data.ragPerformance.retrieval.p95)}`}
+      <div>
+        <SectionLabel>latency</SectionLabel>
+        <LatencyTable
+          rows={[
+            {
+              label: 'retrieval',
+              p50: formatMs(data.ragPerformance.retrieval.p50),
+              p95: formatMs(data.ragPerformance.retrieval.p95),
+            },
+            {
+              label: 'end-to-end',
+              p50: formatMs(data.ragPerformance.endToEnd.p50),
+              p95: formatMs(data.ragPerformance.endToEnd.p95),
+            },
+            {
+              label: 'db query',
+              p50: formatMs(data.dataHealth.dbQuery.p50),
+              p95: formatMs(data.dataHealth.dbQuery.p95),
+            },
+            {
+              label: 'embedding call',
+              p50: formatMs(data.dataHealth.embeddingCall.p50),
+              p95: formatMs(data.dataHealth.embeddingCall.p95),
+            },
+          ]}
         />
-        <StatRow
-          label="end-to-end p50 / p95"
-          value={`${formatMs(data.ragPerformance.endToEnd.p50)} / ${formatMs(data.ragPerformance.endToEnd.p95)}`}
-        />
-        <StatRow label="avg citation confidence" value={formatPct(data.ragPerformance.avgConfidence)} />
-      </StatGroup>
+      </div>
 
-      <StatGroup title="reliability">
-        <StatRow label="errors today" value={data.reliability.errorsToday} />
-        <StatRow label="rate-limited today" value={data.reliability.rateLimitedToday} />
-      </StatGroup>
+      <div>
+        <SectionLabel>reliability</SectionLabel>
+        <div className="flex flex-col gap-1.5">
+          <StatusLine ok={data.reliability.errorsToday === 0} label={`${data.reliability.errorsToday} errors today`} />
+          <StatusLine
+            ok={data.reliability.rateLimitedToday === 0}
+            label={`${data.reliability.rateLimitedToday} rate-limited today`}
+          />
+        </div>
+      </div>
 
-      <StatGroup title="data health">
-        <StatRow
-          label="db query p50 / p95"
-          value={`${formatMs(data.dataHealth.dbQuery.p50)} / ${formatMs(data.dataHealth.dbQuery.p95)}`}
-        />
-        <StatRow
-          label="embedding call p50 / p95"
-          value={`${formatMs(data.dataHealth.embeddingCall.p50)} / ${formatMs(data.dataHealth.embeddingCall.p95)}`}
-        />
-        <StatRow label="corpus size" value={`${data.dataHealth.corpusSize} chunks`} />
-        <StatRow label="last ingest" value={data.dataHealth.lastIngest ? timeAgo(data.dataHealth.lastIngest) : '—'} />
-      </StatGroup>
+      <div>
+        <SectionLabel>data</SectionLabel>
+        <div className="flex flex-col gap-1">
+          <DataRow label="avg citation confidence" value={formatPct(data.ragPerformance.avgConfidence)} />
+          <DataRow label="corpus size" value={`${data.dataHealth.corpusSize} chunks`} />
+          <DataRow label="last ingest" value={data.dataHealth.lastIngest ? timeAgo(data.dataHealth.lastIngest) : '—'} />
+        </div>
+      </div>
     </div>
   );
 }
@@ -102,7 +165,6 @@ function DeploymentsTab() {
         const isLast = i === arr.length - 1;
         return (
           <div key={d.uid} className="flex gap-2.5">
-            {/* the connecting rail: dot + line down to the next commit */}
             <div className="flex flex-col items-center w-2.5 shrink-0">
               <span className={cn('h-2 w-2 rounded-full ring-2 ring-cream mt-1.5 shrink-0', stateDotClass(d.state))} />
               {!isLast && <span className="w-px flex-1 bg-g/20 mt-0.5" />}
@@ -154,17 +216,17 @@ export function SystemStatusPopover({ className }: { className?: string }) {
         <Waypoints className="h-4 w-4" />
       </PopoverTrigger>
 
-      <PopoverContent className="w-96 max-h-[70vh] overflow-y-auto gz-scroll" align="end">
-        <Tabs defaultValue="metrics">
+      <PopoverContent className="w-96 max-h-[70vh] gz-scroll" align="end">
+        <Tabs defaultValue="deployments">
           <TabsList variant="line" className="mb-2 px-1">
-            <TabsTrigger value="metrics" className="font-heading italic text-0_8">metrics</TabsTrigger>
             <TabsTrigger value="deployments" className="font-heading italic text-0_8">deployments</TabsTrigger>
+            <TabsTrigger value="metrics" className="font-heading italic text-0_8">metrics</TabsTrigger>
           </TabsList>
-          <TabsContent value="metrics">
-            <MetricsTab />
-          </TabsContent>
-          <TabsContent value="deployments">
+          <TabsContent value="deployments" className="overflow-y-auto pt-4">
             <DeploymentsTab />
+          </TabsContent>
+          <TabsContent value="metrics" className='overflow-y-auto pt-4'>
+            <MetricsTab />
           </TabsContent>
         </Tabs>
       </PopoverContent>
