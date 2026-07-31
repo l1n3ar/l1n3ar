@@ -1,7 +1,8 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
 import { getNowPlaying, type NowPlaying } from '@/actions/spotify';
-import { THIRTY_SECONDS_MS } from '@/lib/time';
+
+const REFETCH_INTERVAL = 30 * 1000;
 
 export function useNowPlaying() {
   return useQuery<NowPlaying | null, Error>({
@@ -11,7 +12,7 @@ export function useNowPlaying() {
       if (!result.ok) throw new Error(result.error);
       return result.data;
     },
-    staleTime: THIRTY_SECONDS_MS,
-    refetchInterval: THIRTY_SECONDS_MS,
+    staleTime: REFETCH_INTERVAL,
+    refetchInterval: REFETCH_INTERVAL,
   });
 }
