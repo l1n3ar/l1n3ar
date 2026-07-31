@@ -38,9 +38,9 @@ export default {
         },
       },
       fontFamily: {
-        heading: ['"Cormorant Garamond"', 'serif'],
-        body: ['Lora', 'serif'],
-        mono: ['"IBM Plex Mono"', 'monospace'],
+        heading: ['var(--font-heading)', 'serif'],
+        body: ['var(--font-body)', 'serif'],
+        mono: ['var(--font-mono)', 'monospace'],
       },
       fontSize: {
         '0_6': '0.6rem',

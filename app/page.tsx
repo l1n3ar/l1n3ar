@@ -2,11 +2,12 @@
 import { PortfolioApp } from '@/components/portfolio-app';
 import { getAllProjects, getWorkHistory, getRecommendations, getSiteConfig, getOffTheClock } from '@/lib/content';
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: { project?: string };
-}) {
+export default async function Page(
+  props: {
+    searchParams: Promise<{ project?: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   return (
     <>
 
