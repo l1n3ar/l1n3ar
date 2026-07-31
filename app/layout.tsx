@@ -5,6 +5,7 @@ import { getSiteConfig } from '@/lib/content';
 import { QueryProvider } from '@/components/query-provider';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const cormorantGaramond = Cormorant_Garamond({
   subsets: ['latin'],
@@ -66,6 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <QueryProvider>
             {children}
             <Analytics />
+            <SpeedInsights />
           </QueryProvider>
         </TooltipProvider>
 
