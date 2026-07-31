@@ -54,11 +54,13 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+// The 'theme' key literal here must match THEME_STORAGE_KEY in lib/theme.ts — this script
+// has to run before any JS module loads, so it can't import the constant directly.
 const noFlashScript = `(function(){try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark');}catch(e){}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${cormorantGaramond.variable} ${lora.variable} ${ibmPlexMono.variable}`}>
+    <html lang="en" className={`${cormorantGaramond.variable} ${lora.variable} ${ibmPlexMono.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: noFlashScript }} />
       </head>

@@ -1,10 +1,11 @@
 'use client';
 import type { ReactNode } from 'react';
 import { CopyButton } from '@/components/copy-button';
+import { kicker } from '@/lib/typography';
 
 export function CaseHeader({ title }: { title: string }) {
   return (
-    <div className="sticky top-0 z-10 bg-cream/80 backdrop-blur-sm px-5 pt-7 pb-5 md:px-12 md:pt-9 md:pb-6 border-b-2 border-g  ">
+    <div className="sticky top-0 z-10 bg-cream/80 backdrop-blur-sm px-5 pt-7 pb-5 md:px-12 md:pt-9 md:pb-6 border-b-2 border-g">
       <h1 className="font-heading font-light text-2xl md:text-2_6 leading-none pr-10">{title}</h1>
     </div>
   );
@@ -19,7 +20,7 @@ export function CaseHighlights({ items }: { items: { label: string; body: string
     <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-10">
       {items.map((h) => (
         <div key={h.label} className="border border-g/30 rounded-sm p-4 bg-g/5">
-          <div className="font-heading italic text-0_9 text-g mb-1.5">{h.label}</div>
+          <div className={`${kicker} mb-1.5`}>{h.label}</div>
           <div className="text-0_8 leading-snug text-ink/75">{h.body}</div>
         </div>
       ))}
@@ -53,12 +54,12 @@ export function CaseCode({ children }: { children: string }) {
   );
 }
 
-export function CaseImage({ src, alt,border = true }: { src: string; alt: string; border? : boolean }) {
+export function CaseImage({ src, alt, border = true }: { src: string; alt: string; border?: boolean }) {
   return (
     <img
       src={src}
       alt={alt}
-      className={`w-full border-[0.375rem] border-cream  ${border ? 'outline-g/20 outline outline-[0.06rem]' : ''} mb-6`}
+      className={`w-full border-[0.375rem] border-cream ${border ? 'outline-g/20 outline outline-[0.06rem]' : ''} mb-6`}
     />
   );
 }
@@ -84,21 +85,6 @@ export function CaseTable({ rows }: { rows: { label: string; description: string
           ))}
         </tbody>
       </table>
-    </div>
-  );
-}
-
-export function CaseScreenshots({ items }: { items: { caption: string }[] }) {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-      {items.map((s) => (
-        <div
-          key={s.caption}
-          className="border border-dashed border-g/40 rounded-sm p-5 text-center text-0_7 text-ink/55 leading-snug"
-        >
-          📸 {s.caption}
-        </div>
-      ))}
     </div>
   );
 }

@@ -4,7 +4,9 @@ import { BookOpen, SunMoon, FolderGit2, Link, FileDown, Mail } from 'lucide-reac
 import {
   CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem,
 } from '@/components/ui/command';
-import type { Project, SiteConfig } from '@/lib/schema';
+import type { Project, SiteConfig } from '@/lib/types';
+import { hasCaseStudy } from '@/lib/types';
+import { toggleTheme } from '@/lib/theme';
 
 const LINK_ICONS: Record<string, typeof FolderGit2> = {
   github: FolderGit2,
@@ -13,18 +15,11 @@ const LINK_ICONS: Record<string, typeof FolderGit2> = {
   email: Mail,
 };
 
-function toggleTheme() {
-  const next = !document.documentElement.classList.contains('dark');
-  document.documentElement.classList.toggle('dark', next);
-  localStorage.setItem('theme', next ? 'dark' : 'light');
-}
-
 export function CommandPalette({
-  projects, site, onSelectProject, onOpenCase,
+  projects, site, onOpenCase,
 }: {
   projects: Project[];
   site: SiteConfig;
-  onSelectProject: (id: string) => void;
   onOpenCase: (id: string) => void;
 }) {
   const [open, setOpen] = useState(false);
@@ -51,21 +46,8 @@ export function CommandPalette({
       <CommandList>
         <CommandEmpty>no results.</CommandEmpty>
 
-        {/* <CommandGroup heading="projects">
-          {projects.map((p) => (
-            <CommandItem
-              key={p.id}
-              value={`project ${p.name} ${p.line}`}
-              onSelect={() => run(() => onSelectProject(p.id))}
-            >
-              <FileText />
-              {p.name}
-            </CommandItem>
-          ))}
-        </CommandGroup> */}
-
         <CommandGroup heading="read the full case">
-          {projects.filter((p) => p.body && p.body.length > 0).map((p) => (
+          {projects.filter(hasCaseStudy).map((p) => (
             <CommandItem
               key={p.id}
               value={`case study ${p.name}`}

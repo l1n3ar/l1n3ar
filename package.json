@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint .",
-    "spotify:auth": "node scripts/get-spotify-refresh-token.mjs"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^0.0.50",
@@ -34,11 +33,9 @@
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",
     "sanity": "^5.31.1",
-    "styled-components": "^6.4.4",
     "tailwind-merge": "^3.6.0",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.23.0",
-    "zustand": "^5.0.14"
+    "zod": "^3.23.0"
   },
   "devDependencies": {
     "@types/node": "^20.14.0",

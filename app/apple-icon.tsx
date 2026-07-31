@@ -1,4 +1,5 @@
 import { ImageResponse } from 'next/og';
+import { BRAND_COLORS } from '@/lib/brand-colors';
 
 export const size = { width: 180, height: 180 };
 export const contentType = 'image/png';
@@ -13,12 +14,12 @@ export default function AppleIcon() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#0b3d2e',
+          backgroundColor: BRAND_COLORS.g,
         }}
       >
         <span
           style={{
-            color: '#f6f1e4',
+            color: BRAND_COLORS.cream,
             fontSize: 110,
             fontStyle: 'italic',
             fontWeight: 300,

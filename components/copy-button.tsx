@@ -4,6 +4,7 @@ import { Check, Copy, type LucideIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
+import { metaItalic } from '@/lib/typography';
 
 export function CopyButton({
   text, className, label = 'copy', icon: Icon = Copy, tooltip,
@@ -33,7 +34,7 @@ export function CopyButton({
   return (
     <Tooltip>
       <TooltipTrigger render={<Button {...buttonProps} />}>{icon}</TooltipTrigger>
-      <TooltipContent className="font-heading italic text-0_7">{copied ? 'copied' : tooltip}</TooltipContent>
+      <TooltipContent className={metaItalic}>{copied ? 'copied' : tooltip}</TooltipContent>
     </Tooltip>
   );
 }

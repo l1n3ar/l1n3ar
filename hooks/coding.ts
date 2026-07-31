@@ -2,8 +2,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getCodeforcesProfile, type CodeforcesProfile } from '@/actions/codeforces';
 import { getLeetcodeProfile, type LeetcodeProfile } from '@/actions/leetcode';
-
-const STALE_TIME = 60 * 60 * 1000;
+import { ONE_HOUR_MS } from '@/lib/time';
 
 export function useCodeforcesProfile(handle: string) {
   return useQuery<CodeforcesProfile, Error>({
@@ -13,7 +12,7 @@ export function useCodeforcesProfile(handle: string) {
       if (!result.ok) throw new Error(result.error);
       return result.profile;
     },
-    staleTime: STALE_TIME,
+    staleTime: ONE_HOUR_MS,
   });
 }
 
@@ -25,6 +24,6 @@ export function useLeetcodeProfile(handle: string) {
       if (!result.ok) throw new Error(result.error);
       return result.profile;
     },
-    staleTime: STALE_TIME,
+    staleTime: ONE_HOUR_MS,
   });
 }

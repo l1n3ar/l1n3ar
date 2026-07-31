@@ -1,53 +1,19 @@
 'use client';
-import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { useChat, type Message } from 'ai/react';
+import type { FormEvent } from 'react';
+import { useChat } from 'ai/react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Send, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Marker, MarkerIcon, MarkerContent } from '@/components/ui/marker';
-import { SectionHeader } from './section-header';
+import { SectionHeader } from '../section-header';
+import { CitationsMarker, getCitations } from './citations-marker';
+import { useAutoScroll } from '@/hooks/use-auto-scroll';
 import { kicker } from '@/lib/typography';
+import styles from './ask-panel.module.css';
 
-type Citation = { source: string; label: string };
-
-function getCitations(message: Message): Citation[] {
-  const annotation = message.annotations?.find(
-    (a): a is { citations: Citation[] } =>
-      typeof a === 'object' && a !== null && 'citations' in a,
-  );
-  return annotation?.citations ?? [];
-}
-
-function CitationsMarker({ citations }: { citations: Citation[] }) {
-  const [expanded, setExpanded] = useState(false);
-  return (
-    <div className="max-w-[80%] ml-7  rounded-sm py-1">
-      <Button variant='ghost' onClick={() => setExpanded((e) => !e)} className="w-fit text-left" size='sm'>
-        <Marker className="text-0_6">
-          {/* <MarkerIcon> */}
-            {/* <ChevronDown className={`h-2 w-2 transition-transform duration-200 ${expanded ? '' : '-rotate-90'}`} /> */}
-          {/* </MarkerIcon> */}
-          <MarkerContent>
-            reading {citations.length} source{citations.length === 1 ? '' : 's'}
-          </MarkerContent>
-        </Marker>
-      </Button>
-      {expanded && (
-        <div className="flex flex-col gap-1 pt-1.5 max-h-28 pl-2  border-l-2 border-g overflow-y-auto gz-scroll">
-          {citations.map((c) => (
-            <span
-              key={c.source}
-              className="text-0_6 text-ink/50 italic rounded-sm px-1.5 py-0.5"
-            >
-              {c.label}
-            </span>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+function AssistantAvatar() {
+  return <img src="/icon" alt="" className="h-5 w-5 rounded-sm shrink-0 mt-1" />;
 }
 
 export function AskPanel({
@@ -60,17 +26,14 @@ export function AskPanel({
   const lastMessage = messages[messages.length - 1];
   const isWaitingForFirstToken = isLoading && lastMessage?.role !== 'assistant';
 
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const isNearBottomRef = useRef(true);
-  const [showScrollButton, setShowScrollButton] = useState(false);
+  const { scrollRef, showScrollButton, handleScroll, scrollToBottom, resetScroll } = useAutoScroll(messages);
 
   // Each new question starts a fresh exchange rather than a running conversation —
   // the panel only ever shows the latest question and its answer.
   const ask = (content: string) => {
     if (!content.trim() || isLoading) return;
     setMessages([]);
-    isNearBottomRef.current = true;
-    setShowScrollButton(false);
+    resetScroll();
     append({ role: 'user', content });
   };
 
@@ -79,28 +42,6 @@ export function AskPanel({
     const content = input;
     setInput('');
     ask(content);
-  };
-
-  useEffect(() => {
-    if (isNearBottomRef.current) {
-      scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
-    }
-  }, [messages]);
-
-  const handleScroll = () => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const nearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 40;
-    isNearBottomRef.current = nearBottom;
-    setShowScrollButton(!nearBottom);
-  };
-
-  const scrollToBottom = () => {
-    const el = scrollRef.current;
-    if (!el) return;
-    el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
-    isNearBottomRef.current = true;
-    setShowScrollButton(false);
   };
 
   return (
@@ -121,9 +62,6 @@ export function AskPanel({
         {messages.length === 0 ? (
           <div className="flex-1 min-h-0 flex flex-col items-center justify-center gap-2 px-6 text-center">
             <div className="font-heading italic text-1_1 text-g">ask me anything</div>
-            {/* <p className="text-0_8 text-ink/55 max-w-[34ch] leading-snug">
-              a live assistant that can answer questions about my work
-            </p> */}
             <div className="flex flex-wrap justify-center gap-2 pt-2">
               {suggestions.map((s) => (
                 <Button
@@ -150,12 +88,10 @@ export function AskPanel({
                     <CitationsMarker citations={getCitations(m)} />
                   )}
                   <div className={`flex gap-2 ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                    {m.role === 'assistant' && (
-                      <img src="/icon" alt="" className="h-5 w-5 rounded-sm shrink-0 mt-1" />
-                    )}
+                    {m.role === 'assistant' && <AssistantAvatar />}
                     <div
                       className={`text-0_7 leading-snug max-w-[80%] rounded-sm px-3 py-2 ${
-                        m.role === 'user' ? 'bg-g text-cream' : 'case-markdown  text-ink'
+                        m.role === 'user' ? 'bg-g text-cream' : `${styles.markdownBody} text-ink`
                       }`}
                     >
                       {m.role === 'assistant' ? (
@@ -169,12 +105,12 @@ export function AskPanel({
               ))}
               {isWaitingForFirstToken && (
                 <div className="flex gap-2 justify-start">
-                  <img src="/icon" alt="" className="h-5 w-5 rounded-sm shrink-0 mt-1" />
+                  <AssistantAvatar />
                   <div className="text-0_7 text-ink/50 italic px-3 py-2">thinking…</div>
                 </div>
               )}
               {error && (
-                <div className="text-0_7 text-red-600/80 italic px-3 py-2">
+                <div className="text-0_7 text-destructive/80 italic px-3 py-2">
                   something went wrong — try again in a moment.
                 </div>
               )}

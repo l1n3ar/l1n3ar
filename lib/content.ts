@@ -1,7 +1,7 @@
 import { client } from '@/sanity/lib/client';
 import type {
   Project, WorkHistoryEntry, Recommendation, SiteConfig, OffTheClock,
-} from './schema';
+} from './types';
 
 export async function getSiteConfig(): Promise<SiteConfig> {
   return client.fetch(`*[_type == "siteConfig"][0]{

@@ -1,9 +1,8 @@
 'use client';
 import { Video, Camera, Music2, Link2, Play } from 'lucide-react';
-import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
-import { kicker, metaItalic } from '@/lib/typography';
 import { NowPlaying } from './now-playing';
-import type { OffTheClock, MusicEntry, OffTheClockLink } from '@/lib/schema';
+import { SidebarPopover } from './sidebar-popover';
+import { OFF_THE_CLOCK_LINK_KINDS, type OffTheClock, type MusicEntry, type OffTheClockLink } from '@/lib/types';
 
 const LINK_ICON: Record<OffTheClockLink['kind'], typeof Video> = {
   youtube: Video,
@@ -11,6 +10,9 @@ const LINK_ICON: Record<OffTheClockLink['kind'], typeof Video> = {
   instagram: Camera,
   link: Link2,
 };
+
+// Keep every OffTheClockLink['kind'] represented above — enforced at compile time.
+OFF_THE_CLOCK_LINK_KINDS satisfies readonly (keyof typeof LINK_ICON)[];
 
 function youtubeThumbnail(href: string): string | undefined {
   const id = href.match(/(?:youtu\.be\/|[?&]v=)([\w-]{11})/)?.[1];
@@ -44,8 +46,8 @@ function MusicLinkCard({ link }: { link: OffTheClockLink }) {
 function MusicEntryCard({ entry, isFirst }: { entry: MusicEntry; isFirst?: boolean }) {
   return (
     <div className={`pb-3 ${isFirst ? '' : 'border-t border-g/20 pt-3'}`}>
-      <span className="font-heading italic text-0_95">{entry.band}</span>
-      <p className="text-0_75 text-ink/60 leading-snug mt-0.5">{entry.tagline}</p>
+      <span className="font-heading italic text-0_9">{entry.band}</span>
+      <p className="text-0_8 text-ink/60 leading-snug mt-0.5">{entry.tagline}</p>
       {entry.now && (
         <p className="text-0_7 text-g mt-1">
           <span className="text-ink/40">now:</span> {entry.now}
@@ -66,50 +68,27 @@ export function OffTheClockPopover({
   content, onTriggerSiu,
 }: { content: OffTheClock; onTriggerSiu: () => void }) {
   return (
-    <Popover>
-      <PopoverTrigger
-        render={
-          <button
-            type="button"
-            className="shrink-0 w-full flex items-center gap-2 px-6 py-2 border-t border-g hover:bg-g/5 transition-colors text-left"
-          />
-        }
-      >
-        <span className={kicker}>off the clock</span>
-      </PopoverTrigger>
+    <SidebarPopover label="off the clock">
+      <div className="gz-scroll flex-1 overflow-y-auto overflow-x-hidden px-4 pb-4">
+        <NowPlaying />
 
-      <PopoverContent
-        side="top"
-        align="center"
-        sideOffset={8}
-        className="w-[22rem] max-h-[65vh] p-0 flex flex-col overflow-hidden"
-      >
-        <div className="px-4 pt-4 pb-2 shrink-0">
-          <div className={kicker}>off the clock</div>
-        </div>
+        {content.music.length > 0 && (
+          <div className="font-heading italic text-0_8 text-ink/45 mt-3 pt-3 mb-3 border-t border-g/20">bands i am in</div>
+        )}
 
-        <div className="gz-scroll flex-1 overflow-y-auto overflow-x-hidden px-4 pb-4">
-          <NowPlaying />
+        {content.music.map((entry, i) => (
+          <MusicEntryCard key={entry.band} entry={entry} isFirst={i === 0} />
+        ))}
 
-          {content.music.length > 0 && (
-            <div className="font-heading italic text-0_8 text-ink/45 mt-3 pt-3 mb-3 border-t border-g/20">bands i am in</div>
-          )}
-
-          {content.music.map((entry, i) => (
-            <MusicEntryCard key={entry.band} entry={entry} isFirst={i === 0} />
-          ))}
-
-          {/* <button
-            type="button"
-            onClick={onTriggerSiu}
-            className="w-full mt-3 pt-3 border-t border-g/20 flex items-center justify-center gap-2 font-heading italic text-0_8 text-g hover:text-g/70"
-          >
-            hit the siu
-            <span className={`${metaItalic} text-ink/35`}>⌘7</span>
-          </button> */}
-          
-        </div>
-      </PopoverContent>
-    </Popover>
+        {/* <button
+          type="button"
+          onClick={onTriggerSiu}
+          className="w-full mt-3 pt-3 border-t border-g/20 flex items-center justify-center gap-2 font-heading italic text-0_8 text-g hover:text-g/70"
+        >
+          hit the siu
+          <span className={`${metaItalic} text-ink/35`}>⌘7</span>
+        </button> */}
+      </div>
+    </SidebarPopover>
   );
 }

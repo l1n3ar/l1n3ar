@@ -1,19 +1,19 @@
 'use client';
-import { useEffect, useRef, useState, type PointerEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Masthead } from './masthead';
-import { Sidebar } from './sidebar';
-import { WorkLog } from './work-log';
-import { AskPanel } from './ask-panel';
-import { ContextPanel } from './context-panel';
-import { CaseDialog, type CaseDialogHandle } from './case-dialog';
+import { Sidebar } from './sidebar/sidebar';
+import { WorkLog } from './work-log/work-log';
+import { AskPanel } from './ask-panel/ask-panel';
+import { ContextPanel } from './work-log/context-panel';
+import { CaseDialog, type CaseDialogHandle } from './dialogs/case-dialog';
 import { SiuTakeover, type SiuTakeoverHandle } from './siu-takeover';
 import { MobileTabBar, type MobileTab } from './mobile-tab-bar';
 import { CommandPalette } from './command-palette';
-import { DeployStatus } from '@/components/deploy-status';
-import { useRelease } from '@/lib/queries/release';
+import { useRelease } from '@/hooks/release';
+import { useAskPanelResize } from '@/hooks/use-ask-panel-resize';
 import { Tag } from 'lucide-react';
-import type { Project, WorkHistoryEntry, Recommendation, SiteConfig, OffTheClock } from '@/lib/schema';
+import type { Project, WorkHistoryEntry, Recommendation, SiteConfig, OffTheClock } from '@/lib/types';
 
 export function PortfolioApp({
   site, workHistory, recommendations, projects, initialProjectId, offTheClock,
@@ -31,50 +31,9 @@ export function PortfolioApp({
   const [askOpen, setAskOpen] = useState(false);
   const [mobileTab, setMobileTab] = useState<MobileTab>(validInitialId ? 'details' : 'projects');
 
-  // The panel's default open height also doubles as the resize floor — dragging can only grow it.
-  const DEFAULT_ASK_PANEL_HEIGHT = 340;
-  const [askPanelHeight, setAskPanelHeight] = useState(DEFAULT_ASK_PANEL_HEIGHT);
-  const [isResizingAsk, setIsResizingAsk] = useState(false);
-  const isResizingAskRef = useRef(false);
-  const workColumnRef = useRef<HTMLDivElement>(null);
-
-  const startAskResize = (e: PointerEvent) => {
-    isResizingAskRef.current = true;
-    setIsResizingAsk(true);
-    (e.target as HTMLElement).setPointerCapture(e.pointerId);
-  };
-  const onAskResizeMove = (e: PointerEvent) => {
-    // Gate on a ref, not the isResizingAsk state — a fast drag can fire pointermove
-    // before React commits the state update from pointerdown, dropping the first move(s).
-    if (!isResizingAskRef.current || !workColumnRef.current) return;
-    const containerRect = workColumnRef.current.getBoundingClientRect();
-
-    const headerEl = workColumnRef.current.querySelector('[data-ask-panel-header]');
-    const headerHeight = headerEl?.getBoundingClientRect().height ?? 0;
-    // The dragged distance covers the header + body together — only the body portion
-    // is the dynamic grid row, so the header's real height must be subtracted out,
-    // otherwise the panel ends up taller than the cursor position implies.
-    const desiredBodyHeight = containerRect.bottom - e.clientY - headerHeight;
-
-    const handleEl = workColumnRef.current.querySelector('.cursor-row-resize');
-    const handleHeight = handleEl?.getBoundingClientRect().height ?? 0;
-
-    // Cap growth at a real, visible landmark — "WorkLog shows just its header plus its
-    // first project" — measured directly off the rendered DOM, rather than assembled from
-    // separately measured/guessed heights that can drift out of sync with each other.
-    const workLogHeaderEl = workColumnRef.current.querySelector('[data-worklog-header]');
-    const firstProjectEl = workLogHeaderEl?.nextElementSibling?.firstElementChild;
-    const firstProjectBottom = firstProjectEl?.getBoundingClientRect().bottom
-      ?? workLogHeaderEl?.getBoundingClientRect().bottom
-      ?? containerRect.top;
-    const maxHeight = containerRect.bottom - firstProjectBottom - handleHeight - headerHeight;
-
-    setAskPanelHeight(Math.min(Math.max(desiredBodyHeight, DEFAULT_ASK_PANEL_HEIGHT), maxHeight));
-  };
-  const endAskResize = () => {
-    isResizingAskRef.current = false;
-    setIsResizingAsk(false);
-  };
+  const {
+    workColumnRef, askPanelHeight, isResizingAsk, startAskResize, onAskResizeMove, endAskResize,
+  } = useAskPanelResize();
 
   const caseDialogRef = useRef<CaseDialogHandle>(null);
   const siuRef = useRef<SiuTakeoverHandle>(null);
@@ -162,14 +121,13 @@ export function PortfolioApp({
           </div>
         )}
 
-               {mobileTab === 'details' && (
+        {mobileTab === 'details' && (
           <ContextPanel project={selected} onOpenCase={(id) => caseDialogRef.current?.open(id)} />
         )}
 
         {mobileTab === 'ask' && (
           <div className="flex-1 min-h-0 flex flex-col">
             <AskPanel
-            
               suggestions={selected.asks}
               open
               onToggleOpen={() => {}}
@@ -177,8 +135,6 @@ export function PortfolioApp({
             />
           </div>
         )}
-
- 
       </div>
 
       <div className="bg-g text-cream px-6 py-3 flex flex-wrap items-baseline gap-x-4 gap-y-1 md:gap-6">
@@ -204,7 +160,6 @@ export function PortfolioApp({
               {release.tag}
             </a>
           )}
-          {/* <DeployStatus className="text-cream/45" /> */}
         </div>
       </div>
 
@@ -214,7 +169,6 @@ export function PortfolioApp({
       <CommandPalette
         projects={projects}
         site={site}
-        onSelectProject={selectOnMobile}
         onOpenCase={(id) => caseDialogRef.current?.open(id)}
       />
     </div>

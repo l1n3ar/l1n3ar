@@ -1,23 +1,13 @@
 'use client';
-import { Megaphone, Loader2, GitBranch, GitCommitHorizontal, RotateCcwClock, RotateCw, RotateCwFadingClock } from 'lucide-react';
+import { GitBranch, GitCommitHorizontal, RotateCwFadingClock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { Badge } from '@/components/ui/badge';
-import { useDeployments } from '@/lib/queries/deployments';
-import { commitMessage, commitRef, commitSha, timeAgo, stateDotClass } from '@/lib/deployment-meta';
+import { PanelLoading, PanelError } from '@/components/ui/query-state';
+import { useDeployments } from '@/hooks/deployments';
+import { commitMessage, commitRef, commitSha, timeAgo, stateDotClass, stateBadgeVariant } from '@/lib/deployment-meta';
 import { cn } from '@/lib/utils';
-
-function stateBadgeVariant(state?: string): 'default' | 'destructive' | 'secondary' {
-  switch (state) {
-    case 'READY':
-      return 'default';
-    case 'ERROR':
-    case 'CANCELED':
-      return 'destructive';
-    default:
-      return 'secondary';
-  }
-}
+import { kicker } from '@/lib/typography';
 
 export function AnnouncementsPopover({ className }: { className?: string }) {
   const { data: deployments, isLoading, isError, error, refetch, isStale } = useDeployments();
@@ -33,19 +23,13 @@ export function AnnouncementsPopover({ className }: { className?: string }) {
       </PopoverTrigger>
 
       <PopoverContent className="w-80 max-h-[70vh] overflow-y-auto gz-scroll" align="end">
-        <div className="font-heading italic text-0_9 text-g px-1 pb-1.5 border-b border-g/20">
+        <div className={`${kicker} px-1 pb-1.5 border-b border-g/20`}>
           deployments
         </div>
 
-        {isLoading && (
-          <div className="flex justify-center py-3">
-            <Loader2 className="animate-spin h-4 w-4 text-g" />
-          </div>
-        )}
+        {isLoading && <PanelLoading className="py-3" />}
 
-        {isError && (
-          <div className="text-0_8 text-destructive px-1 py-3 break-words">{error.message}</div>
-        )}
+        {isError && <PanelError className="px-1 py-3" message={error.message} />}
 
         {!isLoading && !isError && deployments?.length === 0 && (
           <div className="text-0_8 text-ink/55 px-1 py-3">no deployments found.</div>

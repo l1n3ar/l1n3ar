@@ -1,8 +1,7 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
 import { getDeployments, type Deployment } from '@/actions/deployments';
-
-const STALE_TIME = 60 * 1000;
+import { ONE_MINUTE_MS } from '@/lib/time';
 
 export function useDeployments(limit = 5) {
   return useQuery<Deployment[], Error>({
@@ -12,7 +11,7 @@ export function useDeployments(limit = 5) {
       if (!result.ok) throw new Error(result.error);
       return result.deployments;
     },
-    staleTime: STALE_TIME,
-    refetchInterval: STALE_TIME,
+    staleTime: ONE_MINUTE_MS,
+    refetchInterval: ONE_MINUTE_MS,
   });
 }

@@ -10,6 +10,18 @@ export function stateDotClass(state?: string) {
   }
 }
 
+export function stateBadgeVariant(state?: string): 'default' | 'destructive' | 'secondary' {
+  switch (state) {
+    case 'READY':
+      return 'default';
+    case 'ERROR':
+    case 'CANCELED':
+      return 'destructive';
+    default:
+      return 'secondary';
+  }
+}
+
 export function timeAgo(input: string | number) {
   const then = typeof input === 'number' ? input : Number(input);
   const seconds = Math.max(0, Math.floor((Date.now() - then) / 1000));

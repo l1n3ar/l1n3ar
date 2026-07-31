@@ -61,7 +61,7 @@ export default {
         layout: '20% 1fr 20%',
       },
       boxShadow: {
-        lg: '0 0.75rem 2rem rgba(11, 26, 19, 0.22)',
+        lg: '0 0.75rem 2rem rgb(var(--color-codeBg) / 22%)',
       },
     },
   },

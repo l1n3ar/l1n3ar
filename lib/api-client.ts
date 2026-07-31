@@ -14,7 +14,6 @@ export async function apiFetch<T>(options: {
   errorMessage?: (body: unknown, status: number) => string;
 }): Promise<ApiResult<T>> {
   const method = options.method ?? 'GET';
-  console.log(`[api] → ${method} ${options.url}`);
 
   try {
     const response = await axios.request({
@@ -25,17 +24,13 @@ export async function apiFetch<T>(options: {
       validateStatus: () => true,
     });
 
-    console.log(`[api] ← ${response.status} ${method} ${options.url}`);
-
     if (response.status < 200 || response.status >= 300) {
       const message = options.errorMessage?.(response.data, response.status) ?? `Request failed with status ${response.status}`;
-      console.error(`[api] ✗ ${method} ${options.url} — ${message}`);
       return { ok: false, error: message };
     }
 
     const parsed = options.schema.safeParse(response.data);
     if (!parsed.success) {
-      console.error(`[api] ✗ ${method} ${options.url} — unexpected response shape`);
       return { ok: false, error: 'Unexpected response shape' };
     }
     return { ok: true, data: parsed.data };

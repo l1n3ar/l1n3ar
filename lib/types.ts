@@ -40,13 +40,19 @@ export type Project = ProjectFrontmatter & {
   body?: CaseBodyBlock[];
 };
 
+export function hasCaseStudy(project: Pick<Project, 'body'>): boolean {
+  return Boolean(project.body && project.body.length > 0);
+}
+
 export type WorkHistoryEntry = { org: string; role: string; range: string; order: number };
 
 export type Recommendation = { who: string; quote: string; order: number };
 
 export type CodingProfiles = { codeforces?: string; leetcode?: string; atcoder?: string };
 
-export type OffTheClockLink = { label: string; href: string; kind: 'youtube' | 'spotify' | 'instagram' | 'link' };
+export const OFF_THE_CLOCK_LINK_KINDS = ['youtube', 'spotify', 'instagram', 'link'] as const;
+
+export type OffTheClockLink = { label: string; href: string; kind: typeof OFF_THE_CLOCK_LINK_KINDS[number] };
 
 export type MusicEntry = { band: string; tagline: string; now?: string; links: OffTheClockLink[] };
 

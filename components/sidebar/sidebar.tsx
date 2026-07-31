@@ -1,11 +1,11 @@
 'use client';
 import { useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { RecDialog, type RecDialogHandle } from './rec-dialog';
+import { RecDialog, type RecDialogHandle } from '../dialogs/rec-dialog';
 import { PracticePopover } from './practice-popover';
 import { OffTheClockPopover } from './off-the-clock-popover';
-import { SectionHeader } from './section-header';
-import type { WorkHistoryEntry, Recommendation, CodingProfiles, OffTheClock } from '@/lib/schema';
+import { SectionHeader } from '../section-header';
+import type { WorkHistoryEntry, Recommendation, CodingProfiles, OffTheClock } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { kicker, metaItalic, linkButtonClass } from '@/lib/typography';
 

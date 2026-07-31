@@ -1,22 +1,18 @@
 'use client';
-import { forwardRef, useImperativeHandle, useState } from 'react';
+import { forwardRef } from 'react';
 import { Dialog, DialogContent, DialogClose } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { CaseStudy } from '@/components/case-study';
-import type { Project } from '@/lib/schema';
+import { CaseStudy } from '@/components/case-study/renderer';
+import { hasCaseStudy, type Project } from '@/lib/types';
+import { useImperativeDialog } from '@/hooks/use-imperative-dialog';
+import { dialogClose } from '@/lib/typography';
 
 export type CaseDialogHandle = { open: (id: string) => void };
 
 export const CaseDialog = forwardRef<CaseDialogHandle, { projects: Project[] }>(
   function CaseDialog({ projects }, ref) {
-    const [open, setOpen] = useState(false);
-    const [projectId, setProjectId] = useState<string | null>(null);
+    const { open, setOpen, data: projectId } = useImperativeDialog<[string], string>(ref, (id) => id);
     const project = projectId ? projects.find((p) => p.id === projectId) : undefined;
-    const hasCaseStudy = project?.body && project.body.length > 0;
-
-    useImperativeHandle(ref, () => ({
-      open: (id: string) => { setProjectId(id); setOpen(true); },
-    }));
 
     return (
       <Dialog open={open} onOpenChange={setOpen}>
@@ -24,13 +20,13 @@ export const CaseDialog = forwardRef<CaseDialogHandle, { projects: Project[] }>(
           showCloseButton={false}
           className="shadow-lg p-0 bg-cream rounded-none w-[90vw] h-dialog-safe max-w-5xl overflow-hidden"
         >
-          {hasCaseStudy && project && (
+          {project && hasCaseStudy(project) && (
             <>
               <DialogClose
                 render={
                   <Button
                     variant="ghost"
-                    className="absolute top-4 right-4 p-0 h-auto font-heading italic text-0_8 text-ink/45 hover:text-g z-20"
+                    className={`absolute top-4 right-4 p-0 h-auto z-20 ${dialogClose}`}
                   />
                 }
               >

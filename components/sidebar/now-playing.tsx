@@ -1,24 +1,14 @@
 'use client';
-import { Loader2 } from 'lucide-react';
-import { useNowPlaying } from '@/lib/queries/spotify';
+import { useNowPlaying } from '@/hooks/spotify';
+import { PanelLoading, PanelError } from '@/components/ui/query-state';
 
 export function NowPlaying() {
   const { data, isLoading, isError, error } = useNowPlaying();
 
-  if (isLoading) {
-    return (
-      <div className="flex justify-center py-4">
-        <Loader2 className="h-4 w-4 animate-spin text-g" />
-      </div>
-    );
-  }
+  if (isLoading) return <PanelLoading className="py-4" />;
 
   if (isError) {
-    return (
-      <div className="text-0_8 text-destructive py-2 break-words">
-        {error?.message ?? "can't reach spotify right now"}
-      </div>
-    );
+    return <PanelError className="py-2" message={error?.message ?? "can't reach spotify right now"} />;
   }
 
   if (!data) {

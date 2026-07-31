@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import type { Project } from '@/lib/schema';
+import type { Project } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 

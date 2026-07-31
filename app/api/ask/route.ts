@@ -3,6 +3,7 @@ import { openai } from '@ai-sdk/openai';
 import { anthropic } from '@ai-sdk/anthropic';
 import { neon } from '@neondatabase/serverless';
 import { getSiteConfig } from '@/lib/content';
+import { EMBEDDING_MODEL } from '@/lib/ai-config';
 
 const RATE_LIMIT_WINDOW_MINUTES = 60;
 const RATE_LIMIT_MAX_REQUESTS = 20;
@@ -29,6 +30,7 @@ function humanizeSource(source: string): string {
     case 'case-study':
       return `${rest[0]} — ${rest.slice(1).join(':')}`;
     default:
+      console.warn(`humanizeSource: unrecognized source type "${type}"`);
       return source;
   }
 }
@@ -63,7 +65,7 @@ export async function POST(req: Request) {
 
   try {
     const { embedding } = await embed({
-      model: openai.embedding('text-embedding-3-small'),
+      model: openai.embedding(EMBEDDING_MODEL),
       value: lastUserMessage.content,
     });
     const vectorLiteral = `[${embedding.join(',')}]`;

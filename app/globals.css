@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ---------------------------------------------------------------------------
+   Palette
+   Two intentionally separate token layers:
+   - --color-*: the 5-color brand palette driving all custom components.
+   - --background/--primary/etc: shadcn/ui's semantic tokens, consumed only by
+     components/ui/*. `background`/`foreground`/`primary`/`border`/`input`/`ring`/
+     `popover` alias straight onto the brand palette; `secondary`/`muted`/`destructive`
+     are additional UI-state colors the 5-color palette has no equivalent for (error
+     red, neutral gray) and are defined independently. This is not an oversight to
+     "fix" by merging — inventing brand-palette equivalents for those would be a
+     design decision, not a cleanup.
+   --------------------------------------------------------------------------- */
 :root {
   --color-g: 11 61 46;
   --color-cream: 246 241 228;
@@ -9,7 +21,6 @@
   --color-codeBg: 11 26 19;
   --color-codeInk: 232 227 216;
 
-  /* shadcn/ui semantic tokens, aliased onto the palette above */
   --background: var(--color-cream);
   --foreground: var(--color-ink);
   --primary: var(--color-g);
@@ -26,6 +37,9 @@
   --popover-foreground: var(--color-ink);
 }
 
+/* ---------------------------------------------------------------------------
+   Dark mode — same token set, palette values swapped/inverted.
+   --------------------------------------------------------------------------- */
 .dark {
   --color-g: 246 241 228;
   --color-cream: 11 61 46;
@@ -49,6 +63,9 @@
   --popover-foreground: var(--color-ink);
 }
 
+/* ---------------------------------------------------------------------------
+   Base element resets
+   --------------------------------------------------------------------------- */
 @layer base {
   html, body { @apply bg-cream text-ink font-body m-0 h-full overflow-hidden; }
 
@@ -58,11 +75,10 @@
   a:hover { opacity: 0.8; }
 }
 
+/* ---------------------------------------------------------------------------
+   Custom utilities
+   --------------------------------------------------------------------------- */
 @layer utilities {
-  .rule-hairline { @apply border-0 border-t border-g/25; }
-  .rule-double { border-top: 0.2rem double rgb(var(--color-g)); }
-  .rule-double-b { border-bottom: 0.2rem double rgb(var(--color-g)); }
-
   /* mobile browsers size 100vh against the viewport with toolbars collapsed, taller
      than what's actually visible; dvh tracks the real visible viewport. vh stays as
      a fallback for browsers that don't understand dvh, since an unsupported value
@@ -71,29 +87,6 @@
   .h-dialog-safe { height: 90vh; height: 90dvh; }
   .max-h-rec-dialog-safe { max-height: 88vh; max-height: 88dvh; }
 
-  .gz-scroll::-webkit-scrollbar, .case-markdown pre::-webkit-scrollbar { display: none; width: 0; height: 0; }
-  .gz-scroll, .case-markdown pre { scrollbar-width: none; }
-}
-
-.case-markdown { overflow-wrap: break-word; }
-.case-markdown p { text-align: justify; hyphens: auto; margin-bottom: 1rem; }
-.case-markdown p:last-child { margin-bottom: 0; }
-.case-markdown h2 {
-  font-family: theme('fontFamily.heading'); font-style: italic; color: rgb(var(--color-g));
-  font-size: theme('fontSize.1_4'); margin-top: 2.5rem; margin-bottom: 0.75rem;
-  padding-bottom: 0.5rem; border-bottom: 0.0625rem solid rgb(var(--color-g) / 20%);
-}
-.case-markdown h2:first-child { margin-top: 0; }
-.case-markdown code { font-family: theme('fontFamily.mono'); font-size: 0.85em; background: rgb(var(--color-g) / 8%); padding: 0.1em 0.35em; border-radius: 0.15rem; }
-.case-markdown pre code { background: none; padding: 0; }
-.case-markdown pre {
-  font-family: theme('fontFamily.mono');
-  background: rgb(var(--color-codeBg)); color: rgb(var(--color-codeInk));
-  padding: 1rem 1.25rem; border-radius: theme('borderRadius.sm'); font-size: theme('fontSize.0_8'); line-height: 1.6; overflow-x: auto; overflow-y: hidden;
-  margin-bottom: 1.5rem;
-}
-.case-markdown img {
-  width: 100%; border: 0.375rem solid rgb(var(--color-cream));
-  outline: 0.06rem solid rgb(var(--color-g) / 20%);
-  margin-bottom: 1.5rem;
+  .gz-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
+  .gz-scroll { scrollbar-width: none; }
 }

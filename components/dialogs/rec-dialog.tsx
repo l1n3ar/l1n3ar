@@ -1,21 +1,19 @@
 'use client';
-import { useImperativeHandle, forwardRef, useState } from 'react';
+import { forwardRef } from 'react';
 import { Dialog, DialogContent, DialogClose } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { dialogClose } from '@/lib/typography';
+import { useImperativeDialog } from '@/hooks/use-imperative-dialog';
 
 export type RecDialogHandle = { open: (quote: string, who: string) => void };
 
-export const RecDialog = forwardRef<RecDialogHandle>(function RecDialog(_props, ref) {
-  const [open, setOpen] = useState(false);
-  const [rec, setRec] = useState<{ quote: string; who: string } | null>(null);
+type Rec = { quote: string; who: string };
 
-  useImperativeHandle(ref, () => ({
-    open: (quote: string, who: string) => {
-      setRec({ quote, who });
-      setOpen(true);
-    },
-  }));
+export const RecDialog = forwardRef<RecDialogHandle>(function RecDialog(_props, ref) {
+  const { open, setOpen, data: rec } = useImperativeDialog<[string, string], Rec>(
+    ref,
+    (quote, who) => ({ quote, who }),
+  );
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

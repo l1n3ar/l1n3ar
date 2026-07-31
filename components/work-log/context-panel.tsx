@@ -1,9 +1,9 @@
 'use client';
 import { useEffect, useState } from 'react';
-import type { Project } from '@/lib/schema';
+import { hasCaseStudy, type Project } from '@/lib/types';
 import { Link2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { kicker } from '@/lib/typography';
+import { kicker, metaItalic } from '@/lib/typography';
 import { cn } from '@/lib/utils';
 import { CopyButton } from '@/components/copy-button';
 
@@ -49,7 +49,7 @@ export function ContextPanel({
             view demo →
           </Button>
         )}
-        {project.body && project.body.length > 0 && (
+        {hasCaseStudy(project) && (
           <Button variant="default" className="font-heading italic" onClick={() => onOpenCase(project.id)}>
             read the full case →
           </Button>
@@ -57,9 +57,8 @@ export function ContextPanel({
       </div>
 
       <div className="flex flex-wrap gap-1.5 mt-auto border-g border-t pt-4">
-      
         {project.tech.map((t) => (
-          <span key={t} className="font-heading italic text-0_7 text-g border border-g/30 rounded-sm px-1.5 py-0.5">
+          <span key={t} className={`${metaItalic} text-g border border-g/30 rounded-sm px-1.5 py-0.5`}>
             {t}
           </span>
         ))}

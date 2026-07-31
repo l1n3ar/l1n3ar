@@ -2,33 +2,9 @@
 import { PortableText, type PortableTextComponents } from '@portabletext/react';
 import {
   CaseHeader, CaseBody, CaseHighlights, CaseSection, CaseCode, CaseImage, CaseTable,
-} from './case-study/base';
+} from './primitives';
 import { urlFor } from '@/sanity/lib/image';
-
-type Highlight = { label: string; body: string };
-
-type CaseSectionBlock = {
-  _type: 'caseSection';
-  _key: string;
-  heading: string;
-  body?: unknown[];
-};
-type CodeBlockBlock = { _type: 'codeBlock'; _key: string; code: string; language?: string };
-type CaseImageBlock = {
-  _type: 'caseImage';
-  _key: string;
-  alt: string;
-  border?: boolean;
-  [key: string]: unknown;
-};
-type TableBlockBlock = {
-  _type: 'tableBlock';
-  _key: string;
-  rows: { label: string; description: string; count: number }[];
-};
-type VideoEmbedBlock = { _type: 'videoEmbed'; _key: string; url: string; title: string };
-
-type CaseBodyBlock = CaseSectionBlock | CodeBlockBlock | CaseImageBlock | TableBlockBlock | VideoEmbedBlock;
+import type { Highlight, CaseBodyBlock } from '@/lib/types';
 
 const sectionProseComponents: PortableTextComponents = {
   marks: {
@@ -85,6 +61,7 @@ export function CaseStudy({
                 </div>
               );
             default:
+              console.warn(`CaseStudy: unrecognized block type "${(block as { _type: string })._type}"`);
               return null;
           }
         })}

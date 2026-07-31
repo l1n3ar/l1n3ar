@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity';
+import { OFF_THE_CLOCK_LINK_KINDS } from '@/lib/types';
 
 export default defineType({
   name: 'musicEntry',
@@ -22,7 +23,7 @@ export default defineType({
             defineField({
               name: 'kind',
               type: 'string',
-              options: { list: ['youtube', 'spotify', 'instagram', 'link'] },
+              options: { list: [...OFF_THE_CLOCK_LINK_KINDS] },
               initialValue: 'link',
             }),
           ],

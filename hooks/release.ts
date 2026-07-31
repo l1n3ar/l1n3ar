@@ -10,6 +10,5 @@ export function useRelease() {
       if (!result.ok) throw new Error(result.error);
       return result.release;
     },
-    staleTime: 60 * 60 * 1000,
   });
 }

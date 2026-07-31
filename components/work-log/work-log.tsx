@@ -1,7 +1,7 @@
 'use client';
 import { useRef, useState } from 'react';
 import { ChevronUp, ChevronDown } from 'lucide-react';
-import type { Project } from '@/lib/schema';
+import type { Project } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { ProjectRow } from './project-row';
 import { kicker } from '@/lib/typography';

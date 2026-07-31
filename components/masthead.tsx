@@ -1,4 +1,4 @@
-import type { SiteConfig } from '@/lib/schema';
+import type { SiteConfig } from '@/lib/types';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { AnnouncementsPopover } from '@/components/announcements-popover';
 
