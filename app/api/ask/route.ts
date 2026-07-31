@@ -2,8 +2,11 @@ import { embed, streamText, StreamData } from 'ai';
 import { openai } from '@ai-sdk/openai';
 import { anthropic } from '@ai-sdk/anthropic';
 import { neon } from '@neondatabase/serverless';
+import { Ratelimit } from '@upstash/ratelimit';
 import { getSiteConfig } from '@/lib/content';
 import { EMBEDDING_MODEL } from '@/lib/ai-config';
+import { redis } from '@/lib/kv';
+import { recordValue, incrementCounter } from '@/lib/metrics';
 
 const RATE_LIMIT_WINDOW_MINUTES = 60;
 const RATE_LIMIT_MAX_REQUESTS = 20;
@@ -11,6 +14,11 @@ const MAX_INPUT_LENGTH = 1000;
 const TOP_K = 8;
 
 const sql = neon(process.env.DATABASE_URL!);
+
+const ratelimit = new Ratelimit({
+  redis,
+  limiter: Ratelimit.slidingWindow(RATE_LIMIT_MAX_REQUESTS, `${RATE_LIMIT_WINDOW_MINUTES} m`),
+});
 
 type DocumentRow = { source: string; content: string; distance: number };
 
@@ -42,6 +50,7 @@ function getClientIp(req: Request): string {
 }
 
 export async function POST(req: Request) {
+  const requestStart = Date.now();
   const { messages } = await req.json();
 
   const lastUserMessage = [...messages].reverse().find((m: { role: string }) => m.role === 'user');
@@ -54,28 +63,33 @@ export async function POST(req: Request) {
 
   const ip = getClientIp(req);
 
-  const [{ count }] = await sql`
-    SELECT COUNT(*)::int AS count FROM ask_rate_limit
-    WHERE ip = ${ip} AND created_at > now() - interval '1 minute' * ${RATE_LIMIT_WINDOW_MINUTES}
-  `;
-  if (count >= RATE_LIMIT_MAX_REQUESTS) {
+  const { success } = await ratelimit.limit(ip);
+  if (!success) {
+    await incrementCounter('rate_limited');
     return new Response('Too many requests — please try again later.', { status: 429 });
   }
-  await sql`INSERT INTO ask_rate_limit (ip) VALUES (${ip})`;
 
   try {
+    const retrievalStart = Date.now();
+
+    const embedStart = Date.now();
     const { embedding } = await embed({
       model: openai.embedding(EMBEDDING_MODEL),
       value: lastUserMessage.content,
     });
+    await recordValue('embedding_call', Date.now() - embedStart);
+
     const vectorLiteral = `[${embedding.join(',')}]`;
 
+    const dbStart = Date.now();
     const chunks = (await sql`
       SELECT source, content, embedding <=> ${vectorLiteral}::vector AS distance
       FROM documents
       ORDER BY distance
       LIMIT ${TOP_K}
     `) as DocumentRow[];
+    await recordValue('db_query', Date.now() - dbStart);
+    await recordValue('retrieval_total', Date.now() - retrievalStart);
 
     const site = await getSiteConfig();
     const context = chunks.map((c) => `[${c.source}]\n${c.content}`).join('\n\n---\n\n');
@@ -96,6 +110,11 @@ ${context}`;
       label: humanizeSource(c.source),
       score: 1 - c.distance,
     }));
+    if (citations.length > 0) {
+      const avgConfidence = citations.reduce((sum, c) => sum + c.score, 0) / citations.length;
+      await recordValue('citation_confidence', avgConfidence);
+    }
+
     const data = new StreamData();
     data.appendMessageAnnotation({ citations });
 
@@ -103,14 +122,18 @@ ${context}`;
       model: anthropic('claude-haiku-4-5-20251001'),
       system,
       messages,
-      onFinish: () => {
+      onFinish: async ({ usage }) => {
         data.close();
+        await recordValue('end_to_end', Date.now() - requestStart);
+        await incrementCounter('tokens', usage.totalTokens);
+        await incrementCounter('questions_answered');
       },
     });
 
     return result.toDataStreamResponse({ data });
   } catch (error) {
     console.error('/api/ask error', error);
+    await incrementCounter('ask_error');
     return new Response('Something went wrong answering that — please try again.', { status: 500 });
   }
 }
