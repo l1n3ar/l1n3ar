@@ -1,6 +1,6 @@
 'use client';
 import type { ReactNode } from 'react';
-import { Waypoints, GitBranch, GitCommitHorizontal } from 'lucide-react';
+import { Waypoints, GitBranch, GitCommitHorizontal, HelpCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
@@ -21,8 +21,28 @@ function formatPct(value: number | null): string {
   return value === null ? '—' : `${Math.round(value * 100)}%`;
 }
 
+function formatTokens(n: number): string {
+  return n.toLocaleString();
+}
+
+function formatCost(usd: number): string {
+  if (usd === 0) return '$0.00';
+  return usd < 0.01 ? `$${usd.toFixed(4)}` : `$${usd.toFixed(2)}`;
+}
+
 function SectionLabel({ children }: { children: ReactNode }) {
   return <div className={`${kicker} mb-1.5 pb-1 border-b border-g/20`}>{children}</div>;
+}
+
+function InfoTooltip({ children }: { children: ReactNode }) {
+  return (
+    <Tooltip>
+      <TooltipTrigger render={<button type="button" className="inline-flex items-center ml-1 text-ink/30 hover:text-ink/60" />}>
+        <HelpCircle className="h-2.5 w-2.5" />
+      </TooltipTrigger>
+      <TooltipContent className={cn(metaItalic, 'max-w-56')}>{children}</TooltipContent>
+    </Tooltip>
+  );
 }
 
 function LiveDot() {
@@ -42,12 +62,11 @@ function Hero({ label, value, live }: { label: string; value: ReactNode; live?: 
         {live && <LiveDot />}
         {label}
       </div>
-      
     </div>
   );
 }
 
-function LatencyTable({ rows }: { rows: { label: string; p50: string; p95: string }[] }) {
+function LatencyTable({ rows }: { rows: { label: string; p50: string; p95: string; info?: ReactNode }[] }) {
   return (
     <div>
       <div className="flex items-center gap-2 text-0_6 text-ink/35 uppercase tracking-wide pb-1">
@@ -57,7 +76,10 @@ function LatencyTable({ rows }: { rows: { label: string; p50: string; p95: strin
       </div>
       {rows.map((r) => (
         <div key={r.label} className="flex items-center gap-2 py-1 text-0_7 border-t border-g/10">
-          <span className="flex-1 text-ink/65">{r.label}</span>
+          <span className="flex-1 text-ink/65 flex items-center">
+            {r.label}
+            {r.info && <InfoTooltip>{r.info}</InfoTooltip>}
+          </span>
           <span className="font-mono text-ink/85 w-14 text-right">{r.p50}</span>
           <span className="font-mono text-ink/40 w-14 text-right">{r.p95}</span>
         </div>
@@ -75,10 +97,13 @@ function StatusLine({ ok, label }: { ok: boolean; label: string }) {
   );
 }
 
-function DataRow({ label, value }: { label: string; value: ReactNode }) {
+function DataRow({ label, value, info }: { label: string; value: ReactNode; info?: ReactNode }) {
   return (
     <div className="flex items-center justify-between text-0_7 text-ink/55">
-      <span>{label}</span>
+      <span className="flex items-center">
+        {label}
+        {info && <InfoTooltip>{info}</InfoTooltip>}
+      </span>
       <span className="font-mono text-ink/80">{value}</span>
     </div>
   );
@@ -102,12 +127,23 @@ function MetricsTab() {
         <LatencyTable
           rows={[
             {
+              label: 'embedding call',
+              p50: formatMs(data.dataHealth.embeddingCall.p50),
+              p95: formatMs(data.dataHealth.embeddingCall.p95),
+            },
+            {
               label: 'retrieval',
               p50: formatMs(data.ragPerformance.retrieval.p50),
               p95: formatMs(data.ragPerformance.retrieval.p95),
             },
             {
-              label: 'end-to-end',
+              label: 'first token',
+              p50: formatMs(data.ragPerformance.timeToFirstToken.p50),
+              p95: formatMs(data.ragPerformance.timeToFirstToken.p95),
+              info: 'what a visitor actually waits through — "full answer" below includes the rest of the generation streaming in after that.',
+            },
+            {
+              label: 'full answer',
               p50: formatMs(data.ragPerformance.endToEnd.p50),
               p95: formatMs(data.ragPerformance.endToEnd.p95),
             },
@@ -116,11 +152,12 @@ function MetricsTab() {
               p50: formatMs(data.dataHealth.dbQuery.p50),
               p95: formatMs(data.dataHealth.dbQuery.p95),
             },
-            {
-              label: 'embedding call',
-              p50: formatMs(data.dataHealth.embeddingCall.p50),
-              p95: formatMs(data.dataHealth.embeddingCall.p95),
-            },
+
+            // {
+            //   label: 'site config',
+            //   p50: formatMs(data.dataHealth.siteConfigCall.p50),
+            //   p95: formatMs(data.dataHealth.siteConfigCall.p95),
+            // },
           ]}
         />
       </div>
@@ -139,9 +176,22 @@ function MetricsTab() {
       <div>
         <SectionLabel>data</SectionLabel>
         <div className="flex flex-col gap-1">
-          <DataRow label="avg citation confidence" value={formatPct(data.ragPerformance.avgConfidence)} />
+          <DataRow
+            label="avg relevance score"
+            value={formatPct(data.ragPerformance.avgRelevance)}
+            info="raw embedding cosine similarity — this model runs low even for strong matches, so 25–40% is normal, not a bad match."
+          />
           <DataRow label="corpus size" value={`${data.dataHealth.corpusSize} chunks`} />
           <DataRow label="last ingest" value={data.dataHealth.lastIngest ? timeAgo(data.dataHealth.lastIngest) : '—'} />
+        </div>
+      </div>
+
+      <div>
+        <SectionLabel>economics</SectionLabel>
+        <div className="flex flex-col gap-1">
+          <DataRow label="prompt tokens today" value={formatTokens(data.economics.promptTokensToday)} />
+          <DataRow label="completion tokens today" value={formatTokens(data.economics.completionTokensToday)} />
+          <DataRow label="est. cost today" value={formatCost(data.economics.estimatedCostToday)} />
         </div>
       </div>
     </div>
@@ -224,17 +274,17 @@ export function SystemStatusPopover({ className }: { className?: string }) {
         <TooltipContent className={metaItalic}>system status</TooltipContent>
       </Tooltip>
 
-      <PopoverContent className="w-96 max-h-[70vh] gz-scroll" align="end">
-        <Tabs defaultValue="deployments">
-          <TabsList variant="line" className="mb-2 px-1">
-            <TabsTrigger value="deployments" className="font-heading italic text-0_8">deployments</TabsTrigger>
+      <PopoverContent className="w-96 max-h-[70vh] p-0 overflow-hidden flex flex-col" align="end">
+        <Tabs defaultValue="metrics" className="flex flex-col min-h-0 flex-1">
+          <TabsList variant="line" className="mb-2 px-4 pt-4 shrink-0">
             <TabsTrigger value="metrics" className="font-heading italic text-0_8">metrics</TabsTrigger>
+            <TabsTrigger value="deployments" className="font-heading italic text-0_8">deployments</TabsTrigger>
           </TabsList>
-          <TabsContent value="deployments" className="overflow-y-auto pt-4">
-            <DeploymentsTab />
-          </TabsContent>
-          <TabsContent value="metrics" className='overflow-y-auto pt-4'>
+          <TabsContent value="metrics" className="flex-1 min-h-0 overflow-y-auto gz-scroll p-4">
             <MetricsTab />
+          </TabsContent>
+          <TabsContent value="deployments" className="flex-1 min-h-0 overflow-y-auto gz-scroll p-4">
+            <DeploymentsTab />
           </TabsContent>
         </Tabs>
       </PopoverContent>
