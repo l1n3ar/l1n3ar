@@ -4,7 +4,6 @@ import { BookOpen, SunMoon, FolderGit2, Link, FileDown, Mail } from 'lucide-reac
 import {
   CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem,
 } from '@/components/ui/command';
-import { caseStudies } from '@/components/case-study/registry';
 import type { Project, SiteConfig } from '@/lib/schema';
 
 const LINK_ICONS: Record<string, typeof FolderGit2> = {
@@ -66,7 +65,7 @@ export function CommandPalette({
         </CommandGroup> */}
 
         <CommandGroup heading="read the full case">
-          {projects.filter((p) => caseStudies[p.id]).map((p) => (
+          {projects.filter((p) => p.body && p.body.length > 0).map((p) => (
             <CommandItem
               key={p.id}
               value={`case study ${p.name}`}

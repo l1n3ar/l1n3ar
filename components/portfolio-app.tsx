@@ -208,7 +208,7 @@ export function PortfolioApp({
         </div>
       </div>
 
-      <CaseDialog ref={caseDialogRef} />
+      <CaseDialog ref={caseDialogRef} projects={projects} />
       <SiuTakeover ref={siuRef} />
 
       <CommandPalette

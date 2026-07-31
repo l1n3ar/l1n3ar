@@ -5,7 +5,6 @@ import { Link2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { kicker } from '@/lib/typography';
 import { cn } from '@/lib/utils';
-import { caseStudies } from '@/components/case-study/registry';
 import { CopyButton } from '@/components/copy-button';
 
 export function ContextPanel({
@@ -50,7 +49,7 @@ export function ContextPanel({
             view demo →
           </Button>
         )}
-        {caseStudies[project.id] && (
+        {project.body && project.body.length > 0 && (
           <Button variant="default" className="font-heading italic" onClick={() => onOpenCase(project.id)}>
             read the full case →
           </Button>

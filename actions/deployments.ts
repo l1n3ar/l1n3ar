@@ -24,7 +24,7 @@ export async function getDeployments(limit = 5): Promise<GetDeploymentsResult> {
     return { ok: false, error: 'VERCEL_ACCESS_TOKEN is not set' };
   }
 
-  const params = new URLSearchParams({ limit: String(limit) });
+  const params = new URLSearchParams({ limit: String(limit),target : 'production' });
 
   const result = await apiFetch({
     url: `https://api.vercel.com/v6/deployments?${params}`,
