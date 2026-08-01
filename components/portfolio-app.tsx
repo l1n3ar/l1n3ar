@@ -52,7 +52,7 @@ export function PortfolioApp({
 
   return (
     <div className="h-screen-safe overflow-hidden flex flex-col bg-cream text-ink font-body">
-      <Masthead site={site} />
+      <Masthead site={site} onNameClick={() => setMobileTab('about')} />
 
       <div
         className={`hidden md:grid flex-1 min-h-0 transition-[grid-template-columns] duration-300 ${
