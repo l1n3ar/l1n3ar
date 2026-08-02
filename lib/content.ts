@@ -31,7 +31,7 @@ export async function getOffTheClock(): Promise<OffTheClock> {
 export async function getAllProjects(): Promise<Project[]> {
   return client.fetch(`*[_type == "project"] | order(order asc){
     "id": slug.current,
-    name, org, year, role, line, description, tech, github, demo, metrics, order, asks,
+    name, org, year, role, line, description, tech, github, demo, metrics, order, asks, category,
     highlights,
     body
   }`);

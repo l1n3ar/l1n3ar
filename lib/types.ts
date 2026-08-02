@@ -19,6 +19,9 @@ export type CaseBodyBlock = CaseSectionBlock | CodeBlockBlock | CaseImageBlock |
 
 export type Highlight = { label: string; body: string };
 
+export const PROJECT_CATEGORIES = ['enterprise', 'personal', 'oss'] as const;
+export type ProjectCategory = (typeof PROJECT_CATEGORIES)[number];
+
 export type ProjectFrontmatter = {
   name: string;
   org: string;
@@ -32,6 +35,7 @@ export type ProjectFrontmatter = {
   metrics: Metric[];
   order: number;
   asks: string[];
+  category: ProjectCategory;
 };
 
 export type Project = ProjectFrontmatter & {

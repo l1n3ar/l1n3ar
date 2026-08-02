@@ -14,7 +14,9 @@ import { useRelease } from '@/hooks/release';
 import { useAskPanelResize } from '@/hooks/use-ask-panel-resize';
 import { usePresenceHeartbeat } from '@/hooks/use-presence-heartbeat';
 import { Tag } from 'lucide-react';
-import type { Project, WorkHistoryEntry, Recommendation, SiteConfig, OffTheClock } from '@/lib/types';
+import type {
+  Project, WorkHistoryEntry, Recommendation, SiteConfig, OffTheClock, ProjectCategory,
+} from '@/lib/types';
 
 export function PortfolioApp({
   site, workHistory, recommendations, projects, initialProjectId, offTheClock,
@@ -32,6 +34,10 @@ export function PortfolioApp({
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [askOpen, setAskOpen] = useState(false);
   const [mobileTab, setMobileTab] = useState<MobileTab>(validInitialId ? 'details' : 'about');
+  const [activeCategory, setActiveCategory] = useState<ProjectCategory>(
+    () => projects.find((p) => p.id === validInitialId)?.category ?? 'enterprise',
+  );
+  const visibleProjects = projects.filter((p) => p.category === activeCategory);
 
   const {
     workColumnRef, askPanelHeight, isResizingAsk, startAskResize, onAskResizeMove, endAskResize,
@@ -48,6 +54,12 @@ export function PortfolioApp({
   const selectOnMobile = (id: string) => {
     setSelectedId(id);
     setMobileTab('details');
+  };
+
+  const selectCategory = (category: ProjectCategory) => {
+    setActiveCategory(category);
+    const first = projects.find((p) => p.category === category);
+    if (first) setSelectedId(first.id);
   };
 
   return (
@@ -79,7 +91,13 @@ export function PortfolioApp({
               : 'auto minmax(0,1fr) auto minmax(0,0fr)',
           }}
         >
-          <WorkLog projects={projects} selectedId={selectedId} onSelect={setSelectedId} />
+          <WorkLog
+            projects={visibleProjects}
+            selectedId={selectedId}
+            onSelect={setSelectedId}
+            activeCategory={activeCategory}
+            onCategoryChange={selectCategory}
+          />
           {askOpen && (
             <div
               onPointerDown={startAskResize}
@@ -119,7 +137,13 @@ export function PortfolioApp({
 
         {mobileTab === 'projects' && (
           <div className="flex-1 min-h-0 flex flex-col">
-            <WorkLog projects={projects} selectedId={selectedId} onSelect={selectOnMobile} />
+            <WorkLog
+              projects={visibleProjects}
+              selectedId={selectedId}
+              onSelect={selectOnMobile}
+              activeCategory={activeCategory}
+              onCategoryChange={selectCategory}
+            />
           </div>
         )}
 

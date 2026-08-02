@@ -1,7 +1,6 @@
 import type { SiteConfig } from '@/lib/types';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { SystemStatusPopover } from '@/components/system-status-popover';
-import { useRouter } from 'next/navigation';
 
 export function Masthead({ site, onNameClick }: { site: SiteConfig; onNameClick?: () => void }) {
 

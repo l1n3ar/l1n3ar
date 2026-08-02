@@ -17,6 +17,21 @@ export default defineType({
       options: { source: 'name' },
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      name: 'category',
+      type: 'string',
+      group: 'card',
+      options: {
+        list: [
+          { title: 'Enterprise', value: 'enterprise' },
+          { title: 'Personal', value: 'personal' },
+          { title: 'OSS', value: 'oss' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'enterprise',
+      validation: (Rule) => Rule.required(),
+    }),
     defineField({ name: 'org', type: 'string', group: 'card', validation: (Rule) => Rule.required() }),
     defineField({ name: 'year', type: 'string', group: 'card', validation: (Rule) => Rule.required() }),
     defineField({ name: 'role', type: 'string', group: 'card', validation: (Rule) => Rule.required() }),
