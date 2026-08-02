@@ -29,7 +29,7 @@ export function WorkLog({
     <>
       <div data-worklog-header className="px-6 pt-4 pb-2 flex items-center gap-2.5">
         <div className='flex flex-col gap-2 mb-4'>
-        <div className={`${kicker} text-0_9`}>work</div>
+        <div className={`${kicker} !text-lg`}>work</div>
         <CategoryTabs active={activeCategory} onChange={onCategoryChange} />
         </div>
 

@@ -61,7 +61,7 @@ export function AskPanel({
       <div className="flex-1 min-h-0 overflow-hidden flex flex-col">
         {messages.length === 0 ? (
           <div className="flex-1 min-h-0 flex flex-col items-center justify-center gap-2 px-6 text-center">
-            <div className="font-heading italic text-1_1 text-g">ask me anything</div>
+            {/* <div className="font-heading italic text-1_1 text-g">ask me anything</div> */}
             <div className="flex flex-wrap justify-center gap-2 pt-2">
               {suggestions.map((s) => (
                 <Button

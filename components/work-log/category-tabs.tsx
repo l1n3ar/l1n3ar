@@ -19,7 +19,7 @@ export function CategoryTabs({
           type="button"
           onClick={() => onChange(t.id)}
           className={cn(
-            'font-heading italic text-0_8 transition-colors',
+            'font-heading italic text-sm transition-colors',
             active === t.id ? 'text-g underline underline-offset-4' : 'text-ink/45 hover:text-ink/70',
           )}
         >

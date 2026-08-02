@@ -10,7 +10,7 @@ export function SectionHeader({
     <button
       type="button"
       onClick={onToggle}
-      className={cn(kicker, 'flex items-center gap-1 w-full text-left', className)}
+      className={cn(kicker, 'flex items-center gap-1 w-full text-left text-lg' , className)}
     >
       {label}
       <ChevronDown className={cn('h-3 w-3 transition-transform duration-200', open ? '' : '-rotate-90')} />
