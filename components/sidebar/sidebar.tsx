@@ -50,7 +50,7 @@ export function Sidebar({
       )}
 
       <div className="gz-scroll flex-1 min-h-0 pt-4 pb-4 px-6 flex flex-col overflow-y-auto overflow-x-hidden scroll-smooth">
-        <div className={`${kicker} mb-1.5 text-lg`}>about</div>
+        <div className={`${kicker} mb-1.5`}>about</div>
         <p className="text-0_8 leading-relaxed mb-4 pb-3.5 border-b border-g/25 break-words">{about}</p>
 
         <SectionHeader label="work experience" open={historyOpen} onToggle={() => setHistoryOpen((o) => !o)} className="mb-1.5" />
