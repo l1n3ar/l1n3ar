@@ -5,7 +5,7 @@ import type { ProjectCategory } from '@/lib/types';
 const TABS: { id: ProjectCategory; label: string }[] = [
   { id: 'enterprise', label: 'enterprise' },
   { id: 'personal', label: 'personal' },
-  // { id: 'oss', label: 'oss' }, // no open-source projects yet — uncomment when there's something to show
+  // { id: 'oss', label: 'oss' }, // no open-source projects yet 
 ];
 
 export function CategoryTabs({
