@@ -20,11 +20,12 @@ export type GetDeploymentsResult =
 
 export async function getDeployments(limit = 5): Promise<GetDeploymentsResult> {
   const token = process.env.VERCEL_ACCESS_TOKEN;
+  const projectId = process.env.VERCEL_PROJECT_ID || ''
   if (!token) {
     return { ok: false, error: 'VERCEL_ACCESS_TOKEN is not set' };
   }
 
-  const params = new URLSearchParams({ limit: String(limit), target: 'production' });
+  const params = new URLSearchParams({ limit: String(limit), target: 'production',projectId : projectId });
 
   const result = await apiFetch({
     url: `https://api.vercel.com/v6/deployments?${params}`,
