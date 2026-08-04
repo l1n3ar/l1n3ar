@@ -16,7 +16,7 @@ export async function getWorkHistory(): Promise<WorkHistoryEntry[]> {
 }
 
 export async function getRecommendations(): Promise<Recommendation[]> {
-  return client.fetch(`*[_type == "recommendation"] | order(order asc){
+  return client.fetch(`*[_type == "recommendation"] | order(order desc){
     who, quote, order
   }`);
 }
