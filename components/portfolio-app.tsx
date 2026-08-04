@@ -35,7 +35,7 @@ export function PortfolioApp({
   const [askOpen, setAskOpen] = useState(false);
   const [mobileTab, setMobileTab] = useState<MobileTab>(validInitialId ? 'details' : 'about');
   const [activeCategory, setActiveCategory] = useState<ProjectCategory>(
-    () => projects.find((p) => p.id === validInitialId)?.category ?? 'enterprise',
+    () => projects.find((p) => p.id === validInitialId)?.category ?? 'personal',
   );
   const visibleProjects = projects.filter((p) => p.category === activeCategory);
 

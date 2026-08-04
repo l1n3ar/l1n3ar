@@ -3,8 +3,9 @@ import { cn } from '@/lib/utils';
 import type { ProjectCategory } from '@/lib/types';
 
 const TABS: { id: ProjectCategory; label: string }[] = [
-  { id: 'enterprise', label: 'enterprise' },
   { id: 'personal', label: 'personal' },
+  { id: 'enterprise', label: 'enterprise' },
+
   // { id: 'oss', label: 'oss' }, // no open-source projects yet 
 ];
 
