@@ -32,7 +32,7 @@ export function PortfolioApp({
   const [selectedId, setSelectedId] = useState(validInitialId ?? projects[0]?.id);
   const selected = projects.find((p) => p.id === selectedId) ?? projects[0];
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [askOpen, setAskOpen] = useState(false);
+  const [askOpen, setAskOpen] = useState(true);
   const [mobileTab, setMobileTab] = useState<MobileTab>(validInitialId ? 'details' : 'about');
   const [activeCategory, setActiveCategory] = useState<ProjectCategory>(
     () => projects.find((p) => p.id === validInitialId)?.category ?? 'personal',
