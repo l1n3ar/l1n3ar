@@ -45,11 +45,13 @@ export async function generateMetadata(): Promise<Metadata> {
       url: siteUrl,
       siteName: site.name,
       type: 'website',
+      images: ['/opengraph-image'],
     },
     twitter: {
       card: 'summary_large_image',
       title: `${site.name} · ${site.role}`,
       description: site.about,
+      images: ['/opengraph-image'],
     },
   };
 }
