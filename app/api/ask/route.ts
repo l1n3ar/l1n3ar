@@ -7,6 +7,7 @@ import { getSiteConfig } from '@/lib/content';
 import { EMBEDDING_MODEL } from '@/lib/ai-config';
 import { redis } from '@/lib/kv';
 import { recordValue, incrementCounter } from '@/lib/metrics';
+import { logQuestion } from '@/actions/logs';
 
 const RATE_LIMIT_WINDOW_MINUTES = 60;
 const RATE_LIMIT_MAX_REQUESTS = 20;
@@ -137,7 +138,7 @@ ${context}`;
           firstTokenAt = Date.now();
         }
       },
-      onFinish: async ({ usage }) => {
+      onFinish: async ({ text, usage }) => {
         data.close();
         if (firstTokenAt !== null) {
           await recordValue('time_to_first_token', firstTokenAt - requestStart);
@@ -146,6 +147,7 @@ ${context}`;
         await incrementCounter('prompt_tokens', usage.promptTokens);
         await incrementCounter('completion_tokens', usage.completionTokens);
         await incrementCounter('questions_answered');
+        await logQuestion(lastUserMessage.content, text, citations, ip);
       },
     });
 

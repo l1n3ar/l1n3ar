@@ -1,5 +1,5 @@
 'use client';
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { Waypoints, GitBranch, GitCommitHorizontal, HelpCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
@@ -7,6 +7,7 @@ import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { PanelLoading, PanelError } from '@/components/ui/query-state';
+import { QaLogDialog } from '@/components/dialogs/qa-log-dialog';
 import { useSystemMetrics } from '@/hooks/system-metrics';
 import { useDeployments } from '@/hooks/deployments';
 import { commitMessage, commitRef, commitSha, timeAgo, stateDotClass, stateBadgeVariant } from '@/lib/deployment-meta';
@@ -111,6 +112,7 @@ function DataRow({ label, value, info }: { label: string; value: ReactNode; info
 
 function MetricsTab() {
   const { data, isLoading, isError, error } = useSystemMetrics();
+  const [qaLogOpen, setQaLogOpen] = useState(false);
 
   if (isLoading) return <PanelLoading className="py-3" />;
   if (isError || !data) return <PanelError className="px-1 py-3" message={error?.message ?? 'something went wrong'} />;
@@ -119,8 +121,12 @@ function MetricsTab() {
     <div className="px-1 flex flex-col gap-4">
       <div className="flex justify-between">
         <Hero label="live visitors" value={data.traffic.liveVisitors} live />
-        <Hero label="questions today" value={data.traffic.questionsToday} />
+        <button type="button" onClick={() => setQaLogOpen(true)} className="cursor-pointer">
+          <Hero label="questions today" value={data.traffic.questionsToday} />
+        </button>
       </div>
+
+      <QaLogDialog open={qaLogOpen} onOpenChange={setQaLogOpen} />
 
       <div>
         <SectionLabel>latency</SectionLabel>
