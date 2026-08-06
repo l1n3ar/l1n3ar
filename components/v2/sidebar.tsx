@@ -7,7 +7,10 @@ import {
   SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarSeparator,
 } from '@/components/ui/sidebar';
 import { Input } from '@/components/ui/input';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { NAV_ICONS } from '@/components/v2/nav-icons';
+import { BRAND_ICONS } from '@/components/v2/tech-icons';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { sectionHref } from '@/components/v2/section-routes';
 import { useRelease } from '@/hooks/release';
 import type { NavItem, V2Section } from '@/lib/types';
@@ -25,11 +28,18 @@ const INSET = 'px-4';
 // off the clock) and the end of "live status" (after deployments), without group labels.
 const SEPARATOR_AFTER: V2Section[] = ['offclock', 'deployments'];
 
-// Placeholder icons until real brand marks are dropped in — see FOOTER_ICONS usage below.
+// GitHub gets its real Simple Icons brand mark (see BRAND_ICONS, rendered separately below);
+// LinkedIn has no real icon available (Simple Icons removed it after a trademark takedown
+// request), so it stays on this generic placeholder until a licensed asset is dropped in.
 const FOOTER_ICONS: Record<string, typeof LinkIcon> = {
-  github: LinkIcon,
   linkedin: LinkIcon,
   resume: FileText,
+};
+
+const FOOTER_LABELS: Record<string, string> = {
+  github: 'GitHub',
+  linkedin: 'LinkedIn',
+  resume: 'Download resume',
 };
 
 export function AppSidebar({
@@ -38,11 +48,17 @@ export function AppSidebar({
   site: SiteConfig; navItems: NavItem[]; section: V2Section;
 }) {
   const { data: release } = useRelease();
+  const initials = site.name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase();
 
   return (
     <SidebarPrimitive collapsible="offcanvas">
-      <SidebarHeader className={`gap-2 pt-4 pb-3 ${INSET}`}>
+      <SidebarHeader className={`gap-2 pt-4 ${INSET}`}>
         <NextLink href={sectionHref('home')} className="flex items-start gap-2 min-w-0">
+          <Avatar size="sm" className="rounded-md bg-primary after:rounded-md shrink-0">
+            <AvatarFallback className="rounded-md bg-primary text-primary-foreground text-0_6">
+              {initials}
+            </AvatarFallback>
+          </Avatar>
           <span className="flex flex-col min-w-0 text-left">
             <span className="text-0_7 font-medium truncate text-foreground">{site.name}</span>
             <span className="text-0_6 text-sidebar-foreground/55 line-clamp-2">{site.about}</span>
@@ -109,19 +125,31 @@ export function AppSidebar({
 
           <div className="flex gap-2">
             {site.footerLinks.map((l) => {
+              const isGithub = l.label.toLowerCase().includes('github');
               const key = Object.keys(FOOTER_ICONS).find((k) => l.label.toLowerCase().includes(k));
               const Icon = key ? FOOTER_ICONS[key] : FileText;
+              const tooltipLabel = key ? FOOTER_LABELS[key] : l.label;
               return (
-                <a
-                  key={l.label}
-                  href={l.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex size-icon-xl items-center justify-center rounded-md text-sidebar-foreground/55 hover:text-sidebar-foreground hover:bg-sidebar-accent"
-                  aria-label={l.label}
-                >
-                  <Icon className="size-icon-xs" strokeWidth={ICON_STROKE} />
-                </a>
+                <Tooltip key={l.label}>
+                  <TooltipTrigger
+                    render={
+                      <a
+                        href={l.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex size-icon-xl items-center justify-center rounded-md text-foreground hover:bg-muted"
+                        aria-label={tooltipLabel}
+                      />
+                    }
+                  >
+                    {isGithub ? (
+                      <BRAND_ICONS.github className="size-icon-xs" color="currentColor" />
+                    ) : (
+                      <Icon className="size-icon-xs" strokeWidth={ICON_STROKE} />
+                    )}
+                  </TooltipTrigger>
+                  <TooltipContent className="text-0_6 font-sans not-italic">{tooltipLabel}</TooltipContent>
+                </Tooltip>
               );
             })}
           </div>

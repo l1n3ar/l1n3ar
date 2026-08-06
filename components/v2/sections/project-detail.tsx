@@ -1,6 +1,7 @@
-import { Link as GithubIcon, ExternalLink, Send } from 'lucide-react';
+import { ExternalLink, Send } from 'lucide-react';
 import { CaseStudyBody } from '@/components/v2/sections/case-study-body';
 import { Input } from '@/components/ui/input';
+import { BRAND_ICONS } from '@/components/v2/tech-icons';
 import { hueForKey, pastelChipStyle } from '@/lib/pastel';
 import { hasCaseStudy, type Project } from '@/lib/types';
 
@@ -24,7 +25,7 @@ export function ProjectDetail({ project }: { project: Project }) {
               rel="noopener noreferrer"
               className="text-0_7 px-2.5 py-1.5 rounded-md border border-border bg-card flex items-center gap-1.5"
             >
-              <GithubIcon className="size-icon-xs" strokeWidth={ICON_STROKE} /> Code
+              <BRAND_ICONS.github className="size-icon-xs" color="currentColor" /> Code
             </a>
           )}
           {project.demo && (
@@ -34,7 +35,7 @@ export function ProjectDetail({ project }: { project: Project }) {
               rel="noopener noreferrer"
               className="text-0_7 px-2.5 py-1.5 rounded-md border border-border bg-card flex items-center gap-1.5"
             >
-              <ExternalLink className="size-icon-xs" strokeWidth={ICON_STROKE} /> Demo
+              <ExternalLink className="size-icon-xs" strokeWidth={ICON_STROKE} /> View demo
             </a>
           )}
         </div>

@@ -33,8 +33,9 @@ export function HomeCard({
 
   return (
     <div
-      className={cn('relative overflow-hidden border border-border flex flex-col p-4', s.radius,  className)}
+      className={cn('relative overflow-hidden border border-border flex flex-col p-4 shadow-sm hover:cursor-pointer', s.radius,  className)}
       style={component ? undefined : { background: pastel.bg }}
+           onClick={onClick}
     >
       {image && (
         <div

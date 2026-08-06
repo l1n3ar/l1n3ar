@@ -29,7 +29,7 @@ export function ThemeToggle({
   return (
     <Tooltip>
       <TooltipTrigger
-        render={<Button variant="ghost" size={size} aria-label="toggle theme" onClick={toggle} className={className} />}
+        render={<Button variant="ghost" size='icon-xs' aria-label="toggle theme" onClick={toggle} className={className} />}
       >
         {dark
           ? <Sun className={iconClassName} strokeWidth={strokeWidth} />

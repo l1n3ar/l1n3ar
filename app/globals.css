@@ -71,12 +71,17 @@
    --------------------------------------------------------------------------- */
 .v2 {
   /* Defining --foreground/--background as variables isn't enough on its own — any
-     element with no explicit text-*/bg-* class just inherits the real `color`
+     element with no explicit text- or bg- color class just inherits the real color
      property from <body>, which v1's base styles set to text-ink (v1's palette,
      a different variable entirely). Setting color/background-color here directly
      means inheritance starts from v2's tokens at the scope root, not from <body>. */
   color: rgb(13 13 13);
   background-color: rgb(255 255 255);
+  /* Same story as color/background above — `font-sans` on the wrapper <div> in
+     AppShell never reaches portaled Popover/Tooltip content, so it fell back to
+     <body>'s font-body (v1's serif Lora). Setting the real property here fixes it
+     at the scope root, the same way color/background-color did. */
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   font-size: 0.875rem;
   --radius-sm: 0.5rem;
   --radius: 0.5rem;

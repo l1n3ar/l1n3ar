@@ -1,8 +1,9 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { Link as GithubIcon, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { projectIcon } from '@/components/v2/sections/project-icons';
+import { BRAND_ICONS } from '@/components/v2/tech-icons';
 import { hueForKey, pastelChipStyle } from '@/lib/pastel';
 import type { Project } from '@/lib/types';
 
@@ -23,7 +24,7 @@ export function ProjectCard({ project, showCategory }: { project: Project; showC
     <button
       type="button"
       onClick={() => router.push(`/projects/${project.id}`)}
-      className="group relative flex flex-col text-left border border-border rounded-lg bg-card overflow-hidden"
+      className="group relative flex flex-col text-left border border-border rounded-lg bg-card overflow-hidden shadow-sm"
     >
       <div className="relative flex-1 flex flex-col gap-2 p-3.5">
         <div className="flex items-start justify-between">
@@ -67,13 +68,13 @@ export function ProjectCard({ project, showCategory }: { project: Project; showC
                     type="button"
                     onClick={(e) => openLink(e, project.github!)}
                     aria-label="code"
-                    className="size-icon-xl rounded-md border border-border flex items-center justify-center text-muted-foreground hover:text-foreground"
+                    className="size-icon-xl rounded-md border border-border flex items-center justify-center text-foreground hover:bg-muted"
                   />
                 }
               >
-                <GithubIcon className="size-icon-xs" strokeWidth={ICON_STROKE} />
+                <BRAND_ICONS.github className="size-icon-xs" color="currentColor" />
               </TooltipTrigger>
-              <TooltipContent>Code</TooltipContent>
+              <TooltipContent className="text-0_6 font-sans not-italic">Code</TooltipContent>
             </Tooltip>
           )}
           {project.demo && (
@@ -84,13 +85,13 @@ export function ProjectCard({ project, showCategory }: { project: Project; showC
                     type="button"
                     onClick={(e) => openLink(e, project.demo!)}
                     aria-label="demo"
-                    className="size-icon-xl rounded-md border border-border flex items-center justify-center text-muted-foreground hover:text-foreground"
+                    className="size-icon-xl rounded-md border border-border flex items-center justify-center text-foreground hover:bg-muted"
                   />
                 }
               >
                 <ExternalLink className="size-icon-xs" strokeWidth={ICON_STROKE} />
               </TooltipTrigger>
-              <TooltipContent>Demo</TooltipContent>
+              <TooltipContent className="text-0_6 font-sans not-italic">View demo</TooltipContent>
             </Tooltip>
           )}
         </div>

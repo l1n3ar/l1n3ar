@@ -35,7 +35,7 @@ export function AppShell({
         <AppSidebar site={site} navItems={navItems} section={section} />
         <SidebarInset className="h-screen-safe">
           <Navbar title={title} feedbackEmail={site.email} onBack={onBack} />
-          <div className="flex-1 min-h-0 overflow-y-auto gz-scroll bg-muted/30">
+          <div className="flex-1 min-h-0 overflow-y-auto gz-scroll bg-muted/20">
             <div className="max-w-[90rem] mx-auto p-5 h-full">{children}</div>
           </div>
         </SidebarInset>

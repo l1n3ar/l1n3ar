@@ -43,7 +43,8 @@ export async function getHomeTiles(): Promise<HomeTileContent[]> {
 export async function getAllProjects(): Promise<Project[]> {
   return client.fetch(`*[_type == "project"] | order(order asc){
     "id": slug.current,
-    name, org, year, role, line, description, tech, github, demo, metrics, order, asks, category,
+    name, org, year, role, line, description, github, demo, metrics, order, asks, category,
+    "tech": tech[]->name,
     highlights,
     body
   }`);

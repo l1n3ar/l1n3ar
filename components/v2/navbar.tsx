@@ -19,7 +19,7 @@ export function Navbar({
       <div className="flex items-center gap-1">
         <SidebarTrigger aria-label="toggle sidebar" />
         {onBack && (
-          <Button variant="ghost" size="icon-sm" onClick={onBack} aria-label="back">
+          <Button variant="ghost" size="icon-xs" onClick={onBack} aria-label="back">
             <ChevronLeft className="size-icon-xs" strokeWidth={ICON_STROKE} />
           </Button>
         )}
@@ -29,7 +29,6 @@ export function Navbar({
 
       <div className="flex items-center justify-end gap-2">
         <ThemeToggle
-          size="icon-sm"
           iconClassName="size-icon-xs"
           strokeWidth={ICON_STROKE}
           tooltipClassName="text-0_6 font-sans not-italic"
@@ -37,9 +36,9 @@ export function Navbar({
 
         <Tooltip>
           <TooltipTrigger
-            render={<Button variant="ghost" size="icon-sm" aria-label="switch to v1" render={<NextLink href="/v1" />} />}
+            render={<Button variant="ghost" size='icon-xs' aria-label="switch to v1" render={<NextLink href="/v1" />} />}
           >
-            <History className="size-icon-xs" strokeWidth={ICON_STROKE} />
+            <History className="size-icon-xs text-foreground" strokeWidth={ICON_STROKE} />
           </TooltipTrigger>
           <TooltipContent className="text-0_6 font-sans not-italic">Switch to v1</TooltipContent>
         </Tooltip>
