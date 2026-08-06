@@ -64,6 +64,10 @@ export function PortfolioApp({
 
   return (
     <div className="h-screen-safe overflow-hidden flex flex-col bg-cream text-ink font-body">
+      <div className="shrink-0 bg-g text-cream px-4 py-2 text-center text-0_9 font-body">
+        🚀 v2 is on the way
+      </div>
+
       <Masthead site={site} onNameClick={() => setMobileTab('about')} />
 
       <div
