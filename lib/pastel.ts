@@ -31,6 +31,5 @@ export const HOME_TILE_HUES = {
   metrics: 60,
   work: 200,
   recommendations: 20,
-  coding: 145,
-  offclock: 280,
+  l1n3ar: 145,
 } as const;

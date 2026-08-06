@@ -1,5 +1,5 @@
-import { SectionPlaceholder } from '@/components/v2/section-placeholder';
+import { Metrics } from '@/components/v2/sections/metrics';
 
 export default function MetricsPage() {
-  return <SectionPlaceholder title="Metrics" note="Live traffic, latency, cost — coming next" />;
+  return <Metrics />;
 }

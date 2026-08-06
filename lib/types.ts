@@ -63,7 +63,7 @@ export type MusicEntry = { band: string; tagline: string; now?: string; links: O
 export type OffTheClock = { music: MusicEntry[] };
 
 export const V2_SECTIONS = [
-  'home', 'projects', 'ask', 'recommendations', 'coding', 'offclock', 'metrics', 'deployments', 'qalog',
+  'home', 'projects', 'ask', 'recommendations', 'l1n3ar', 'metrics', 'deployments', 'qalog',
 ] as const;
 export type V2Section = (typeof V2_SECTIONS)[number];
 
@@ -87,7 +87,7 @@ export type NavItem = {
 };
 
 export const HOME_TILE_KEYS = [
-  'projects', 'ask', 'metrics', 'work', 'recommendations', 'coding', 'offclock',
+  'projects', 'ask', 'metrics', 'work', 'recommendations', 'l1n3ar',
 ] as const;
 export type HomeTileKey = (typeof HOME_TILE_KEYS)[number];
 

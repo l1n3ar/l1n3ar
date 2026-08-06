@@ -35,8 +35,7 @@ const TILE_LAYOUT: Record<HomeTileKey, {
     size: 'sm', hue: HOME_TILE_HUES.recommendations, image: '/images/tiles/tile-recs.png',
     targetSection: 'recommendations',
   },
-  coding: { size: 'sm', hue: HOME_TILE_HUES.coding, image: '/images/tiles/tile-coding.png', targetSection: 'coding' },
-  offclock: { size: 'sm', hue: HOME_TILE_HUES.offclock, targetSection: 'offclock' },
+  l1n3ar: { size: 'sm', hue: HOME_TILE_HUES.l1n3ar, image: '/images/tiles/tile-coding.png', targetSection: 'l1n3ar' },
 };
 
 export function Home({
@@ -80,8 +79,8 @@ export function Home({
 
       <div className="grid grid-cols-[1fr_1.7fr] gap-3.5 min-h-0" style={{ flex: 1 }}>
         {renderTile('work')}
-        <div className="grid grid-cols-3 gap-2.5">
-          {(['recommendations', 'coding', 'offclock'] as const).map((key) => renderTile(key))}
+        <div className="grid grid-cols-2 gap-2.5">
+          {(['recommendations', 'l1n3ar'] as const).map((key) => renderTile(key))}
         </div>
       </div>
     </div>

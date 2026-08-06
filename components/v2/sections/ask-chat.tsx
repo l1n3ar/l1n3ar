@@ -12,7 +12,6 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { useSite } from '@/components/v2/site-context';
 import { useAutoScroll } from '@/hooks/use-auto-scroll';
 import { getCitations, type Citation } from '@/lib/citations';
-import { hueForKey, pastelChipStyle } from '@/lib/pastel';
 import { cn } from '@/lib/utils';
 
 const ICON_STROKE = 1.75;
@@ -126,21 +125,17 @@ export function AskChat({
 
   const suggestionChips = (
     <>
-      {suggestions.map((suggestion) => {
-        const chipStyle = pastelChipStyle(hueForKey(suggestion));
-        return (
-          <Button
-            key={suggestion}
-            type="button"
-            variant="outline"
-            onClick={() => ask(suggestion)}
-            className="pastel-chip h-auto whitespace-normal text-0_7 text-left justify-start px-3 py-2 rounded-lg self-start border-transparent capitalize"
-            style={chipStyle}
-          >
-            {suggestion}
-          </Button>
-        );
-      })}
+      {suggestions.map((suggestion) => (
+        <Button
+          key={suggestion}
+          type="button"
+          variant="outline"
+          onClick={() => ask(suggestion)}
+          className="bg-muted h-auto whitespace-normal text-0_7 text-left justify-start px-3 py-2 rounded-lg self-start border-transparent capitalize"
+        >
+          {suggestion}
+        </Button>
+      ))}
     </>
   );
 

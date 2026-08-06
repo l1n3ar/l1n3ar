@@ -31,11 +31,11 @@ export function Navbar({
       <div className="text-0_8 font-medium truncate text-center">{title}</div>
 
       <div className="flex items-center justify-end gap-2">
-        <ThemeToggle
+        {/* <ThemeToggle
           iconClassName="size-icon-xs"
           strokeWidth={ICON_STROKE}
           tooltipClassName="text-0_6 font-sans not-italic"
-        />
+        /> */}
 
         <Tooltip>
           <TooltipTrigger

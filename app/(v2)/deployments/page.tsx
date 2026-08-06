@@ -1,5 +1,5 @@
-import { SectionPlaceholder } from '@/components/v2/section-placeholder';
+import { Deployments } from '@/components/v2/sections/deployments';
 
 export default function DeploymentsPage() {
-  return <SectionPlaceholder title="Deployments" note="Deployment timeline coming next" />;
+  return <Deployments />;
 }

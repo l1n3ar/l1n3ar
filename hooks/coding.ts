@@ -14,6 +14,7 @@ export function useCodeforcesProfile(handle: string) {
       return result.profile;
     },
     staleTime: STALE_TIME,
+    enabled: Boolean(handle),
   });
 }
 
@@ -26,5 +27,6 @@ export function useLeetcodeProfile(handle: string) {
       return result.profile;
     },
     staleTime: STALE_TIME,
+    enabled: Boolean(handle),
   });
 }

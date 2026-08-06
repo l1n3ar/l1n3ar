@@ -26,7 +26,7 @@ const INSET = 'px-4';
 
 // Nav items render as one flat list — a separator marks the end of "explore" (after
 // off the clock) and the end of "live status" (after deployments), without group labels.
-const SEPARATOR_AFTER: V2Section[] = ['offclock', 'deployments'];
+const SEPARATOR_AFTER: V2Section[] = ['l1n3ar', 'deployments'];
 
 // GitHub gets its real Simple Icons brand mark (see BRAND_ICONS, rendered separately below);
 // LinkedIn has no real icon available (Simple Icons removed it after a trademark takedown
