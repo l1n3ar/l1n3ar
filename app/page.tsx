@@ -1,29 +1,13 @@
-
-import { PortfolioApp } from '@/components/portfolio-app';
-import { getAllProjects, getWorkHistory, getRecommendations, getSiteConfig, getOffTheClock } from '@/lib/content';
-
-export default async function Page(
-  props: {
-    searchParams: Promise<{ project?: string }>;
-  }
-) {
-  const searchParams = await props.searchParams;
-  const [site, workHistory, recommendations, projects, offTheClock] = await Promise.all([
-    getSiteConfig(),
-    getWorkHistory(),
-    getRecommendations(),
-    getAllProjects(),
-    getOffTheClock(),
-  ]);
-
+// v2 build in progress — replaced piece by piece across the v2-redesign branch. Old site lives at /v1.
+export default function Page() {
   return (
-    <PortfolioApp
-      site={site}
-      workHistory={workHistory}
-      recommendations={recommendations}
-      projects={projects}
-      initialProjectId={searchParams.project}
-      offTheClock={offTheClock}
-    />
+    <div className="flex h-screen items-center justify-center text-center">
+      <div>
+        <div className="text-lg font-medium">v2 — under construction</div>
+        <p className="text-sm text-muted-foreground mt-1">
+          in the meantime, the old site is at <a href="/v1" className="underline">/v1</a>.
+        </p>
+      </div>
+    </div>
   );
 }
