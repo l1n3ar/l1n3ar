@@ -1,5 +1,5 @@
 'use client';
-import { Camera, Code2, Link2, Music2, Play, Video } from 'lucide-react';
+import { Camera, Code2, Link2, Loader2, Music2, Play, Video } from 'lucide-react';
 import { SiInstagram, SiSpotify, SiYoutube, type IconType } from '@icons-pack/react-simple-icons';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { useCodeforcesProfile, useLeetcodeProfile } from '@/hooks/coding';
@@ -248,7 +248,7 @@ function BandCard({ entry }: { entry: MusicEntry }) {
 function NowPlayingCard() {
   const { data, isLoading, isError, error } = useNowPlaying();
 
-  if (isLoading) return <div className="text-0_7 text-muted-foreground py-2">loading…</div>;
+  if (isLoading) return   <Loader2 className="size-icon-sm animate-spin text-muted-foreground" strokeWidth={ICON_STROKE} />;
   if (isError) {
     return <p className="text-0_7 text-destructive">{error?.message ?? "can't reach Spotify right now."}</p>;
   }

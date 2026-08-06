@@ -17,6 +17,7 @@ import { Tag } from 'lucide-react';
 import type {
   Project, WorkHistoryEntry, Recommendation, SiteConfig, OffTheClock, ProjectCategory,
 } from '@/lib/types';
+import Link from 'next/link';
 
 export function PortfolioApp({
   site, workHistory, recommendations, projects, initialProjectId, offTheClock,
@@ -64,16 +65,18 @@ export function PortfolioApp({
 
   return (
     <div className="h-screen-safe overflow-hidden flex flex-col bg-cream text-ink font-body">
-      <div className="shrink-0 bg-g text-cream px-4 py-2 text-center text-0_9 font-body">
-        🚀 v2 is on the way
-      </div>
+      <Link href='/'>
+        <div className="shrink-0 bg-g text-cream px-4 py-2 text-center text-0_9 font-body">
+          🚀 v2 is LIVE!
+        </div>
+      </Link>
+
 
       <Masthead site={site} onNameClick={() => setMobileTab('about')} />
 
       <div
-        className={`hidden md:grid flex-1 min-h-0 transition-[grid-template-columns] duration-300 ${
-          sidebarOpen ? 'grid-cols-layout' : 'grid-cols-[3rem_1fr_20%]'
-        }`}
+        className={`hidden md:grid flex-1 min-h-0 transition-[grid-template-columns] duration-300 ${sidebarOpen ? 'grid-cols-layout' : 'grid-cols-[3rem_1fr_20%]'
+          }`}
       >
         <Sidebar
           about={site.about}
@@ -130,7 +133,7 @@ export function PortfolioApp({
               history={workHistory}
               recs={recommendations}
               open
-              onToggleOpen={() => {}}
+              onToggleOpen={() => { }}
               collapsible={false}
               codingProfiles={site.codingProfiles}
               offTheClock={offTheClock}
@@ -160,7 +163,7 @@ export function PortfolioApp({
             <AskPanel
               suggestions={selected.asks}
               open
-              onToggleOpen={() => {}}
+              onToggleOpen={() => { }}
               collapsible={false}
             />
           </div>
