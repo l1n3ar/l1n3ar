@@ -1,6 +1,6 @@
 'use client';
 import type { ReactNode } from 'react';
-import { CopyButton } from '@/components/copy-button';
+import { CopyButton } from '@/components/v1/copy-button';
 import { kicker } from '@/lib/typography';
 
 export function CaseHeader({ title }: { title: string }) {

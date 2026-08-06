@@ -7,7 +7,7 @@ import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { PanelLoading, PanelError } from '@/components/ui/query-state';
-import { QaLogDialog } from '@/components/dialogs/qa-log-dialog';
+import { QaLogDialog } from '@/components/v1/dialogs/qa-log-dialog';
 import { useSystemMetrics } from '@/hooks/system-metrics';
 import { useDeployments } from '@/hooks/deployments';
 import { commitMessage, commitRef, commitSha, timeAgo, stateDotClass, stateBadgeVariant } from '@/lib/deployment-meta';

@@ -1,5 +1,5 @@
-import { PortfolioApp } from '@/components/portfolio-app';
-import { V1MigrationDialog } from '@/components/v1-migration-dialog';
+import { PortfolioApp } from '@/components/v1/portfolio-app';
+import { V1MigrationDialog } from '@/components/v1/migration-dialog';
 import { getAllProjects, getWorkHistory, getRecommendations, getSiteConfig, getOffTheClock } from '@/lib/content';
 
 export default async function V1Page(

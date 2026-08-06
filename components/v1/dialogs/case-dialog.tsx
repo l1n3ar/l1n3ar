@@ -2,7 +2,7 @@
 import { forwardRef } from 'react';
 import { Dialog, DialogContent, DialogClose } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { CaseStudy } from '@/components/case-study/renderer';
+import { CaseStudy } from '@/components/v1/case-study/renderer';
 import { hasCaseStudy, type Project } from '@/lib/types';
 import { useImperativeDialog } from '@/hooks/use-imperative-dialog';
 import { dialogClose } from '@/lib/typography';

@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { getAskedQuestions, type AskedQuestion } from '@/actions/logs';
 import { timeAgo } from '@/lib/deployment-meta';
 import { dialogClose, kicker } from '@/lib/typography';
-import markdownStyles from '@/components/ask-panel/ask-panel.module.css';
+import markdownStyles from '@/components/v1/ask-panel/ask-panel.module.css';
 
 export function QaLogDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
   const [password, setPassword] = useState('');

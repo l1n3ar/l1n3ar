@@ -5,7 +5,7 @@ import { Link2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { kicker, metaItalic } from '@/lib/typography';
 import { cn } from '@/lib/utils';
-import { CopyButton } from '@/components/copy-button';
+import { CopyButton } from '@/components/v1/copy-button';
 
 export function ContextPanel({
   project, onOpenCase,
