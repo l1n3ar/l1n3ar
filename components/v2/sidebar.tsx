@@ -1,5 +1,5 @@
 'use client';
-import { Search, Github, Linkedin, FileText, Tag } from 'lucide-react';
+import { Search, Link as LinkIcon, FileText, Tag } from 'lucide-react';
 import {
   Sidebar as SidebarPrimitive, SidebarHeader, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupLabel,
   SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton,
@@ -11,9 +11,10 @@ import { useRelease } from '@/hooks/release';
 import type { NavGroupName, NavItem, V2Section } from '@/lib/types';
 import type { SiteConfig } from '@/lib/types';
 
-const FOOTER_ICONS: Record<string, typeof Github> = {
-  github: Github,
-  linkedin: Linkedin,
+// Placeholder icons until real brand marks are dropped in — see FOOTER_ICONS usage below.
+const FOOTER_ICONS: Record<string, typeof LinkIcon> = {
+  github: LinkIcon,
+  linkedin: LinkIcon,
   resume: FileText,
 };
 
