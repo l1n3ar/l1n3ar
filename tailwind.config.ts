@@ -1,7 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 export default {
-  content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}'],
+  content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './lib/**/*.{ts,tsx}'],
   darkMode: 'class',
   theme: {
     extend: {
@@ -29,6 +29,7 @@ export default {
           DEFAULT: 'rgb(var(--muted) / <alpha-value>)',
           foreground: 'rgb(var(--muted-foreground) / <alpha-value>)',
         },
+        'content-muted': 'rgb(var(--content-muted) / <alpha-value>)',
         destructive: {
           DEFAULT: 'rgb(var(--destructive) / <alpha-value>)',
         },
@@ -36,21 +37,50 @@ export default {
           DEFAULT: 'rgb(var(--popover) / <alpha-value>)',
           foreground: 'rgb(var(--popover-foreground) / <alpha-value>)',
         },
+        card: {
+          DEFAULT: 'rgb(var(--card) / <alpha-value>)',
+          foreground: 'rgb(var(--card-foreground) / <alpha-value>)',
+        },
+        sidebar: {
+          DEFAULT: 'rgb(var(--sidebar) / <alpha-value>)',
+          foreground: 'rgb(var(--sidebar-foreground) / <alpha-value>)',
+          primary: 'rgb(var(--sidebar-primary) / <alpha-value>)',
+          'primary-foreground': 'rgb(var(--sidebar-primary-foreground) / <alpha-value>)',
+          accent: 'rgb(var(--sidebar-accent) / <alpha-value>)',
+          'accent-foreground': 'rgb(var(--sidebar-accent-foreground) / <alpha-value>)',
+          border: 'rgb(var(--sidebar-border) / <alpha-value>)',
+          ring: 'rgb(var(--sidebar-ring) / <alpha-value>)',
+        },
       },
       fontFamily: {
         heading: ['var(--font-heading)', 'serif'],
         body: ['var(--font-body)', 'serif'],
         mono: ['var(--font-mono)', 'monospace'],
+        sans: ['var(--font-geist-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+      },
+      borderRadius: {
+        sm: 'var(--radius-sm, 0.125rem)',
+        DEFAULT: 'var(--radius, 0.25rem)',
+        md: 'var(--radius-md, 0.375rem)',
+        lg: 'var(--radius-lg, 0.5rem)',
       },
       fontSize: {
-        '0_6': '0.6rem',
-        '0_7': '0.7rem',
-        '0_8': '0.8rem',
-        '0_9': '0.9rem',
-        '1_1': '1.1rem',
-        '1_2': '1.2rem',
-        '1_4': '1.4rem',
-        '2_6': '2.6rem',
+        '0_6': 'var(--text-0_6, 0.6rem)',
+        '0_7': 'var(--text-0_7, 0.7rem)',
+        '0_8': 'var(--text-0_8, 0.8rem)',
+        '0_9': 'var(--text-0_9, 0.9rem)',
+        '1_1': 'var(--text-1_1, 1.1rem)',
+        '1_2': 'var(--text-1_2, 1.2rem)',
+        '1_4': 'var(--text-1_4, 1.4rem)',
+        '2_6': 'var(--text-2_6, 2.6rem)',
+      },
+      size: {
+        'icon-xs': 'var(--icon-xs, 0.75rem)',
+        'icon-sm': 'var(--icon-sm, 0.875rem)',
+        'icon-md': 'var(--icon-md, 1rem)',
+        'icon-lg': 'var(--icon-lg, 1.25rem)',
+        'icon-xl': 'var(--icon-xl, 1.5rem)',
+        'icon-2xl': 'var(--icon-2xl, 1.75rem)',
       },
       maxWidth: {
         dialog: 'min(47.5rem, 92vw)',

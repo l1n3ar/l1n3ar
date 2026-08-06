@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { Cormorant_Garamond, Lora, IBM_Plex_Mono } from 'next/font/google';
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 import './globals.css';
 import { getSiteConfig } from '@/lib/content';
 import { QueryProvider } from '@/components/query-provider';
@@ -30,7 +32,11 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: 'swap',
 });
 
+// VERCEL_PROJECT_PRODUCTION_URL is Vercel's stable production domain — VERCEL_URL is
+// per-deployment (drifts on every preview/prod deploy) and shouldn't be the primary
+// fallback, since a stale/mismatched og:image URL is exactly why social previews break.
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+  ?? (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : undefined)
   ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -62,7 +68,11 @@ const noFlashScript = `(function(){try{var t=localStorage.getItem('theme');var d
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${cormorantGaramond.variable} ${lora.variable} ${ibmPlexMono.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${cormorantGaramond.variable} ${lora.variable} ${ibmPlexMono.variable} ${GeistSans.variable} ${GeistMono.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: noFlashScript }} />
       </head>

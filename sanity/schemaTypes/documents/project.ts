@@ -37,7 +37,12 @@ export default defineType({
     defineField({ name: 'role', type: 'string', group: 'card', validation: (Rule) => Rule.required() }),
     defineField({ name: 'line', type: 'string', group: 'card', validation: (Rule) => Rule.required() }),
     defineField({ name: 'description', type: 'text', group: 'card', validation: (Rule) => Rule.required() }),
-    defineField({ name: 'tech', type: 'array', group: 'card', of: [{ type: 'string' }] }),
+    defineField({
+      name: 'tech',
+      type: 'array',
+      group: 'card',
+      of: [{ type: 'reference', to: [{ type: 'tech' }] }],
+    }),
     defineField({ name: 'github', type: 'url', group: 'card' }),
     defineField({ name: 'demo', type: 'url', group: 'card' }),
     defineField({

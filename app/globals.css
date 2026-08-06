@@ -64,6 +64,129 @@
 }
 
 /* ---------------------------------------------------------------------------
+   v2 design tokens — scoped to .v2 so v1 (outside that subtree) is untouched.
+   Values are the handoff's OKLCH spec converted to sRGB, since the shared
+   --x: R G B / rgb(var(--x) / <alpha-value>) convention above is fixed to rgb().
+   Sidebar/card keys are net-new (v1 never used them), so they're additive.
+   --------------------------------------------------------------------------- */
+.v2 {
+  /* Defining --foreground/--background as variables isn't enough on its own — any
+     element with no explicit text- or bg- color class just inherits the real color
+     property from <body>, which v1's base styles set to text-ink (v1's palette,
+     a different variable entirely). Setting color/background-color here directly
+     means inheritance starts from v2's tokens at the scope root, not from <body>. */
+  color: rgb(13 13 13);
+  background-color: rgb(255 255 255);
+  /* Same story as color/background above — `font-sans` on the wrapper <div> in
+     AppShell never reaches portaled Popover/Tooltip content, so it fell back to
+     <body>'s font-body (v1's serif Lora). Setting the real property here fixes it
+     at the scope root, the same way color/background-color did. */
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.875rem;
+  --radius-sm: 0.5rem;
+  --radius: 0.5rem;
+  --radius-md: 0.5625rem;
+  --radius-lg: 0.625rem;
+
+  /* v1 keeps its original fixed rem values (the var() fallback in tailwind.config.ts) —
+     these are the only scope where text-0_6..2_6 render larger, since at 100% browser
+     zoom the original scale read as too small across the whole v2 build. */
+  --text-0_6: 0.75rem;
+  --text-0_7: 0.8125rem;
+  --text-0_8: 0.875rem;
+  --text-0_9: 0.9375rem;
+  --text-1_1: 1.125rem;
+  --text-1_2: 1.25rem;
+  --text-1_4: 1.5rem;
+  --text-2_6: 3rem;
+
+  /* Same story as the text scale — icons were using raw size-3/3.5/4/5/6/7 utilities
+     (the shared numeric spacing scale), too small at 100% zoom. These are new size-*
+     keys (icon-xs..icon-2xl), so v1 — which never uses them — is unaffected. */
+  --icon-xs: 0.875rem;
+  --icon-sm: 1rem;
+  --icon-md: 1.125rem;
+  --icon-lg: 1.375rem;
+  --icon-xl: 1.625rem;
+  --icon-2xl: 1.875rem;
+
+  --background: 255 255 255;
+  --foreground: 13 13 13;
+  --muted: 240 240 240;
+  --muted-foreground: 99 99 99;
+  /* Separate from --muted on purpose: --muted also backs every small badge/pill, which
+     need real contrast against white cards. The content pane's backdrop wants something
+     much closer to white than that — a distinct token keeps the two from fighting. */
+  --content-muted: 252 252 252;
+  --border: 235 235 235;
+  --input: 235 235 235;
+  --ring: 235 235 235;
+  --card: 255 255 255;
+  --card-foreground: 13 13 13;
+  --popover: 255 255 255;
+  --popover-foreground: 13 13 13;
+  --primary: 13 13 13;
+  --primary-foreground: 255 255 255;
+  --secondary: 240 240 240;
+  --secondary-foreground: 13 13 13;
+
+  --sidebar: 255 255 255;
+  --sidebar-foreground: 13 13 13;
+  --sidebar-primary: 13 13 13;
+  --sidebar-primary-foreground: 255 255 255;
+  --sidebar-accent: 240 240 240;
+  --sidebar-accent-foreground: 13 13 13;
+  --sidebar-border: 235 235 235;
+  --sidebar-ring: 235 235 235;
+}
+
+/* Also matches when .v2 lands on the same element as .dark (documentElement, once
+   AppShell adds .v2 there so portaled overlays — which mount outside the wrapper div —
+   still inherit v2 tokens instead of falling back to v1's :root values). */
+.dark .v2,
+.v2.dark {
+  color: rgb(238 238 238);
+  background-color: rgb(11 11 11);
+  --background: 11 11 11;
+  --foreground: 238 238 238;
+  --muted: 29 29 29;
+  --muted-foreground: 137 137 137;
+  --content-muted: 16 16 16;
+  --border: 27 27 27;
+  --input: 27 27 27;
+  --ring: 27 27 27;
+  --card: 19 19 19;
+  --card-foreground: 238 238 238;
+  --popover: 19 19 19;
+  --popover-foreground: 238 238 238;
+  --primary: 238 238 238;
+  --primary-foreground: 11 11 11;
+  --secondary: 29 29 29;
+  --secondary-foreground: 238 238 238;
+
+  --sidebar: 11 11 11;
+  --sidebar-foreground: 238 238 238;
+  --sidebar-primary: 238 238 238;
+  --sidebar-primary-foreground: 11 11 11;
+  --sidebar-accent: 29 29 29;
+  --sidebar-accent-foreground: 238 238 238;
+  --sidebar-border: 27 27 27;
+  --sidebar-ring: 27 27 27;
+}
+
+/* Per-item pastel hue chips (projects, recommenders, bands, ...) — hue is set inline
+   per instance via lib/pastel.ts; light/dark swap follows the same .dark cascade as
+   everything else instead of needing theme state in JS. */
+.pastel-chip {
+  background: var(--pastel-bg);
+  color: var(--pastel-fg);
+}
+.dark .pastel-chip {
+  background: var(--pastel-bg-dark);
+  color: var(--pastel-fg-dark);
+}
+
+/* ---------------------------------------------------------------------------
    Base element resets
    --------------------------------------------------------------------------- */
 @layer base {
@@ -89,4 +212,10 @@
 
   .gz-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
   .gz-scroll { scrollbar-width: none; }
+
+  .thin-scroll::-webkit-scrollbar { width: 3px; height: 3px; }
+  .thin-scroll::-webkit-scrollbar-track { background: transparent; }
+  .thin-scroll::-webkit-scrollbar-thumb { background: rgb(var(--muted-foreground) / 0.3); border-radius: 9999px; }
+  .thin-scroll::-webkit-scrollbar-thumb:hover { background: rgb(var(--muted-foreground) / 0.5); }
+  .thin-scroll { scrollbar-width: thin; }
 }

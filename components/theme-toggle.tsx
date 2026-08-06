@@ -6,7 +6,12 @@ import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip
 import { getTheme, setTheme } from '@/lib/theme';
 import { metaItalic } from '@/lib/typography';
 
-export function ThemeToggle({ className }: { className?: string }) {
+export function ThemeToggle({
+  className, size = 'icon', iconClassName = 'h-4 w-4', strokeWidth, tooltipClassName = metaItalic,
+}: {
+  className?: string; size?: 'icon' | 'icon-sm'; iconClassName?: string; strokeWidth?: number;
+  tooltipClassName?: string;
+}) {
   const [dark, setDark] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -24,11 +29,13 @@ export function ThemeToggle({ className }: { className?: string }) {
   return (
     <Tooltip>
       <TooltipTrigger
-        render={<Button variant="ghost" size="icon" aria-label="toggle theme" onClick={toggle} className={className} />}
+        render={<Button variant="ghost" size='icon-xs' aria-label="toggle theme" onClick={toggle} className={className} />}
       >
-        {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+        {dark
+          ? <Sun className={iconClassName} strokeWidth={strokeWidth} />
+          : <Moon className={iconClassName} strokeWidth={strokeWidth} />}
       </TooltipTrigger>
-      <TooltipContent className={metaItalic}>toggle theme</TooltipContent>
+      <TooltipContent className={tooltipClassName}>toggle theme</TooltipContent>
     </Tooltip>
   );
 }

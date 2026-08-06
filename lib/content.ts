@@ -1,6 +1,6 @@
 import { client } from '@/sanity/lib/client';
 import type {
-  Project, WorkHistoryEntry, Recommendation, SiteConfig, OffTheClock,
+  Project, WorkHistoryEntry, Recommendation, SiteConfig, OffTheClock, NavItem, HomeTileContent,
 } from './types';
 
 export async function getSiteConfig(): Promise<SiteConfig> {
@@ -28,10 +28,23 @@ export async function getOffTheClock(): Promise<OffTheClock> {
   return { music };
 }
 
+export async function getNavItems(): Promise<NavItem[]> {
+  return client.fetch(`*[_type == "navItem" && hidden != true] | order(order asc){
+    section, label, group, icon, order, hidden
+  }`);
+}
+
+export async function getHomeTiles(): Promise<HomeTileContent[]> {
+  return client.fetch(`*[_type == "homeTile"] | order(order asc){
+    key, title, description, buttonLabel, icon, order
+  }`);
+}
+
 export async function getAllProjects(): Promise<Project[]> {
   return client.fetch(`*[_type == "project"] | order(order asc){
     "id": slug.current,
-    name, org, year, role, line, description, tech, github, demo, metrics, order, asks, category,
+    name, org, year, role, line, description, github, demo, metrics, order, asks, category,
+    "tech": tech[]->name,
     highlights,
     body
   }`);

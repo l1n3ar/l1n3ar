@@ -22,6 +22,23 @@ export function stateBadgeVariant(state?: string): 'default' | 'destructive' | '
   }
 }
 
+/** Traffic-light coloring (ready=green, error=red, building/queued=yellow) for a Badge's className. */
+export function stateBadgeClass(state?: string): string {
+  switch (state) {
+    case 'READY':
+      return 'bg-green-600/15 text-green-700 dark:text-green-400 border-transparent';
+    case 'ERROR':
+    case 'CANCELED':
+      return 'bg-red-600/15 text-red-700 dark:text-red-400 border-transparent';
+    case 'BUILDING':
+    case 'QUEUED':
+    case 'INITIALIZING':
+      return 'bg-yellow-600/15 text-yellow-700 dark:text-yellow-400 border-transparent';
+    default:
+      return 'bg-muted text-muted-foreground border-transparent';
+  }
+}
+
 export function timeAgo(input: string | number) {
   const then = typeof input === 'number' ? input : Number(input);
   const seconds = Math.max(0, Math.floor((Date.now() - then) / 1000));

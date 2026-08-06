@@ -60,7 +60,7 @@ async function timed<T>(kind: string, fn: () => Promise<T>): Promise<T> {
 
 export async function POST(req: Request) {
   const requestStart = Date.now();
-  const { messages } = await req.json();
+  const { messages, projectId, projectName } = await req.json();
 
   const lastUserMessage = [...messages].reverse().find((m: { role: string }) => m.role === 'user');
   if (!lastUserMessage?.content) {
@@ -93,17 +93,30 @@ export async function POST(req: Request) {
 
     const vectorLiteral = `[${embedding.join(',')}]`;
 
-    const chunks = await timed('db_query', async () => (await sql`
-      SELECT source, content, embedding <=> ${vectorLiteral}::vector AS distance
-      FROM documents
-      ORDER BY distance
-      LIMIT ${TOP_K}
-    `) as DocumentRow[]);
+    const chunks = await timed('db_query', async () => (await (projectId
+      ? sql`
+        SELECT source, content, embedding <=> ${vectorLiteral}::vector AS distance
+        FROM documents
+        WHERE source = ${`project:${projectId}`} OR source LIKE ${`case-study:${projectId}:%`}
+        ORDER BY distance
+        LIMIT ${TOP_K}
+      `
+      : sql`
+        SELECT source, content, embedding <=> ${vectorLiteral}::vector AS distance
+        FROM documents
+        ORDER BY distance
+        LIMIT ${TOP_K}
+      `
+    )) as DocumentRow[]);
     await recordValue('retrieval_total', Date.now() - retrievalStart);
 
     const context = chunks.map((c) => `[${c.source}]\n${c.content}`).join('\n\n---\n\n');
 
-    const system = `You are a helpful assistant on ${site.name}'s portfolio site, answering visitor questions about ${site.name}'s background, work history, and projects.
+    const scopeLine = projectName
+      ? `You are answering questions specifically about ${site.name}'s "${projectName}" project — stay focused on that project.`
+      : `You are answering visitor questions about ${site.name}'s background, work history, and projects.`;
+
+    const system = `You are a helpful assistant on ${site.name}'s portfolio site. ${scopeLine}
 
 Answer ONLY using the context below, retrieved from ${site.name}'s actual project documentation, work history, and case studies. If the context doesn't contain enough information to answer confidently, say so honestly instead of guessing.
 

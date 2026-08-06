@@ -1,0 +1,134 @@
+'use client';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { BookOpen, FileText, Mail } from 'lucide-react';
+import {
+  CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem,
+} from '@/components/ui/command';
+import { NAV_ICONS } from '@/components/v2/nav-icons';
+import { useCommandPalette } from '@/components/v2/command-palette-context';
+import { sectionHref } from '@/components/v2/section-routes';
+import { useSite } from '@/components/v2/site-context';
+import { BRAND_ICONS } from '@/components/v2/tech-icons';
+import { hasCaseStudy } from '@/lib/types';
+
+const ICON_STROKE = 1.75;
+
+// Mirrors components/v2/sidebar.tsx's footer icon logic exactly, so the same link
+// shows the same icon in both places — github/linkedin get real brand marks, resume
+// falls back to FileText, anything else (e.g. email) falls back to Mail.
+const FOOTER_ICONS: Record<string, typeof FileText> = {
+  resume: FileText,
+};
+
+const ITEM_CLASS = 'text-0_7 text-foreground data-[selected=true]:bg-muted data-[selected=true]:border-l-foreground data-[selected=true]:text-foreground [&_svg]:text-muted-foreground data-[selected=true]:*:[svg]:text-foreground';
+const GROUP_CLASS = 'text-foreground [&_[cmdk-group-heading]]:font-sans [&_[cmdk-group-heading]]:not-italic [&_[cmdk-group-heading]]:text-0_6 [&_[cmdk-group-heading]]:text-muted-foreground';
+
+export function CommandPalette() {
+  const { site, navItems, projects } = useSite();
+  const { open, setOpen } = useCommandPalette();
+  const router = useRouter();
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setOpen(!open);
+      }
+    };
+    document.addEventListener('keydown', handler);
+    return () => document.removeEventListener('keydown', handler);
+  }, [open, setOpen]);
+
+  const run = (fn: () => void) => {
+    setOpen(false);
+    fn();
+  };
+
+  return (
+    <CommandDialog
+      open={open}
+      onOpenChange={setOpen}
+      title="Command palette"
+      description="Jump to a section, a project or view links"
+      className="rounded-lg border-border max-w-lg font-sans not-italic"
+      commandClassName="bg-popover text-foreground font-sans"
+    >
+      <CommandInput
+        autoFocus
+        placeholder="Jump to a section, a project, toggle theme…"
+        className="font-sans not-italic text-0_8 text-foreground placeholder:text-0_7 placeholder:text-muted-foreground"
+        wrapperClassName="border-border focus-within:border-foreground/40"
+      />
+      <CommandList className="gz-scroll">
+        <CommandEmpty className="text-0_7 text-muted-foreground font-sans not-italic">No results.</CommandEmpty>
+
+        <CommandGroup heading="Go to" className={GROUP_CLASS}>
+          {navItems.map((item) => {
+            const Icon = NAV_ICONS[item.icon];
+            return (
+              <CommandItem
+                key={item.section}
+                value={item.label}
+                onSelect={() => run(() => router.push(sectionHref(item.section)))}
+                className={ITEM_CLASS}
+              >
+                <Icon strokeWidth={ICON_STROKE} />
+                {item.label}
+              </CommandItem>
+            );
+          })}
+        </CommandGroup>
+
+        <CommandGroup heading="Projects" className={GROUP_CLASS}>
+          {projects.filter(hasCaseStudy).map((p) => (
+            <CommandItem
+              key={p.id}
+              value={`project ${p.name}`}
+              onSelect={() => run(() => router.push(`/projects/${p.id}`))}
+              className={ITEM_CLASS}
+            >
+              <BookOpen strokeWidth={ICON_STROKE} />
+              {p.name}
+            </CommandItem>
+          ))}
+        </CommandGroup>
+
+        <CommandGroup heading="Actions" className={GROUP_CLASS}>
+          {/* <CommandItem
+            value="toggle theme dark light mode"
+            onSelect={() => run(toggleTheme)}
+            className={ITEM_CLASS}
+          >
+            <SunMoon strokeWidth={ICON_STROKE} />
+            Toggle dark / light mode
+          </CommandItem> */}
+          {site.footerLinks.map((l) => {
+            const isGithub = l.label.toLowerCase().includes('github');
+            const isLinkedin = l.label.toLowerCase().includes('linkedin');
+            const key = Object.keys(FOOTER_ICONS).find((k) => l.label.toLowerCase().includes(k));
+            const Icon = key ? FOOTER_ICONS[key] : Mail;
+            return (
+              <CommandItem
+                key={l.label}
+                value={l.label}
+                onSelect={() => run(() => window.open(l.href, '_blank', 'noopener,noreferrer'))}
+                className={ITEM_CLASS}
+              >
+                {isGithub ? (
+                  <BRAND_ICONS.github className="size-icon-xs" color="currentColor" />
+                ) : isLinkedin ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src="/images/tiles/linkedin.png" alt="" className="size-icon-xs object-contain" />
+                ) : (
+                  <Icon className="size-icon-xs" strokeWidth={ICON_STROKE} />
+                )}
+                {l.label}
+              </CommandItem>
+            );
+          })}
+        </CommandGroup>
+      </CommandList>
+    </CommandDialog>
+  );
+}
