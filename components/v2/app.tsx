@@ -1,13 +1,13 @@
 'use client';
 import { useState } from 'react';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
-import { V2Sidebar } from '@/components/v2/v2-sidebar';
-import { V2Navbar } from '@/components/v2/v2-navbar';
+import { AppSidebar } from '@/components/v2/sidebar';
+import { Navbar } from '@/components/v2/navbar';
 import type {
   Project, WorkHistoryEntry, Recommendation, SiteConfig, OffTheClock, NavItem, V2Section,
 } from '@/lib/types';
 
-export function AppShell({
+export function App({
   site, workHistory, recommendations, projects, offTheClock, navItems,
 }: {
   site: SiteConfig; workHistory: WorkHistoryEntry[]; recommendations: Recommendation[];
@@ -19,9 +19,9 @@ export function AppShell({
   return (
     <div className="v2 font-sans">
       <SidebarProvider>
-        <V2Sidebar site={site} navItems={navItems} section={section} onSectionChange={setSection} />
+        <AppSidebar site={site} navItems={navItems} section={section} onSectionChange={setSection} />
         <SidebarInset className="h-screen-safe">
-          <V2Navbar title={title} feedbackEmail={site.email} />
+          <Navbar title={title} feedbackEmail={site.email} />
           <div className="flex-1 min-h-0 overflow-y-auto gz-scroll">
             <div className="max-w-[1440px] mx-auto p-5">
               <SectionPlaceholder section={section} projectCount={projects.length} workHistoryCount={workHistory.length} recommendationCount={recommendations.length} musicCount={offTheClock.music.length} />

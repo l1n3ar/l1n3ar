@@ -1,7 +1,7 @@
 'use client';
 import { Search, Github, Linkedin, FileText, Tag } from 'lucide-react';
 import {
-  Sidebar, SidebarHeader, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupLabel,
+  Sidebar as SidebarPrimitive, SidebarHeader, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupLabel,
   SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton,
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
@@ -17,7 +17,7 @@ const FOOTER_ICONS: Record<string, typeof Github> = {
   resume: FileText,
 };
 
-export function V2Sidebar({
+export function AppSidebar({
   site, navItems, section, onSectionChange,
 }: {
   site: SiteConfig; navItems: NavItem[]; section: V2Section; onSectionChange: (s: V2Section) => void;
@@ -26,7 +26,7 @@ export function V2Sidebar({
   const groups = groupBy(navItems);
 
   return (
-    <Sidebar collapsible="offcanvas" className="w-[204px]">
+    <SidebarPrimitive collapsible="offcanvas" className="w-[204px]">
       <SidebarHeader className="h-11 flex-row items-center justify-between border-b border-sidebar-border px-3">
         <button type="button" onClick={() => onSectionChange('home')} className="text-sm font-medium truncate">
           {site.name}
@@ -100,7 +100,7 @@ export function V2Sidebar({
           })}
         </div>
       </SidebarFooter>
-    </Sidebar>
+    </SidebarPrimitive>
   );
 }
 

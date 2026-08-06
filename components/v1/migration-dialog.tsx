@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogClose } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { dialogClose } from '@/lib/typography';
 
-export function V1MigrationDialog() {
+export function MigrationDialog() {
   const [open, setOpen] = useState(true);
 
   return (

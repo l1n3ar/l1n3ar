@@ -3,7 +3,7 @@ import { ChevronLeft, MessageCircle } from 'lucide-react';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 
-export function V2Navbar({
+export function Navbar({
   title, onBack, feedbackEmail,
 }: {
   title: string; onBack?: () => void; feedbackEmail?: string;
