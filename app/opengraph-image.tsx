@@ -13,15 +13,17 @@ const V2_COLORS = {
   background: '#ffffff',
   foreground: '#0d0d0d',
   mutedForeground: '#636363',
-  border: '#ebebeb',
 };
 
 export default async function OpengraphImage() {
   const [site, imageBuffer] = await Promise.all([
     getSiteConfig(),
-    readFile(join(process.cwd(), 'public/images/tiles/tile-projects.png')),
+    // A cropped screenshot of the live homepage — see how it was generated in the
+    // "how can I make the opengraph image an image of my website" conversation.
+    // Re-take/re-crop this whenever the site's design changes noticeably.
+    readFile(join(process.cwd(), 'public/images/og-site.png')),
   ]);
-  const backgroundImage = `data:image/png;base64,${imageBuffer.toString('base64')}`;
+  const screenshot = `data:image/png;base64,${imageBuffer.toString('base64')}`;
 
   return new ImageResponse(
     (
@@ -35,36 +37,28 @@ export default async function OpengraphImage() {
         }}
       >
         <img
-          src={backgroundImage}
+          src={screenshot}
           alt=""
           width={size.width}
           height={size.height}
-          style={{ position: 'absolute', inset: 0, objectFit: 'cover', opacity: 0.4 }}
+          style={{ position: 'absolute', inset: 0, objectFit: 'cover' }}
         />
         <div
           style={{
-            position: 'relative',
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
-            padding: '80px',
-            color: V2_COLORS.foreground,
-            fontFamily: 'sans-serif',
+            padding: '40px 56px',
+            background: 'linear-gradient(to top, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.85) 60%, rgba(255,255,255,0) 100%)',
           }}
         >
-          <div style={{ display: 'flex', fontSize: 84, fontWeight: 600, lineHeight: 1.05 }}>
+          <div style={{ display: 'flex', fontSize: 52, fontWeight: 600, color: V2_COLORS.foreground, fontFamily: 'sans-serif' }}>
             {site.name}
           </div>
-          <div
-            style={{
-              display: 'flex',
-              fontSize: 32,
-              marginTop: 28,
-              paddingTop: 28,
-              borderTop: `2px solid ${V2_COLORS.border}`,
-              color: V2_COLORS.mutedForeground,
-            }}
-          >
+          <div style={{ display: 'flex', fontSize: 26, color: V2_COLORS.mutedForeground, marginTop: 8, fontFamily: 'sans-serif' }}>
             {site.role}
           </div>
         </div>
