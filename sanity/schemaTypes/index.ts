@@ -6,6 +6,7 @@ import workHistoryEntry from './documents/work-history-entry';
 import recommendation from './documents/recommendation';
 import musicEntry from './documents/music-entry';
 import navItem from './documents/nav-item';
+import homeTile from './documents/home-tile';
 import caseSection from './objects/case-section';
 import codeBlock from './objects/code-block';
 import caseImage from './objects/case-image';
@@ -20,6 +21,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     recommendation,
     musicEntry,
     navItem,
+    homeTile,
     caseSection,
     codeBlock,
     caseImage,

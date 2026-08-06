@@ -18,3 +18,19 @@ export function pastelChipStyle(hue: number): CSSProperties {
     '--pastel-fg-dark': `oklch(0.76 0.07 ${hue})`,
   } as CSSProperties;
 }
+
+/** The Home bento tiles' washed-out fixed-hue variant — distinct from pastelChipStyle, per the design handoff prototype. */
+export function tilePastel(hue: number): { bg: string; fg: string } {
+  return { bg: `oklch(0.95 0.024 ${hue})`, fg: `oklch(0.45 0.065 ${hue})` };
+}
+
+/** Fixed per-tile hues from the design handoff prototype, so tile color never depends on section order. */
+export const HOME_TILE_HUES = {
+  projects: 260,
+  ask: 330,
+  metrics: 60,
+  work: 200,
+  recommendations: 20,
+  coding: 145,
+  offclock: 280,
+} as const;

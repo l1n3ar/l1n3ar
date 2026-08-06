@@ -57,6 +57,12 @@ export default {
         mono: ['var(--font-mono)', 'monospace'],
         sans: ['var(--font-geist-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
+      borderRadius: {
+        sm: 'var(--radius-sm, 0.125rem)',
+        DEFAULT: 'var(--radius, 0.25rem)',
+        md: 'var(--radius-md, 0.375rem)',
+        lg: 'var(--radius-lg, 0.5rem)',
+      },
       fontSize: {
         '0_6': '0.6rem',
         '0_7': '0.7rem',

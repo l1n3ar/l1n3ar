@@ -70,13 +70,19 @@
    Sidebar/card keys are net-new (v1 never used them), so they're additive.
    --------------------------------------------------------------------------- */
 .v2 {
-  --background: 255 255 255;
+  font-size: 0.8125rem;
+  --radius-sm: 0.5rem;
+  --radius: 0.5rem;
+  --radius-md: 0.5625rem;
+  --radius-lg: 0.625rem;
+
+  --background: 251 251 251;
   --foreground: 13 13 13;
   --muted: 240 240 240;
   --muted-foreground: 99 99 99;
-  --border: 219 219 219;
-  --input: 219 219 219;
-  --ring: 219 219 219;
+  --border: 235 235 235;
+  --input: 235 235 235;
+  --ring: 235 235 235;
   --card: 255 255 255;
   --card-foreground: 13 13 13;
   --popover: 255 255 255;
@@ -86,14 +92,14 @@
   --secondary: 240 240 240;
   --secondary-foreground: 13 13 13;
 
-  --sidebar: 255 255 255;
+  --sidebar: 249 249 249;
   --sidebar-foreground: 13 13 13;
   --sidebar-primary: 13 13 13;
   --sidebar-primary-foreground: 255 255 255;
   --sidebar-accent: 240 240 240;
   --sidebar-accent-foreground: 13 13 13;
-  --sidebar-border: 219 219 219;
-  --sidebar-ring: 219 219 219;
+  --sidebar-border: 235 235 235;
+  --sidebar-ring: 235 235 235;
 }
 
 .dark .v2 {
@@ -101,9 +107,9 @@
   --foreground: 238 238 238;
   --muted: 29 29 29;
   --muted-foreground: 137 137 137;
-  --border: 43 43 43;
-  --input: 43 43 43;
-  --ring: 43 43 43;
+  --border: 27 27 27;
+  --input: 27 27 27;
+  --ring: 27 27 27;
   --card: 19 19 19;
   --card-foreground: 238 238 238;
   --popover: 19 19 19;
@@ -119,8 +125,8 @@
   --sidebar-primary-foreground: 11 11 11;
   --sidebar-accent: 29 29 29;
   --sidebar-accent-foreground: 238 238 238;
-  --sidebar-border: 43 43 43;
-  --sidebar-ring: 43 43 43;
+  --sidebar-border: 27 27 27;
+  --sidebar-ring: 27 27 27;
 }
 
 /* Per-item pastel hue chips (projects, recommenders, bands, ...) — hue is set inline

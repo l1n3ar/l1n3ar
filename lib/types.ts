@@ -73,7 +73,7 @@ export type NavGroupName = (typeof NAV_GROUPS)[number];
 // Curated so Studio can only pick an icon name this codebase actually bundles —
 // see components/v2/nav-icons.ts for the name -> Lucide component lookup.
 export const NAV_ICON_NAMES = [
-  'Home', 'FolderKanban', 'MessageSquare', 'Quote', 'Code2', 'Music2', 'Activity', 'GitBranch', 'Lock',
+  'Home', 'FolderKanban', 'MessageSquare', 'Quote', 'Code2', 'Music2', 'Activity', 'GitBranch', 'Lock', 'Briefcase',
 ] as const;
 export type NavIconName = (typeof NAV_ICON_NAMES)[number];
 
@@ -84,6 +84,20 @@ export type NavItem = {
   icon: NavIconName;
   order: number;
   hidden?: boolean;
+};
+
+export const HOME_TILE_KEYS = [
+  'projects', 'ask', 'metrics', 'work', 'recommendations', 'coding', 'offclock',
+] as const;
+export type HomeTileKey = (typeof HOME_TILE_KEYS)[number];
+
+export type HomeTileContent = {
+  key: HomeTileKey;
+  title: string;
+  description?: string;
+  buttonLabel?: string;
+  icon: NavIconName;
+  order: number;
 };
 
 export type SiteConfig = {

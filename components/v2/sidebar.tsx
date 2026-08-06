@@ -1,15 +1,27 @@
 'use client';
+import { Fragment } from 'react';
 import { Search, Link as LinkIcon, FileText, Tag } from 'lucide-react';
 import {
-  Sidebar as SidebarPrimitive, SidebarHeader, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupLabel,
-  SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton,
+  Sidebar as SidebarPrimitive, SidebarHeader, SidebarContent, SidebarFooter,
+  SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarSeparator,
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
-import { ThemeToggle } from '@/components/theme-toggle';
 import { NAV_ICONS } from '@/components/v2/nav-icons';
 import { useRelease } from '@/hooks/release';
-import type { NavGroupName, NavItem, V2Section } from '@/lib/types';
+import type { NavItem, V2Section } from '@/lib/types';
 import type { SiteConfig } from '@/lib/types';
+
+// Base icon weight for this UI — see Global look / Icons in the design handoff.
+const ICON_STROKE = 1.75;
+
+// One consistent horizontal inset for every row in the sidebar (header, search, nav,
+// footer) so separators — which sit flush with no margin of their own — line up with
+// everything above and below them instead of appearing narrower/wider at each nesting depth.
+const INSET = 'px-3';
+
+// Nav items render as one flat list — a separator marks the end of "explore" (after
+// off the clock) and the end of "live status" (after deployments), without group labels.
+const SEPARATOR_AFTER: V2Section[] = ['offclock', 'deployments'];
 
 // Placeholder icons until real brand marks are dropped in — see FOOTER_ICONS usage below.
 const FOOTER_ICONS: Record<string, typeof LinkIcon> = {
@@ -24,61 +36,67 @@ export function AppSidebar({
   site: SiteConfig; navItems: NavItem[]; section: V2Section; onSectionChange: (s: V2Section) => void;
 }) {
   const { data: release } = useRelease();
-  const groups = groupBy(navItems);
 
   return (
-    <SidebarPrimitive collapsible="offcanvas" className="w-[204px]">
-      <SidebarHeader className="h-11 flex-row items-center justify-between border-b border-sidebar-border px-3">
-        <button type="button" onClick={() => onSectionChange('home')} className="text-sm font-medium truncate">
-          {site.name}
+    <SidebarPrimitive collapsible="offcanvas">
+      <SidebarHeader className={`gap-2 pt-3 pb-2 ${INSET}`}>
+        <button type="button" onClick={() => onSectionChange('home')} className="flex items-start gap-2 min-w-0">
+          <span className="flex flex-col min-w-0 text-left">
+            <span className="text-0_7 font-medium truncate">{site.name}</span>
+            <span className="text-0_6 text-sidebar-foreground/55 line-clamp-2">{site.about}</span>
+          </span>
         </button>
-        <ThemeToggle />
       </SidebarHeader>
 
-      <div className="px-3 py-2.5 border-b border-sidebar-border">
-        <p className="text-xs text-sidebar-foreground/65 line-clamp-2">{site.about}</p>
-      </div>
 
-      <div className="px-3 py-2 border-b border-sidebar-border">
-        <Button variant="outline" size="sm" className="w-full justify-start gap-2 text-sidebar-foreground/60">
-          <Search className="h-3.5 w-3.5" />
-          Search
-          <kbd className="ml-auto text-[0.65rem] font-mono">⌘K</kbd>
+
+      <div className={`py-2 ${INSET}`}>
+        <Button variant="outline" size="sm" className="w-full justify-start gap-2 text-sidebar-foreground/55">
+          <Search className="size-3 shrink-0" strokeWidth={ICON_STROKE} />
+          <span className="text-0_7">Search</span>
+          <kbd className="ml-auto text-0_6 font-mono text-sidebar-foreground/40">⌘K</kbd>
         </Button>
       </div>
 
-      <SidebarContent className="gap-0">
-        {groups.map(([group, items]) => (
-          <SidebarGroup key={group} className="border-b border-sidebar-border py-2.5">
-            <SidebarGroupLabel className="text-[9.5px] uppercase tracking-wide">{group}</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {items.map((item) => {
-                  const Icon = NAV_ICONS[item.icon];
-                  return (
-                    <SidebarMenuItem key={item.section}>
-                      <SidebarMenuButton isActive={section === item.section} onClick={() => onSectionChange(item.section)}>
-                        <Icon className="h-4 w-4" />
-                        <span>{item.label}</span>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  );
-                })}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        ))}
+
+
+      <SidebarContent className={`gap-0 py-2 ${INSET} gz-scroll p-2`}>
+        <SidebarMenu className="gap-0.2">
+          {navItems.map((item) => {
+            const Icon = NAV_ICONS[item.icon];
+            return (
+              <Fragment key={item.section}>
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    size="sm"
+                    isActive={section === item.section}
+                    onClick={() => onSectionChange(item.section)}
+                    className="text-0_7 gap-2 text-sidebar-foreground/70 data-active:text-sidebar-foreground"
+                  >
+                    <Icon strokeWidth={ICON_STROKE} />
+                    <span>{item.label}</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                {SEPARATOR_AFTER.includes(item.section) && (
+                  <SidebarSeparator className="mx-0 my-1.5" />
+                )}
+              </Fragment>
+            );
+          })}
+        </SidebarMenu>
       </SidebarContent>
 
-      <SidebarFooter className="gap-2 border-t border-sidebar-border">
+      <SidebarSeparator className="mx-0" />
+
+      <SidebarFooter className={`gap-2 pt-2 ${INSET}`}>
         {release && (
           <a
             href={release.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1 text-[0.65rem] font-mono text-sidebar-foreground/45 hover:text-sidebar-foreground/80 px-1"
+            className="flex items-center gap-1 text-0_6 font-mono text-sidebar-foreground/40 hover:text-sidebar-foreground/70"
           >
-            <Tag className="h-3 w-3" />
+            <Tag className="size-3" strokeWidth={ICON_STROKE} />
             {release.tag}
           </a>
         )}
@@ -92,10 +110,10 @@ export function AppSidebar({
                 href={l.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex size-7 items-center justify-center rounded-md border border-sidebar-border text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent"
+                className="flex size-6 items-center justify-center rounded-md text-sidebar-foreground/55 hover:text-sidebar-foreground hover:bg-sidebar-accent"
                 aria-label={l.label}
               >
-                <Icon className="h-3.5 w-3.5" />
+                <Icon className="size-3" strokeWidth={ICON_STROKE} />
               </a>
             );
           })}
@@ -103,14 +121,4 @@ export function AppSidebar({
       </SidebarFooter>
     </SidebarPrimitive>
   );
-}
-
-function groupBy(items: NavItem[]): [NavGroupName, NavItem[]][] {
-  const map = new Map<NavGroupName, NavItem[]>();
-  for (const item of items) {
-    const list = map.get(item.group) ?? [];
-    list.push(item);
-    map.set(item.group, list);
-  }
-  return Array.from(map.entries());
 }
