@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { useSite } from '@/components/v2/site-context';
 import { useAutoScroll } from '@/hooks/use-auto-scroll';
 import { getCitations, type Citation } from '@/lib/citations';
 import { hueForKey, pastelChipStyle } from '@/lib/pastel';
@@ -77,9 +78,8 @@ function CitationsList({ citations }: { citations: Citation[] }) {
 }
 
 export function AskChat({
-  siteName, suggestions, apiBody, title, inputPosition = 'bottom', className, style,
+  suggestions, apiBody, title, inputPosition = 'bottom', className, style,
 }: {
-  siteName: string;
   suggestions: string[];
   apiBody?: Record<string, unknown>;
   title?: string;
@@ -87,7 +87,8 @@ export function AskChat({
   className?: string;
   style?: CSSProperties;
 }) {
-  const initials = siteName.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase();
+  const { site } = useSite();
+  const initials = site.name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase();
   const {
     messages, input, setInput, handleInputChange, append, setMessages, isLoading, error,
   } = useChat({ api: '/api/ask', body: apiBody });
@@ -133,7 +134,7 @@ export function AskChat({
             type="button"
             variant="outline"
             onClick={() => ask(suggestion)}
-            className="pastel-chip h-auto whitespace-normal text-0_7 text-left justify-start px-3 py-2 rounded-full self-start border-transparent capitalize"
+            className="pastel-chip h-auto whitespace-normal text-0_7 text-left justify-start px-3 py-2 rounded-lg self-start border-transparent capitalize"
             style={chipStyle}
           >
             {suggestion}

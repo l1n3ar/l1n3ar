@@ -9,7 +9,7 @@ import { hasCaseStudy, type Project } from '@/lib/types';
 
 const ICON_STROKE = 1.75;
 
-export function ProjectDetail({ project, siteName }: { project: Project; siteName: string }) {
+export function ProjectDetail({ project }: { project: Project }) {
   const { containerRef, leftPercent, startResize, onResizeMove, endResize } = useSplitResize();
   const accentColor = tilePastel(hueForKey(project.id)).fg;
 
@@ -78,7 +78,6 @@ export function ProjectDetail({ project, siteName }: { project: Project; siteNam
       </div>
 
       <AskChat
-        siteName={siteName}
         title={`Ask about ${project.name}`}
         suggestions={project.asks}
         apiBody={{ projectId: project.id, projectName: project.name }}

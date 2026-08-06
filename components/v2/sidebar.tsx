@@ -12,9 +12,9 @@ import { NAV_ICONS } from '@/components/v2/nav-icons';
 import { BRAND_ICONS } from '@/components/v2/tech-icons';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { sectionHref } from '@/components/v2/section-routes';
+import { useSite } from '@/components/v2/site-context';
 import { useRelease } from '@/hooks/release';
-import type { NavItem, V2Section } from '@/lib/types';
-import type { SiteConfig } from '@/lib/types';
+import type { V2Section } from '@/lib/types';
 
 // Base icon weight for this UI — see Global look / Icons in the design handoff.
 const ICON_STROKE = 1.75;
@@ -42,11 +42,8 @@ const FOOTER_LABELS: Record<string, string> = {
   resume: 'Download resume',
 };
 
-export function AppSidebar({
-  site, navItems, section,
-}: {
-  site: SiteConfig; navItems: NavItem[]; section: V2Section;
-}) {
+export function AppSidebar({ section }: { section: V2Section }) {
+  const { site, navItems } = useSite();
   const { data: release } = useRelease();
   const initials = site.name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase();
 

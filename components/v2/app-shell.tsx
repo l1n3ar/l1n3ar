@@ -5,6 +5,7 @@ import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/v2/sidebar';
 import { Navbar } from '@/components/v2/navbar';
 import { sectionFromPathname, sectionHref } from '@/components/v2/section-routes';
+import { SiteProvider } from '@/components/v2/site-context';
 import type { SiteConfig, NavItem, Project } from '@/lib/types';
 
 const PROJECT_DETAIL = /^\/projects\/([^/]+)$/;
@@ -32,16 +33,18 @@ export function AppShell({
   const onBack = projectSlug ? () => router.push(sectionHref('projects')) : undefined;
 
   return (
-    <div className="v2 font-sans">
-      <SidebarProvider style={{ '--sidebar-width': 'clamp(14rem, 18vw, 18rem)' } as React.CSSProperties}>
-        <AppSidebar site={site} navItems={navItems} section={section} />
-        <SidebarInset className="h-screen-safe">
-          <Navbar title={title} feedbackEmail={site.email} onBack={onBack} />
-          <div className="flex-1 min-h-0 overflow-y-auto gz-scroll bg-muted/20">
-            <div className="max-w-[90rem] mx-auto p-5 h-full">{children}</div>
-          </div>
-        </SidebarInset>
-      </SidebarProvider>
-    </div>
+    <SiteProvider site={site} navItems={navItems} projects={projects}>
+      <div className="v2 font-sans">
+        <SidebarProvider style={{ '--sidebar-width': 'clamp(14rem, 18vw, 18rem)' } as React.CSSProperties}>
+          <AppSidebar section={section} />
+          <SidebarInset className="h-screen-safe">
+            <Navbar title={title} onBack={onBack} />
+            <div className="flex-1 min-h-0 overflow-y-auto gz-scroll bg-muted/20">
+              <div className="max-w-[90rem] mx-auto p-5 h-full">{children}</div>
+            </div>
+          </SidebarInset>
+        </SidebarProvider>
+      </div>
+    </SiteProvider>
   );
 }
