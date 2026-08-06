@@ -1,5 +1,8 @@
+'use client';
+import { useRouter } from 'next/navigation';
 import { HomeCard, HOME_CARD_ICON_SIZE } from '@/components/v2/sections/home-tile';
 import { NAV_ICONS } from '@/components/v2/nav-icons';
+import { sectionHref } from '@/components/v2/section-routes';
 import { HOME_TILE_HUES } from '@/lib/pastel';
 import { cn } from '@/lib/utils';
 import type {
@@ -37,10 +40,11 @@ const TILE_LAYOUT: Record<HomeTileKey, {
 };
 
 export function Home({
-  tiles, workHistory, onNavigate,
+  tiles, workHistory,
 }: {
-  tiles: HomeTileContent[]; workHistory: WorkHistoryEntry[]; onNavigate: (section: V2Section) => void;
+  tiles: HomeTileContent[]; workHistory: WorkHistoryEntry[];
 }) {
+  const router = useRouter();
   const byKey = new Map(tiles.map((t) => [t.key, t]));
 
   const renderTile = (key: HomeTileKey) => {
@@ -59,7 +63,7 @@ export function Home({
         title={content.title}
         description={content.description}
         buttonLabel={content.buttonLabel}
-        onClick={layout.targetSection ? () => onNavigate(layout.targetSection!) : undefined}
+        onClick={layout.targetSection ? () => router.push(sectionHref(layout.targetSection!)) : undefined}
         component={key === 'work' ? <WorkHistoryTimeline entries={workHistory} /> : undefined}
       />
     );

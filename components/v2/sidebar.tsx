@@ -1,5 +1,6 @@
 'use client';
 import { Fragment } from 'react';
+import NextLink from 'next/link';
 import { Search, Link as LinkIcon, FileText, Tag } from 'lucide-react';
 import {
   Sidebar as SidebarPrimitive, SidebarHeader, SidebarContent, SidebarFooter,
@@ -7,6 +8,7 @@ import {
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { NAV_ICONS } from '@/components/v2/nav-icons';
+import { sectionHref } from '@/components/v2/section-routes';
 import { useRelease } from '@/hooks/release';
 import type { NavItem, V2Section } from '@/lib/types';
 import type { SiteConfig } from '@/lib/types';
@@ -31,21 +33,21 @@ const FOOTER_ICONS: Record<string, typeof LinkIcon> = {
 };
 
 export function AppSidebar({
-  site, navItems, section, onSectionChange,
+  site, navItems, section,
 }: {
-  site: SiteConfig; navItems: NavItem[]; section: V2Section; onSectionChange: (s: V2Section) => void;
+  site: SiteConfig; navItems: NavItem[]; section: V2Section;
 }) {
   const { data: release } = useRelease();
 
   return (
     <SidebarPrimitive collapsible="offcanvas">
       <SidebarHeader className={`gap-2 pt-3 pb-2 ${INSET}`}>
-        <button type="button" onClick={() => onSectionChange('home')} className="flex items-start gap-2 min-w-0">
+        <NextLink href={sectionHref('home')} className="flex items-start gap-2 min-w-0">
           <span className="flex flex-col min-w-0 text-left">
             <span className="text-0_7 font-medium truncate">{site.name}</span>
             <span className="text-0_6 text-sidebar-foreground/55 line-clamp-2">{site.about}</span>
           </span>
-        </button>
+        </NextLink>
       </SidebarHeader>
 
 
@@ -70,7 +72,7 @@ export function AppSidebar({
                   <SidebarMenuButton
                     size="sm"
                     isActive={section === item.section}
-                    onClick={() => onSectionChange(item.section)}
+                    render={<NextLink href={sectionHref(item.section)} />}
                     className="text-0_7 gap-2 text-sidebar-foreground/70 data-active:text-sidebar-foreground"
                   >
                     <Icon strokeWidth={ICON_STROKE} />
