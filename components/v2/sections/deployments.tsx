@@ -45,7 +45,7 @@ export function Deployments() {
                   className="flex items-center gap-3 px-3.5 py-2.5 border-b border-border last:border-b-0 text-0_7"
                 >
                   <span className="flex-1 min-w-0 truncate">{message ?? 'deployment'}</span>
-                  <span className={`shrink-0 text-0_6 font-medium px-2 py-0.5 rounded-md ${stateBadgeClass(d.state)}`}>
+                  <span className={`shrink-0 text-0_6 font-medium px-2 py-0.5 rounded-sm ${stateBadgeClass(d.state)}`}>
                     {d.state ?? 'unknown'}
                   </span>
                   {d.target && <Badge variant="outline" className="shrink-0 capitalize">{d.target}</Badge>}
