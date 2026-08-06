@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/v2/sidebar';
+import { CommandPalette } from '@/components/v2/command-palette';
+import { CommandPaletteProvider } from '@/components/v2/command-palette-context';
 import { Navbar } from '@/components/v2/navbar';
 import { sectionFromPathname, sectionHref } from '@/components/v2/section-routes';
 import { SiteProvider } from '@/components/v2/site-context';
@@ -34,17 +36,20 @@ export function AppShell({
 
   return (
     <SiteProvider site={site} navItems={navItems} projects={projects}>
-      <div className="v2 font-sans">
-        <SidebarProvider style={{ '--sidebar-width': 'clamp(14rem, 18vw, 18rem)' } as React.CSSProperties}>
-          <AppSidebar section={section} />
-          <SidebarInset className="h-screen-safe">
-            <Navbar title={title} onBack={onBack} />
-            <div className="flex-1 min-h-0 overflow-y-auto gz-scroll bg-muted/20">
-              <div className="max-w-[90rem] mx-auto p-5 h-full">{children}</div>
-            </div>
-          </SidebarInset>
-        </SidebarProvider>
-      </div>
+      <CommandPaletteProvider>
+        <div className="v2 font-sans">
+          <SidebarProvider style={{ '--sidebar-width': 'clamp(14rem, 18vw, 18rem)' } as React.CSSProperties}>
+            <AppSidebar section={section} />
+            <SidebarInset className="h-screen-safe">
+              <Navbar title={title} onBack={onBack} />
+              <div className="flex-1 min-h-0 overflow-y-auto gz-scroll bg-muted/20">
+                <div className="max-w-[90rem] mx-auto p-5 h-full">{children}</div>
+              </div>
+            </SidebarInset>
+          </SidebarProvider>
+          <CommandPalette />
+        </div>
+      </CommandPaletteProvider>
     </SiteProvider>
   );
 }

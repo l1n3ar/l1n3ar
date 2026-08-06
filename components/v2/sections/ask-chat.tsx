@@ -18,11 +18,18 @@ const ICON_STROKE = 1.75;
 
 // Cycled while waiting for the first token, so a slow answer doesn't just sit on "thinking…".
 const THINKING_MESSAGES = [
-  'thinking…',
-  'reading through the case study…',
-  'checking the details…',
-  'putting an answer together…',
-  'almost there…',
+  'frobnicating',
+  'zhuzhing the answer',
+  'sploinking around',
+  'discombobulating',
+  'wibbling the data',
+  'narfling the garthog',
+  'gloopifying',
+  'bamboozling the bits',
+  'quazzling',
+  'flibbertigibbeting',
+  'spiffbuffing',
+  'blorping',
 ];
 
 function useThinkingMessage(active: boolean) {
@@ -30,15 +37,10 @@ function useThinkingMessage(active: boolean) {
 
   useEffect(() => {
     if (!active) return;
-    const id = setInterval(() => {
-      setIndex((current) => {
-        if (THINKING_MESSAGES.length <= 1) return current;
-        let next = current;
-        while (next === current) next = Math.floor(Math.random() * THINKING_MESSAGES.length);
-        return next;
-      });
-    }, 2000);
-    return () => clearInterval(id);
+    const id = setTimeout(() => {
+      setIndex(Math.floor(Math.random() * THINKING_MESSAGES.length));
+    }, 0);
+    return () => clearTimeout(id);
   }, [active]);
 
   return THINKING_MESSAGES[index];
@@ -64,9 +66,9 @@ function CitationsList({ citations }: { citations: Citation[] }) {
         {citations.map((c) => {
           const pct = Math.round(c.score * 100);
           return (
-            <div key={c.source} className="flex items-center gap-2 text-[0.625rem] text-muted-foreground px-1">
-              <span className="truncate min-w-0 flex-1 capitalize">{c.label}</span>
-              <Progress value={pct} className="w-10 shrink-0" indicatorClassName="bg-green-600 dark:bg-green-500" />
+            <div key={c.source} className="flex items-center gap-2 text-[0.65rem] text-muted-foreground px-1 font-light">
+              <span className="truncate min-w-0 flex-1">{c.label}</span>
+              <Progress value={pct} className="w-10 shrink-0" indicatorClassName="bg-green-700 dark:bg-green-500" />
               <span className="text-muted-foreground/70 shrink-0 font-mono w-6 text-right">{pct}</span>
             </div>
           );
@@ -221,7 +223,7 @@ export function AskChat({
                         {initials}
                       </AvatarFallback>
                     </Avatar>
-                    <div className="text-0_7 text-muted-foreground italic px-1">{thinkingMessage}</div>
+                    <div className="text-[0.8rem] font-light text-muted-foreground px-1 animate-pulse">{thinkingMessage}</div>
                   </div>
                 )}
                 {error && (
