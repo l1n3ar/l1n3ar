@@ -55,7 +55,7 @@ function formatTimestamp(date?: Date) {
 function CitationsList({ citations }: { citations: Citation[] }) {
   if (citations.length === 0) return null;
   return (
-    <div className="max-w-full border-l-2 border-border pl-2 py-1 mb-4">
+    <div className="max-w-full ml-8 border-l-2 border-border pl-2 py-1 mb-4">
       <div className="flex items-center gap-2 text-[0.625rem] text-muted-foreground/70 uppercase tracking-wide px-1 pb-1 mb-1 border-b border-border">
         <span className="flex-1">source</span>
         <span className="w-14 shrink-0 text-right">confidence</span>
@@ -249,7 +249,8 @@ export function AskChat({
             )}
           </div>
         ) : centering ? (
-          <div className="flex flex-col items-center gap-3 px-4 pb-2">
+          <div className="flex flex-col items-center gap-4 px-4">
+            {inputForm}
             <div className="flex flex-wrap justify-center gap-2 max-w-2xl">
               {suggestionChips}
             </div>
@@ -260,7 +261,6 @@ export function AskChat({
           </div>
         )}
 
-        {!hasMessages && centering && inputForm}
         {spacer}
       </div>
 
