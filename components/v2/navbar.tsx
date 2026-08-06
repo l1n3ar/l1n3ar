@@ -1,6 +1,6 @@
 'use client';
 import NextLink from 'next/link';
-import { ChevronLeft, History } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, History } from 'lucide-react';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -19,8 +19,9 @@ export function Navbar({
       <div className="flex items-center gap-1">
         <SidebarTrigger aria-label="toggle sidebar" />
         {onBack && (
-          <Button variant="ghost" size="icon-xs" onClick={onBack} aria-label="back">
-            <ChevronLeft className="size-icon-xs" strokeWidth={ICON_STROKE} />
+          <Button variant="ghost" size="icon-xs" onClick={onBack} className="gap-1 flex items-center">
+            <ArrowLeft className="size-icon-xs" strokeWidth={ICON_STROKE} />
+            {/* <div className="text-0_7">Back to projects</div> */}
           </Button>
         )}
       </div>

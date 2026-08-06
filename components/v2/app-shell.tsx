@@ -5,14 +5,14 @@ import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/v2/sidebar';
 import { Navbar } from '@/components/v2/navbar';
 import { sectionFromPathname, sectionHref } from '@/components/v2/section-routes';
-import type { SiteConfig, NavItem } from '@/lib/types';
+import type { SiteConfig, NavItem, Project } from '@/lib/types';
 
-const PROJECT_DETAIL = /^\/projects\/[^/]+$/;
+const PROJECT_DETAIL = /^\/projects\/([^/]+)$/;
 
 export function AppShell({
-  site, navItems, children,
+  site, navItems, projects, children,
 }: {
-  site: SiteConfig; navItems: NavItem[]; children: React.ReactNode;
+  site: SiteConfig; navItems: NavItem[]; projects: Project[]; children: React.ReactNode;
 }) {
   // Popover/Tooltip/Dialog content portals to document.body, outside the .v2 wrapper
   // div below — without this, those overlays fall back to v1's :root tokens instead
@@ -26,8 +26,10 @@ export function AppShell({
   const pathname = usePathname();
   const router = useRouter();
   const section = sectionFromPathname(pathname);
-  const title = navItems.find((i) => i.section === section)?.label ?? section;
-  const onBack = PROJECT_DETAIL.test(pathname) ? () => router.push(sectionHref('projects')) : undefined;
+  const projectSlug = pathname.match(PROJECT_DETAIL)?.[1];
+  const project = projectSlug ? projects.find((p) => p.id === projectSlug) : undefined;
+  const title = project?.name ?? navItems.find((i) => i.section === section)?.label ?? section;
+  const onBack = projectSlug ? () => router.push(sectionHref('projects')) : undefined;
 
   return (
     <div className="v2 font-sans">

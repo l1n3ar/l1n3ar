@@ -1,16 +1,8 @@
 'use client';
-import type { Message } from 'ai/react';
 import { Progress } from '@/components/ui/progress';
+import { getCitations, type Citation } from '@/lib/citations';
 
-export type Citation = { source: string; label: string; score: number };
-
-export function getCitations(message: Message): Citation[] {
-  const annotation = message.annotations?.find(
-    (a): a is { citations: Citation[] } =>
-      typeof a === 'object' && a !== null && 'citations' in a,
-  );
-  return annotation?.citations ?? [];
-}
+export { getCitations, type Citation };
 
 export function CitationsMarker({ citations }: { citations: Citation[] }) {
 

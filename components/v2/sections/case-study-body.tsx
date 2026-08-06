@@ -19,7 +19,7 @@ export function CaseStudyBody({ body }: { body?: CaseBodyBlock[] }) {
           case 'caseSection':
             return (
               <section key={block._key}>
-                <h3 className="text-0_9 font-semibold mb-2">{block.heading}</h3>
+                <h3 className="text-0_9 font-semibold mb-2 capitalize">{block.heading}</h3>
                 <PortableText value={block.body ?? []} components={proseComponents} />
               </section>
             );
@@ -27,7 +27,7 @@ export function CaseStudyBody({ body }: { body?: CaseBodyBlock[] }) {
             return (
               <pre
                 key={block._key}
-                className="font-mono text-0_75 leading-relaxed bg-[#1c1c1e] text-[#e4e4e7] rounded-lg p-4 overflow-x-auto gz-scroll"
+                className="font-mono text-0_75 leading-relaxed bg-[#1c1c1e] text-[#e4e4e7] rounded-lg p-4 overflow-x-auto thin-scroll"
               >
                 <code>{block.code}</code>
               </pre>
