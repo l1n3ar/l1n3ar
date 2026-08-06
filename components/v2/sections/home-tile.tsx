@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 // clean surface), fading out to reveal the watercolor image lower down. The transparent
 // stop sits deep (88%) so text/timeline content anywhere in the card stays on a legible
 // backdrop — only a thin band near the very bottom shows the image at full strength.
-const GRADIENT_CSS = 'linear-gradient(to bottom, rgb(var(--background)) 0%, transparent 88%)';
+const GRADIENT_CSS = 'linear-gradient(to bottom, rgb(var(--background)) 0%, transparent 97%)';
 
 type HomeCardSize = 'lg' | 'md' | 'sm';
 
