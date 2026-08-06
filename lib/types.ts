@@ -62,6 +62,30 @@ export type MusicEntry = { band: string; tagline: string; now?: string; links: O
 
 export type OffTheClock = { music: MusicEntry[] };
 
+export const V2_SECTIONS = [
+  'home', 'projects', 'ask', 'recommendations', 'coding', 'offclock', 'metrics', 'deployments', 'qalog',
+] as const;
+export type V2Section = (typeof V2_SECTIONS)[number];
+
+export const NAV_GROUPS = ['Explore', 'Live status', 'Restricted'] as const;
+export type NavGroupName = (typeof NAV_GROUPS)[number];
+
+// Curated so Studio can only pick an icon name this codebase actually bundles —
+// see components/v2/nav-icons.ts for the name -> Lucide component lookup.
+export const NAV_ICON_NAMES = [
+  'Home', 'FolderKanban', 'MessageSquare', 'Quote', 'Code2', 'Music2', 'Activity', 'GitBranch', 'Lock',
+] as const;
+export type NavIconName = (typeof NAV_ICON_NAMES)[number];
+
+export type NavItem = {
+  section: V2Section;
+  label: string;
+  group: NavGroupName;
+  icon: NavIconName;
+  order: number;
+  hidden?: boolean;
+};
+
 export type SiteConfig = {
   name: string;
   role: string;
