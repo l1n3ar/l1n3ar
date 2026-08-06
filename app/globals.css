@@ -64,6 +64,78 @@
 }
 
 /* ---------------------------------------------------------------------------
+   v2 design tokens — scoped to .v2 so v1 (outside that subtree) is untouched.
+   Values are the handoff's OKLCH spec converted to sRGB, since the shared
+   --x: R G B / rgb(var(--x) / <alpha-value>) convention above is fixed to rgb().
+   Sidebar/card keys are net-new (v1 never used them), so they're additive.
+   --------------------------------------------------------------------------- */
+.v2 {
+  --background: 255 255 255;
+  --foreground: 13 13 13;
+  --muted: 240 240 240;
+  --muted-foreground: 99 99 99;
+  --border: 219 219 219;
+  --input: 219 219 219;
+  --ring: 219 219 219;
+  --card: 255 255 255;
+  --card-foreground: 13 13 13;
+  --popover: 255 255 255;
+  --popover-foreground: 13 13 13;
+  --primary: 13 13 13;
+  --primary-foreground: 255 255 255;
+  --secondary: 240 240 240;
+  --secondary-foreground: 13 13 13;
+
+  --sidebar: 255 255 255;
+  --sidebar-foreground: 13 13 13;
+  --sidebar-primary: 13 13 13;
+  --sidebar-primary-foreground: 255 255 255;
+  --sidebar-accent: 240 240 240;
+  --sidebar-accent-foreground: 13 13 13;
+  --sidebar-border: 219 219 219;
+  --sidebar-ring: 219 219 219;
+}
+
+.dark .v2 {
+  --background: 11 11 11;
+  --foreground: 238 238 238;
+  --muted: 29 29 29;
+  --muted-foreground: 137 137 137;
+  --border: 43 43 43;
+  --input: 43 43 43;
+  --ring: 43 43 43;
+  --card: 19 19 19;
+  --card-foreground: 238 238 238;
+  --popover: 19 19 19;
+  --popover-foreground: 238 238 238;
+  --primary: 238 238 238;
+  --primary-foreground: 11 11 11;
+  --secondary: 29 29 29;
+  --secondary-foreground: 238 238 238;
+
+  --sidebar: 11 11 11;
+  --sidebar-foreground: 238 238 238;
+  --sidebar-primary: 238 238 238;
+  --sidebar-primary-foreground: 11 11 11;
+  --sidebar-accent: 29 29 29;
+  --sidebar-accent-foreground: 238 238 238;
+  --sidebar-border: 43 43 43;
+  --sidebar-ring: 43 43 43;
+}
+
+/* Per-item pastel hue chips (projects, recommenders, bands, ...) — hue is set inline
+   per instance via lib/pastel.ts; light/dark swap follows the same .dark cascade as
+   everything else instead of needing theme state in JS. */
+.pastel-chip {
+  background: var(--pastel-bg);
+  color: var(--pastel-fg);
+}
+.dark .pastel-chip {
+  background: var(--pastel-bg-dark);
+  color: var(--pastel-fg-dark);
+}
+
+/* ---------------------------------------------------------------------------
    Base element resets
    --------------------------------------------------------------------------- */
 @layer base {

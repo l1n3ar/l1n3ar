@@ -36,11 +36,26 @@ export default {
           DEFAULT: 'rgb(var(--popover) / <alpha-value>)',
           foreground: 'rgb(var(--popover-foreground) / <alpha-value>)',
         },
+        card: {
+          DEFAULT: 'rgb(var(--card) / <alpha-value>)',
+          foreground: 'rgb(var(--card-foreground) / <alpha-value>)',
+        },
+        sidebar: {
+          DEFAULT: 'rgb(var(--sidebar) / <alpha-value>)',
+          foreground: 'rgb(var(--sidebar-foreground) / <alpha-value>)',
+          primary: 'rgb(var(--sidebar-primary) / <alpha-value>)',
+          'primary-foreground': 'rgb(var(--sidebar-primary-foreground) / <alpha-value>)',
+          accent: 'rgb(var(--sidebar-accent) / <alpha-value>)',
+          'accent-foreground': 'rgb(var(--sidebar-accent-foreground) / <alpha-value>)',
+          border: 'rgb(var(--sidebar-border) / <alpha-value>)',
+          ring: 'rgb(var(--sidebar-ring) / <alpha-value>)',
+        },
       },
       fontFamily: {
         heading: ['var(--font-heading)', 'serif'],
         body: ['var(--font-body)', 'serif'],
         mono: ['var(--font-mono)', 'monospace'],
+        sans: ['var(--font-geist-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       fontSize: {
         '0_6': '0.6rem',

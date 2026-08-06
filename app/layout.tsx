@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { Cormorant_Garamond, Lora, IBM_Plex_Mono } from 'next/font/google';
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 import './globals.css';
 import { getSiteConfig } from '@/lib/content';
 import { QueryProvider } from '@/components/query-provider';
@@ -62,7 +64,11 @@ const noFlashScript = `(function(){try{var t=localStorage.getItem('theme');var d
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${cormorantGaramond.variable} ${lora.variable} ${ibmPlexMono.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${cormorantGaramond.variable} ${lora.variable} ${ibmPlexMono.variable} ${GeistSans.variable} ${GeistMono.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: noFlashScript }} />
       </head>

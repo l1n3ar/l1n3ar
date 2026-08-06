@@ -1,0 +1,20 @@
+import type { CSSProperties } from 'react';
+
+/** Deterministic 0–360 hue from any string key, so a given item always lands on the same hue. */
+export function hueForKey(key: string): number {
+  let hash = 0;
+  for (let i = 0; i < key.length; i++) {
+    hash = (hash * 31 + key.charCodeAt(i)) | 0;
+  }
+  return Math.abs(hash) % 360;
+}
+
+/** Inline style for the `.pastel-chip` utility (see globals.css) — light/dark swap follows the existing `.dark` cascade. */
+export function pastelChipStyle(hue: number): CSSProperties {
+  return {
+    '--pastel-bg': `oklch(0.93 0.032 ${hue})`,
+    '--pastel-fg': `oklch(0.49 0.075 ${hue})`,
+    '--pastel-bg-dark': `oklch(0.28 0.035 ${hue})`,
+    '--pastel-fg-dark': `oklch(0.76 0.07 ${hue})`,
+  } as CSSProperties;
+}
