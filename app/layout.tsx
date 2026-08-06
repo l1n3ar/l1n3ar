@@ -65,7 +65,9 @@ export async function generateMetadata(): Promise<Metadata> {
 // The 'theme_v2' key literal here must match THEME_STORAGE_KEY in lib/theme.ts — this script
 // has to run before any JS module loads, so it can't import the constant directly. Also clears
 // the old 'theme' key once per visit so returning visitors' stale dark-mode choice is wiped.
-const noFlashScript = `(function(){try{localStorage.removeItem('theme');var t=localStorage.getItem('theme_v2');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark');}catch(e){}})();`;
+// Default is always light — dark only applies if the visitor explicitly toggled it on this
+// site before (no system-preference fallback).
+const noFlashScript = `(function(){try{localStorage.removeItem('theme');if(localStorage.getItem('theme_v2')==='dark')document.documentElement.classList.add('dark');}catch(e){}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
