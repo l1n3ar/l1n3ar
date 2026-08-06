@@ -1,8 +1,10 @@
 'use client';
-import { ChevronLeft } from 'lucide-react';
+import NextLink from 'next/link';
+import { ChevronLeft, History } from 'lucide-react';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { ThemeToggle } from '@/components/theme-toggle';
 
 const ICON_STROKE = 1.75;
@@ -18,7 +20,7 @@ export function Navbar({
         <SidebarTrigger aria-label="toggle sidebar" />
         {onBack && (
           <Button variant="ghost" size="icon-sm" onClick={onBack} aria-label="back">
-            <ChevronLeft className="size-3" strokeWidth={ICON_STROKE} />
+            <ChevronLeft className="size-icon-xs" strokeWidth={ICON_STROKE} />
           </Button>
         )}
       </div>
@@ -26,12 +28,27 @@ export function Navbar({
       <div className="text-0_8 font-medium truncate text-center">{title}</div>
 
       <div className="flex items-center justify-end gap-2">
-        <ThemeToggle size="icon-sm" iconClassName="size-3" strokeWidth={ICON_STROKE} />
+        <ThemeToggle
+          size="icon-sm"
+          iconClassName="size-icon-xs"
+          strokeWidth={ICON_STROKE}
+          tooltipClassName="text-0_6 font-sans not-italic"
+        />
+
+        <Tooltip>
+          <TooltipTrigger
+            render={<Button variant="ghost" size="icon-sm" aria-label="switch to v1" render={<NextLink href="/v1" />} />}
+          >
+            <History className="size-icon-xs" strokeWidth={ICON_STROKE} />
+          </TooltipTrigger>
+          <TooltipContent className="text-0_6 font-sans not-italic">Switch to v1</TooltipContent>
+        </Tooltip>
+
         {feedbackEmail && (
           <>
-            <Separator orientation="vertical" className="h-4 data-[orientation=vertical]:self-center" />
+            <Separator orientation="vertical" className="h-4 bg-muted-foreground/30 data-[orientation=vertical]:self-center" />
             <Button variant="outline" size="sm" render={<a href={`mailto:${feedbackEmail}`} />}>
-              <span className="text-0_7">Feedback</span>
+              <span className="text-0_7 text-foreground">Feedback</span>
             </Button>
           </>
         )}

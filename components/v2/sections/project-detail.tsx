@@ -1,5 +1,6 @@
 import { Link as GithubIcon, ExternalLink, Send } from 'lucide-react';
 import { CaseStudyBody } from '@/components/v2/sections/case-study-body';
+import { Input } from '@/components/ui/input';
 import { hueForKey, pastelChipStyle } from '@/lib/pastel';
 import { hasCaseStudy, type Project } from '@/lib/types';
 
@@ -23,7 +24,7 @@ export function ProjectDetail({ project }: { project: Project }) {
               rel="noopener noreferrer"
               className="text-0_7 px-2.5 py-1.5 rounded-md border border-border bg-card flex items-center gap-1.5"
             >
-              <GithubIcon className="size-3" strokeWidth={ICON_STROKE} /> Code
+              <GithubIcon className="size-icon-xs" strokeWidth={ICON_STROKE} /> Code
             </a>
           )}
           {project.demo && (
@@ -33,7 +34,7 @@ export function ProjectDetail({ project }: { project: Project }) {
               rel="noopener noreferrer"
               className="text-0_7 px-2.5 py-1.5 rounded-md border border-border bg-card flex items-center gap-1.5"
             >
-              <ExternalLink className="size-3" strokeWidth={ICON_STROKE} /> Demo
+              <ExternalLink className="size-icon-xs" strokeWidth={ICON_STROKE} /> Demo
             </a>
           )}
         </div>
@@ -80,16 +81,16 @@ function ProjectAskPanel({ project }: { project: Project }) {
         })}
       </div>
       <div className="flex items-center gap-1.5 border border-border rounded-lg px-2.5 py-2 bg-card">
-        <input
+        <Input
           placeholder="ask something…"
-          className="flex-1 min-w-0 border-none outline-none bg-transparent text-0_7"
+          className="flex-1 min-w-0 h-auto border-none shadow-none px-0 bg-transparent text-0_7 focus-visible:ring-0"
         />
         <button
           type="button"
-          className="size-6 rounded-md bg-foreground text-background flex items-center justify-center shrink-0"
+          className="size-icon-xl rounded-md bg-foreground text-background flex items-center justify-center shrink-0"
           aria-label="send"
         >
-          <Send className="size-3" strokeWidth={ICON_STROKE} />
+          <Send className="size-icon-xs" strokeWidth={ICON_STROKE} />
         </button>
       </div>
     </div>

@@ -70,16 +70,49 @@
    Sidebar/card keys are net-new (v1 never used them), so they're additive.
    --------------------------------------------------------------------------- */
 .v2 {
-  font-size: 0.8125rem;
+  /* Defining --foreground/--background as variables isn't enough on its own — any
+     element with no explicit text-*/bg-* class just inherits the real `color`
+     property from <body>, which v1's base styles set to text-ink (v1's palette,
+     a different variable entirely). Setting color/background-color here directly
+     means inheritance starts from v2's tokens at the scope root, not from <body>. */
+  color: rgb(13 13 13);
+  background-color: rgb(255 255 255);
+  font-size: 0.875rem;
   --radius-sm: 0.5rem;
   --radius: 0.5rem;
   --radius-md: 0.5625rem;
   --radius-lg: 0.625rem;
 
-  --background: 251 251 251;
+  /* v1 keeps its original fixed rem values (the var() fallback in tailwind.config.ts) —
+     these are the only scope where text-0_6..2_6 render larger, since at 100% browser
+     zoom the original scale read as too small across the whole v2 build. */
+  --text-0_6: 0.75rem;
+  --text-0_7: 0.8125rem;
+  --text-0_8: 0.875rem;
+  --text-0_9: 0.9375rem;
+  --text-1_1: 1.125rem;
+  --text-1_2: 1.25rem;
+  --text-1_4: 1.5rem;
+  --text-2_6: 3rem;
+
+  /* Same story as the text scale — icons were using raw size-3/3.5/4/5/6/7 utilities
+     (the shared numeric spacing scale), too small at 100% zoom. These are new size-*
+     keys (icon-xs..icon-2xl), so v1 — which never uses them — is unaffected. */
+  --icon-xs: 0.875rem;
+  --icon-sm: 1rem;
+  --icon-md: 1.125rem;
+  --icon-lg: 1.375rem;
+  --icon-xl: 1.625rem;
+  --icon-2xl: 1.875rem;
+
+  --background: 255 255 255;
   --foreground: 13 13 13;
   --muted: 240 240 240;
   --muted-foreground: 99 99 99;
+  /* Separate from --muted on purpose: --muted also backs every small badge/pill, which
+     need real contrast against white cards. The content pane's backdrop wants something
+     much closer to white than that — a distinct token keeps the two from fighting. */
+  --content-muted: 252 252 252;
   --border: 235 235 235;
   --input: 235 235 235;
   --ring: 235 235 235;
@@ -92,7 +125,7 @@
   --secondary: 240 240 240;
   --secondary-foreground: 13 13 13;
 
-  --sidebar: 250 250 250;
+  --sidebar: 255 255 255;
   --sidebar-foreground: 13 13 13;
   --sidebar-primary: 13 13 13;
   --sidebar-primary-foreground: 255 255 255;
@@ -102,11 +135,18 @@
   --sidebar-ring: 235 235 235;
 }
 
-.dark .v2 {
+/* Also matches when .v2 lands on the same element as .dark (documentElement, once
+   AppShell adds .v2 there so portaled overlays — which mount outside the wrapper div —
+   still inherit v2 tokens instead of falling back to v1's :root values). */
+.dark .v2,
+.v2.dark {
+  color: rgb(238 238 238);
+  background-color: rgb(11 11 11);
   --background: 11 11 11;
   --foreground: 238 238 238;
   --muted: 29 29 29;
   --muted-foreground: 137 137 137;
+  --content-muted: 16 16 16;
   --border: 27 27 27;
   --input: 27 27 27;
   --ring: 27 27 27;

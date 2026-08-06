@@ -13,9 +13,9 @@ type HomeCardSize = 'lg' | 'md' | 'sm';
 const SIZE: Record<HomeCardSize, {
   icon: string; title: string; description: string; radius: string;
 }> = {
-  lg: { icon: 'size-6', title: 'text-[1.375rem]', description: 'text-0_8',  radius: 'rounded-2xl' },
-  md: { icon: 'size-5', title: 'text-0_9', description: 'text-0_7',  radius: 'rounded-[0.875rem]' },
-  sm: { icon: 'size-4', title: 'text-0_7', description: 'text-0_6', radius: 'rounded-xl' },
+  lg: { icon: 'size-icon-xl', title: 'text-[1.375rem]', description: 'text-0_8', radius: 'rounded-2xl' },
+  md: { icon: 'size-icon-lg', title: 'text-0_9', description: 'text-0_7', radius: 'rounded-[0.875rem]' },
+  sm: { icon: 'size-icon-md', title: 'text-0_7', description: 'text-0_6', radius: 'rounded-xl' },
 };
 
 // One card, one layout: icon, then title below it, then either a bespoke `component`

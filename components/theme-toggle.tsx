@@ -7,9 +7,10 @@ import { getTheme, setTheme } from '@/lib/theme';
 import { metaItalic } from '@/lib/typography';
 
 export function ThemeToggle({
-  className, size = 'icon', iconClassName = 'h-4 w-4', strokeWidth,
+  className, size = 'icon', iconClassName = 'h-4 w-4', strokeWidth, tooltipClassName = metaItalic,
 }: {
   className?: string; size?: 'icon' | 'icon-sm'; iconClassName?: string; strokeWidth?: number;
+  tooltipClassName?: string;
 }) {
   const [dark, setDark] = useState<boolean | null>(null);
 
@@ -34,7 +35,7 @@ export function ThemeToggle({
           ? <Sun className={iconClassName} strokeWidth={strokeWidth} />
           : <Moon className={iconClassName} strokeWidth={strokeWidth} />}
       </TooltipTrigger>
-      <TooltipContent className={metaItalic}>toggle theme</TooltipContent>
+      <TooltipContent className={tooltipClassName}>toggle theme</TooltipContent>
     </Tooltip>
   );
 }

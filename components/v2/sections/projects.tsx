@@ -1,71 +1,122 @@
 'use client';
-import { useState } from 'react';
-import { LayoutGrid, List } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { Filter, Search, X } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { ProjectCard } from '@/components/v2/sections/project-card';
 import { PROJECT_CATEGORIES, type Project, type ProjectCategory } from '@/lib/types';
 
 const ICON_STROKE = 1.75;
+type CategoryFilter = ProjectCategory | 'all';
 
 export function Projects({ projects }: { projects: Project[] }) {
   const categories = PROJECT_CATEGORIES.filter((c) => projects.some((p) => p.category === c));
-  const [category, setCategory] = useState<ProjectCategory>(categories[0]);
-  const [view, setView] = useState<'grid' | 'list'>('grid');
+  const [category, setCategory] = useState<CategoryFilter>('all');
+  const [tech, setTech] = useState<string | null>(null);
+  const [query, setQuery] = useState('');
 
-  const filtered = projects.filter((p) => p.category === category);
+  const inCategory = category === 'all' ? projects : projects.filter((p) => p.category === category);
+  const techOptions = useMemo(
+    () => Array.from(new Set(inCategory.flatMap((p) => p.tech))).sort(),
+    [inCategory],
+  );
+
+  const q = query.trim().toLowerCase();
+  const filtered = inCategory.filter((p) => {
+    if (tech && !p.tech.includes(tech)) return false;
+    if (q && !`${p.name} ${p.line} ${p.tech.join(' ')}`.toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  const selectCategory = (c: CategoryFilter) => {
+    setCategory(c);
+    setTech(null);
+  };
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-3.5">
-        <h1 className="text-0_9 font-semibold">Projects</h1>
-        <div className="flex gap-1">
-          <Button
-            variant={view === 'grid' ? 'secondary' : 'outline'}
-            size="icon-sm"
-            aria-label="grid view"
-            onClick={() => setView('grid')}
-          >
-            <LayoutGrid className="size-3.5" strokeWidth={ICON_STROKE} />
-          </Button>
-          <Button
-            variant={view === 'list' ? 'secondary' : 'outline'}
-            size="icon-sm"
-            aria-label="list view"
-            onClick={() => setView('list')}
-          >
-            <List className="size-3.5" strokeWidth={ICON_STROKE} />
-          </Button>
+      <h1 className="text-0_9 font-semibold mb-3.5">Projects</h1>
+
+      <div className="flex items-center justify-between gap-4 border-b border-border mb-3">
+        <div className="flex gap-4">
+          {(['all', ...categories] as const).map((cat) => (
+            <button
+              key={cat}
+              type="button"
+              onClick={() => selectCategory(cat)}
+              className={`text-0_7 font-medium capitalize pb-2 border-b-2 -mb-px ${
+                cat === category ? 'border-foreground text-foreground' : 'border-transparent text-muted-foreground'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-2 pb-2">
+          <div className="relative w-40">
+            <Search
+              className="size-icon-xs absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground"
+              strokeWidth={ICON_STROKE}
+            />
+            <Input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search…"
+              className="pl-7 h-7 text-0_6"
+            />
+          </div>
+
+          {techOptions.length > 0 && (
+            <Popover>
+              <PopoverTrigger
+                render={
+                  <Button variant={tech ? 'secondary' : 'outline'} size="icon-sm" aria-label="filter by tech" />
+                }
+              >
+                <Filter className="size-icon-sm" strokeWidth={ICON_STROKE} />
+              </PopoverTrigger>
+              <PopoverContent className="w-56 max-h-72 overflow-y-auto" align="end">
+                <div className="flex flex-col gap-0.5">
+                  {techOptions.map((t) => (
+                    <button
+                      key={t}
+                      type="button"
+                      onClick={() => setTech((current) => (current === t ? null : t))}
+                      className={`text-0_7 capitalize text-left px-2 py-1.5 rounded-md ${
+                        tech === t ? 'bg-foreground text-background' : 'hover:bg-muted'
+                      }`}
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+              </PopoverContent>
+            </Popover>
+          )}
         </div>
       </div>
 
-      <div className="flex gap-4 border-b border-border mb-4">
-        {categories.map((cat) => (
+      {tech && (
+        <div className="flex items-center gap-1.5 mb-4">
+          <span className="text-0_6 text-muted-foreground">Filtered by</span>
           <button
-            key={cat}
             type="button"
-            onClick={() => setCategory(cat)}
-            className={`text-0_7 font-medium pb-2 border-b-2 -mb-px ${
-              cat === category ? 'border-foreground text-foreground' : 'border-transparent text-muted-foreground'
-            }`}
+            onClick={() => setTech(null)}
+            className="text-0_6 capitalize flex items-center gap-1 pl-2.5 pr-1.5 py-1 rounded-full bg-foreground text-background"
           >
-            {cat}
+            {tech}
+            <X className="size-icon-xs" strokeWidth={ICON_STROKE} />
           </button>
-        ))}
-      </div>
-
-      {view === 'grid' ? (
-        <div className="grid grid-cols-3 gap-2.5">
-          {filtered.map((p) => (
-            <ProjectCard key={p.id} project={p} index={projects.indexOf(p)} view="grid" />
-          ))}
-        </div>
-      ) : (
-        <div className="flex flex-col">
-          {filtered.map((p) => (
-            <ProjectCard key={p.id} project={p} index={projects.indexOf(p)} view="list" />
-          ))}
         </div>
       )}
+
+      <div className="grid grid-cols-3 gap-2.5">
+        {filtered.map((p) => (
+          <ProjectCard key={p.id} project={p} showCategory={category === 'all'} />
+        ))}
+      </div>
     </div>
   );
 }
