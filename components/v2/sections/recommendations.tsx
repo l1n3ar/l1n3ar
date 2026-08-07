@@ -32,7 +32,7 @@ function RecommendationCard({ rec, onReadMore }: { rec: Recommendation; onReadMo
       <div className="min-w-0 flex-1">
         <span className="text-0_8 font-semibold block">{name}</span>
         {role && <p className="text-0_7 text-muted-foreground leading-snug mt-0.5 mb-1.5">{role}</p>}
-        <p className={`text-0_7 leading-relaxed ${role ? '' : 'mt-1.5'} mb-1.5`}>&quot;{preview}&quot;</p>
+        <p className={`text-0_7 leading-relaxed text-foreground/85 ${role ? '' : 'mt-1.5'} mb-1.5`}>&quot;{preview}&quot;</p>
         {isLong && (
           <button
             type="button"
@@ -78,7 +78,7 @@ export function Recommendations({ recommendations }: { recommendations: Recommen
                   {openInfo.role && <div className="text-0_7 text-muted-foreground">{openInfo.role}</div>}
                 </div>
               </div>
-              <p className="text-0_75 leading-relaxed">&quot;{open.quote}&quot;</p>
+              <p className="text-0_75 leading-relaxed text-foreground/85">&quot;{open.quote}&quot;</p>
             </>
           )}
         </DialogContent>

@@ -145,33 +145,36 @@
    still inherit v2 tokens instead of falling back to v1's :root values). */
 .dark .v2,
 .v2.dark {
-  color: rgb(238 238 238);
-  background-color: rgb(11 11 11);
-  --background: 11 11 11;
-  --foreground: 238 238 238;
-  --muted: 29 29 29;
-  --muted-foreground: 137 137 137;
-  --content-muted: 16 16 16;
-  --border: 27 27 27;
-  --input: 27 27 27;
-  --ring: 27 27 27;
-  --card: 19 19 19;
-  --card-foreground: 238 238 238;
-  --popover: 19 19 19;
-  --popover-foreground: 238 238 238;
-  --primary: 238 238 238;
-  --primary-foreground: 11 11 11;
-  --secondary: 29 29 29;
-  --secondary-foreground: 238 238 238;
+  /* Apple-system-dark-inspired: elevated near-black (never pure #000/#fff) with a
+     visible-but-quiet border, so surfaces read as "layered" rather than a flat
+     black page with harsh white text — light mode's pastel/calm feel is untouched. */
+  color: rgb(235 235 238);
+  background-color: rgb(30 30 33);
+  --background: 30 30 33;
+  --foreground: 235 235 238;
+  --muted: 48 48 53;
+  --muted-foreground: 172 172 178;
+  --content-muted: 34 34 38;
+  --border: 62 62 68;
+  --input: 62 62 68;
+  --ring: 90 90 97;
+  --card: 39 39 43;
+  --card-foreground: 235 235 238;
+  --popover: 39 39 43;
+  --popover-foreground: 235 235 238;
+  --primary: 235 235 238;
+  --primary-foreground: 30 30 33;
+  --secondary: 48 48 53;
+  --secondary-foreground: 235 235 238;
 
-  --sidebar: 11 11 11;
-  --sidebar-foreground: 238 238 238;
-  --sidebar-primary: 238 238 238;
-  --sidebar-primary-foreground: 11 11 11;
-  --sidebar-accent: 29 29 29;
-  --sidebar-accent-foreground: 238 238 238;
-  --sidebar-border: 27 27 27;
-  --sidebar-ring: 27 27 27;
+  --sidebar: 30 30 33;
+  --sidebar-foreground: 235 235 238;
+  --sidebar-primary: 235 235 238;
+  --sidebar-primary-foreground: 30 30 33;
+  --sidebar-accent: 48 48 53;
+  --sidebar-accent-foreground: 235 235 238;
+  --sidebar-border: 62 62 68;
+  --sidebar-ring: 90 90 97;
 }
 
 /* Per-item pastel hue chips (projects, recommenders, bands, ...) — hue is set inline
@@ -186,6 +189,17 @@
   color: var(--pastel-fg-dark);
 }
 
+/* Home bento tiles (lib/pastel.ts's tilePastel) — light mode is a flat washed-out pastel
+   behind the tile's watercolor image; dark mode swaps to a hue-tinted gradient instead of
+   the image (see home-tile.tsx, which hides the image via .dark), matching a techier feel
+   than the light theme's calm/pastel one rather than just darkening the same flat color. */
+.tile-pastel {
+  background: var(--tile-bg);
+}
+.dark .tile-pastel {
+  background: linear-gradient(145deg, oklch(0.28 0.045 var(--tile-hue)) 0%, oklch(0.16 0.025 var(--tile-hue)) 100%);
+}
+
 /* ---------------------------------------------------------------------------
    Base element resets
    --------------------------------------------------------------------------- */
@@ -196,6 +210,14 @@
 
   a { @apply text-g; }
   a:hover { opacity: 0.8; }
+
+  /* Tailwind's Preflight defaults any bare `border`/`border-r`/`border-l` utility (no
+     explicit border-*-{color} class) to a fixed light gray — invisible in v1's light
+     theme, but a jarring near-white line once a dark surface sits behind it (e.g. the
+     desktop sidebar's `border-r` in components/ui/sidebar.tsx has never carried its own
+     color class). Resetting the default itself means every such utility automatically
+     follows whichever --border is in scope (v1 vs v2, light vs dark) with no per-usage fix. */
+  *, ::before, ::after { border-color: rgb(var(--border)); }
 }
 
 /* ---------------------------------------------------------------------------

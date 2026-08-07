@@ -19,9 +19,13 @@ export function pastelChipStyle(hue: number): CSSProperties {
   } as CSSProperties;
 }
 
-/** The Home bento tiles' washed-out fixed-hue variant — distinct from pastelChipStyle, per the design handoff prototype. */
-export function tilePastel(hue: number): { bg: string; fg: string } {
-  return { bg: `oklch(0.95 0.024 ${hue})`, fg: `oklch(0.45 0.065 ${hue})` };
+/** Inline style for the `.tile-pastel` utility (see globals.css) — light mode is a flat washed-out
+ * pastel; dark mode (handled entirely in CSS) swaps to a hue-tinted gradient via --tile-hue. */
+export function tilePastel(hue: number): CSSProperties {
+  return {
+    '--tile-bg': `oklch(0.95 0.024 ${hue})`,
+    '--tile-hue': hue,
+  } as CSSProperties;
 }
 
 /** Fixed per-tile hues from the design handoff prototype, so tile color never depends on section order. */

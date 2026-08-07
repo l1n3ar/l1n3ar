@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
-import { getTheme, setTheme } from '@/lib/theme';
+import { getTheme, setTheme, THEME_CHANGE_EVENT } from '@/lib/theme';
 import { metaItalic } from '@/lib/typography';
 
 export function ThemeToggle({
@@ -15,7 +15,15 @@ export function ThemeToggle({
   const [dark, setDark] = useState<boolean | null>(null);
 
   useEffect(() => {
+    // Deliberately not a lazy useState initializer: that would run during SSR/hydration
+    // too (no `document` there, or a value that mismatches the server-rendered `null`
+    // placeholder below). Reading the real theme only after mount avoids a hydration
+    // mismatch — this is a justified exception to the set-state-in-effect rule.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDark(getTheme() === 'dark');
+    const onChange = () => setDark(getTheme() === 'dark');
+    window.addEventListener(THEME_CHANGE_EVENT, onChange);
+    return () => window.removeEventListener(THEME_CHANGE_EVENT, onChange);
   }, []);
 
   const toggle = () => {
