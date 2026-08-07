@@ -1,5 +1,5 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { BookOpen, FileText, Mail, SunMoon } from 'lucide-react';
 import {
@@ -10,7 +10,7 @@ import { useCommandPalette } from '@/components/v2/command-palette-context';
 import { sectionHref } from '@/components/v2/section-routes';
 import { useSite } from '@/components/v2/site-context';
 import { BRAND_ICONS } from '@/components/v2/tech-icons';
-import { toggleTheme } from '@/lib/theme';
+import { getTheme, toggleTheme, THEME_CHANGE_EVENT } from '@/lib/theme';
 import { hasCaseStudy } from '@/lib/types';
 
 const ICON_STROKE = 1.75;
@@ -29,6 +29,7 @@ export function CommandPalette() {
   const { site, navItems, projects } = useSite();
   const { open, setOpen } = useCommandPalette();
   const router = useRouter();
+  const [dark, setDark] = useState<boolean | null>(null);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -40,6 +41,16 @@ export function CommandPalette() {
     document.addEventListener('keydown', handler);
     return () => document.removeEventListener('keydown', handler);
   }, [open, setOpen]);
+
+  useEffect(() => {
+    // Reads `document`'s current class, so it can't be a lazy useState initializer (no
+    // `document` during SSR) — this is a justified exception to set-state-in-effect.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setDark(getTheme() === 'dark');
+    const onChange = () => setDark(getTheme() === 'dark');
+    window.addEventListener(THEME_CHANGE_EVENT, onChange);
+    return () => window.removeEventListener(THEME_CHANGE_EVENT, onChange);
+  }, []);
 
   const run = (fn: () => void) => {
     setOpen(false);
@@ -102,7 +113,7 @@ export function CommandPalette() {
             className={ITEM_CLASS}
           >
             <SunMoon strokeWidth={ICON_STROKE} />
-            Toggle dark / light mode
+            {dark ? 'Switch to light mode' : 'Switch to dark mode'}
           </CommandItem>
           {site.footerLinks.map((l) => {
             const isGithub = l.label.toLowerCase().includes('github');
