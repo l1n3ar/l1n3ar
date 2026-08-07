@@ -22,7 +22,7 @@ function RecommendationCard({ rec, onReadMore }: { rec: Recommendation; onReadMo
   const preview = isLong ? `${rec.quote.slice(0, PREVIEW_LEN)}…` : rec.quote;
 
   return (
-    <div className="border border-border rounded-lg p-3.5 bg-card flex gap-2.5">
+    <div className="border border-border rounded-lg p-4 bg-card flex gap-2.5">
       <div
         className="pastel-chip size-icon-lg rounded-full flex items-center justify-center text-0_6 font-semibold shrink-0"
         style={chipStyle}

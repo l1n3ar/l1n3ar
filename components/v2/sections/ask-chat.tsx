@@ -11,8 +11,11 @@ import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useSite } from '@/components/v2/site-context';
 import { useAutoScroll } from '@/hooks/use-auto-scroll';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { getCitations, type Citation } from '@/lib/citations';
 import { cn } from '@/lib/utils';
+
+const MOBILE_MAX_SUGGESTIONS = 3;
 
 const ICON_STROKE = 1.75;
 
@@ -54,19 +57,19 @@ function formatTimestamp(date?: Date) {
 // Mirrors v1's citations-marker.tsx layout (source / confidence rows with a progress
 // bar) at v2 scale/tokens — deliberately not v1's component, which is styled with
 // v1-only classes (text-ink, border-g, italic) that don't resolve inside .v2.
-function CitationsList({ citations }: { citations: Citation[] }) {
+function CitationsList({ citations,isMobile }: { citations: Citation[],isMobile? : boolean }) {
   if (citations.length === 0) return null;
   return (
-    <div className="max-w-full ml-8 border-l-2 border-border pl-2 py-1 mb-4">
-      <div className="flex items-center gap-2 text-[0.625rem] text-muted-foreground/70 uppercase tracking-wide px-1 pb-1 mb-1 border-b border-border">
-        <span className="flex-1">source</span>
+    <div className={`w-full min-w-0  max-w-[85%] ml-8 border-l-2 border-border pl-2 py-1 mb-4`}>
+      <div className="flex items-center gap-2 min-w-0 text-[0.625rem] text-muted-foreground/70 uppercase tracking-wide px-1 pb-1 mb-1 border-b border-border">
+        <span className="flex-1 min-w-0">source</span>
         <span className="w-14 shrink-0 text-right">confidence</span>
       </div>
-      <div className="flex flex-col gap-0.5 max-h-24 overflow-y-auto thin-scroll">
+      <div className="flex flex-col gap-0.5 min-w-0 max-h-24 overflow-y-auto overflow-x-hidden gz-scroll">
         {citations.map((c) => {
           const pct = Math.round(c.score * 100);
           return (
-            <div key={c.source} className="flex items-center gap-2 text-[0.65rem] text-muted-foreground px-1 font-light">
+            <div key={c.source} className="flex items-center gap-2 min-w-0 text-[0.65rem] text-muted-foreground px-1 font-light">
               <span className="truncate min-w-0 flex-1">{c.label}</span>
               <Progress value={pct} className="w-10 shrink-0" indicatorClassName="bg-green-700 dark:bg-green-500" />
               <span className="text-muted-foreground/70 shrink-0 font-mono w-6 text-right">{pct}</span>
@@ -90,6 +93,8 @@ export function AskChat({
 }) {
   const { site } = useSite();
   const initials = site.name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase();
+  const isMobile = useIsMobile();
+  const visibleSuggestions = isMobile ? suggestions.slice(0, MOBILE_MAX_SUGGESTIONS) : suggestions;
   const {
     messages, input, setInput, handleInputChange, append, setMessages, isLoading, error,
   } = useChat({ api: '/api/ask', body: apiBody });
@@ -100,6 +105,7 @@ export function AskChat({
   const thinkingMessage = useThinkingMessage(isWaitingForFirstToken);
 
   const { scrollRef, showScrollButton, handleScroll, scrollToBottom, resetScroll } = useAutoScroll(messages);
+
 
   // Each new question starts a fresh exchange rather than a running conversation —
   // the panel only ever shows the latest question and its answer.
@@ -127,13 +133,13 @@ export function AskChat({
 
   const suggestionChips = (
     <>
-      {suggestions.map((suggestion) => (
+      {visibleSuggestions.map((suggestion) => (
         <Button
           key={suggestion}
           type="button"
           variant="outline"
           onClick={() => ask(suggestion)}
-          className="bg-muted h-auto whitespace-normal text-0_7 text-left justify-start px-3 py-2 rounded-lg self-start border-transparent capitalize"
+          className="bg-muted h-auto max-w-full whitespace-normal text-0_7 text-left justify-start px-3 py-2 rounded-lg self-start border-transparent capitalize"
         >
           {suggestion}
         </Button>
@@ -189,7 +195,7 @@ export function AskChat({
                   const citations = m.role === 'assistant' ? getCitations(m) : [];
                   return (
                     <div key={m.id} className={`min-w-0 w-full flex flex-col gap-1 ${m.role === 'user' ? 'items-end' : 'items-start'}`}>
-                      <CitationsList citations={citations} />
+                      <CitationsList citations={citations} isMobile/>
                       <div className={`min-w-0 max-w-full flex items-start gap-2 ${m.role === 'user' ? 'flex-row-reverse' : ''}`}>
                         {m.role === 'assistant' && (
                           <Avatar size="sm" className="shrink-0 rounded-md bg-primary after:rounded-md">
@@ -210,7 +216,7 @@ export function AskChat({
                           )}
                         </div>
                       </div>
-                      <span className={`text-0_6 text-muted-foreground/70 ${m.role === 'assistant' ? 'ml-9' : 'mr-0.5'}`}>
+                      <span className={`text-0_6 text-muted-foreground/70 ${m.role === 'assistant' ? 'ml-8' : 'mr-0.5'}`}>
                         {formatTimestamp(m.createdAt)}
                       </span>
                     </div>
@@ -247,14 +253,14 @@ export function AskChat({
             )}
           </div>
         ) : centering ? (
-          <div className="flex flex-col items-center gap-4 px-4">
+          <div className="flex flex-col items-center gap-4 px-4 min-w-0 w-full">
             {inputForm}
-            <div className="flex flex-wrap justify-center gap-2 max-w-2xl">
+            <div className="flex flex-wrap justify-center gap-2 max-w-2xl min-w-0">
               {suggestionChips}
             </div>
           </div>
         ) : (
-          <div className="flex-1 flex flex-col gap-2 justify-end">
+          <div className="flex-1 flex flex-col gap-2 justify-end min-w-0">
             {suggestionChips}
           </div>
         )}

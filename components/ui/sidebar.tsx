@@ -23,7 +23,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { PanelLeftIcon } from "lucide-react"
+import { MenuIcon, PanelLeft } from "lucide-react"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -187,7 +187,7 @@ function Sidebar({
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
-          className="w-[var(--sidebar-width)] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
+          className="v2 font-sans w-[var(--sidebar-width)] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
           style={
             {
               "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
@@ -257,6 +257,7 @@ function SidebarTrigger({
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { toggleSidebar } = useSidebar()
+  const isMobile = useIsMobile()
 
   return (
     <Button
@@ -271,7 +272,10 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <PanelLeftIcon className="size-icon-xs" strokeWidth={1.75} />
+      {
+        isMobile ?  <MenuIcon className="size-icon-xs" strokeWidth={1.75} /> :  <PanelLeft className="size-icon-xs" strokeWidth={1.75} />
+      }
+
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )

@@ -17,7 +17,7 @@ export default async function AskPage() {
       suggestions={suggestions}
       apiBody={{}}
       inputPosition="center"
-      className="h-full"
+      className="flex-1 min-h-0"
     />
   );
 }

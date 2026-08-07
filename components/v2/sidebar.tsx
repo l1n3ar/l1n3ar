@@ -4,7 +4,7 @@ import NextLink from 'next/link';
 import { Search, Link as LinkIcon, FileText, Tag } from 'lucide-react';
 import {
   Sidebar as SidebarPrimitive, SidebarHeader, SidebarContent, SidebarFooter,
-  SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarSeparator,
+  SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarSeparator, useSidebar,
 } from '@/components/ui/sidebar';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -48,12 +48,14 @@ export function AppSidebar({ section }: { section: V2Section }) {
   const { site, navItems } = useSite();
   const { setOpen: setPaletteOpen } = useCommandPalette();
   const { data: release } = useRelease();
+  const { setOpenMobile } = useSidebar();
   const initials = site.name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase();
+  const closeMobile = () => setOpenMobile(false);
 
   return (
     <SidebarPrimitive collapsible="offcanvas">
       <SidebarHeader className={`gap-2 pt-4 ${INSET}`}>
-        <NextLink href={sectionHref('home')} className="flex items-start gap-2 min-w-0">
+        <NextLink href={sectionHref('home')} onClick={closeMobile} className="flex items-start gap-2 min-w-0">
           <Avatar size="sm" className="rounded-md bg-primary after:rounded-md shrink-0">
             <AvatarFallback className="rounded-md bg-primary text-primary-foreground text-0_6">
               {initials}
@@ -78,6 +80,7 @@ export function AppSidebar({ section }: { section: V2Section }) {
                   <SidebarMenuButton
                     size="sm"
                     isActive={section === item.section}
+                    onClick={closeMobile}
                     render={<NextLink href={sectionHref(item.section)} />}
                     className="text-0_7 gap-2 text-sidebar-foreground/70 data-[active]:text-sidebar-foreground"
                   >

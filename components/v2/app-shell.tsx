@@ -9,6 +9,7 @@ import { Navbar } from '@/components/v2/navbar';
 import { sectionFromPathname, sectionHref } from '@/components/v2/section-routes';
 import { SiteProvider } from '@/components/v2/site-context';
 import type { SiteConfig, NavItem, Project } from '@/lib/types';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const PROJECT_DETAIL = /^\/projects\/([^/]+)$/;
 
@@ -17,13 +18,19 @@ export function AppShell({
 }: {
   site: SiteConfig; navItems: NavItem[]; projects: Project[]; children: React.ReactNode;
 }) {
-  // Popover/Tooltip/Dialog content portals to document.body, outside the .v2 wrapper
-  // div below — without this, those overlays fall back to v1's :root tokens instead
-  // of v2's. Adding .v2 to <html> too means portaled content (still a DOM descendant
-  // of <html>) inherits the right CSS variables regardless of where it's mounted.
+  // Popover/Tooltip/Dialog/Sheet (mobile sidebar) content portals to document.body,
+  // outside the .v2 wrapper div below — .v2's own CSS block sets color/background/font
+  // directly (see globals.css) specifically so portaled content doesn't fall back to
+  // <body>'s v1 tokens (serif font-body included). <body> itself carries an explicit
+  // font-family declaration of its own, which beats mere inheritance from <html> — so
+  // .v2 has to land on both elements, not just <html>, for portaled content to pick it up.
   useEffect(() => {
     document.documentElement.classList.add('v2');
-    return () => document.documentElement.classList.remove('v2');
+    document.body.classList.add('v2');
+    return () => {
+      document.documentElement.classList.remove('v2');
+      document.body.classList.remove('v2');
+    };
   }, []);
 
   const pathname = usePathname();
@@ -33,6 +40,7 @@ export function AppShell({
   const project = projectSlug ? projects.find((p) => p.id === projectSlug) : undefined;
   const title = project?.name ?? navItems.find((i) => i.section === section)?.label ?? section;
   const onBack = projectSlug ? () => router.push(sectionHref('projects')) : undefined;
+  const isMobile = useIsMobile()
 
   return (
     <SiteProvider site={site} navItems={navItems} projects={projects}>
@@ -42,8 +50,10 @@ export function AppShell({
             <AppSidebar section={section} />
             <SidebarInset className="h-screen-safe">
               <Navbar title={title} onBack={onBack} />
-              <div className="flex-1 min-h-0 overflow-y-auto gz-scroll bg-muted/20">
-                <div className="max-w-[90rem] mx-auto p-3 sm:p-5 h-full">{children}</div>
+              <div className="flex-1 min-h-0 bg-muted/20">
+                <div className={`max-w-[90rem] mx-auto h-full overflow-y-auto gz-scroll p-3 ${isMobile ? 'pb-6' : ''} flex flex-col`}>
+                  {children}
+                </div>
               </div>
             </SidebarInset>
           </SidebarProvider>

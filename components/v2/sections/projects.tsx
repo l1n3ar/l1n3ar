@@ -38,7 +38,7 @@ export function Projects({ projects }: { projects: Project[] }) {
 
   return (
     <div>
-      <h1 className="text-0_9 font-semibold mb-3.5">Projects</h1>
+      <h1 className="text-0_9 font-semibold mb-3.5 ml-1">Projects</h1>
 
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4">
         <Tabs value={category} onValueChange={(v) => selectCategory(v as CategoryFilter)} className="overflow-x-auto gz-scroll">

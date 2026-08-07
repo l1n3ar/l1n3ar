@@ -69,7 +69,7 @@ export function Home({
   };
 
   return (
-    <div className="flex flex-col gap-3.5 md:h-full">
+    <div className="flex flex-col gap-3.5 md:flex-1 md:min-h-0">
       <div className="grid grid-cols-1 md:grid-cols-[1.7fr_1fr] gap-3.5 md:flex-[2]">
         {renderTile('projects')}
         <div className="flex flex-col gap-3.5">
