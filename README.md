@@ -82,9 +82,7 @@ i built a provenance system for blockchain notarization of trademarks and copyri
 
 ## off the clock
 
-drummer · [eatbreakfast](https-//linktr.ee/eatbreakfast), [flowersaremagic](https-//linktr.ee/flowersaremagic), [the light we refuse](http-//linktr.ee/thelightwerefuse). session work for [dindun](https-//www.instagram.com/dindun.din/). best drummer, winners, battle of bands.
-football- real madrid + man united. die-hard ronaldo fan. nike fanboy.
-reading- crime and mystery thrillers.
+drummer · [eatbreakfast](https-//linktr.ee/eatbreakfast), [flowersaremagic](https-//linktr.ee/flowersaremagic), [the light we refuse](http-//linktr.ee/thelightwerefuse). session work for [dindun](https-//www.instagram.com/dindun.din/).
 
 <!-- ## stats -->
 
