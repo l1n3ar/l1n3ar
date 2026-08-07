@@ -30,6 +30,8 @@ export function QaLog() {
       setError('Incorrect password.');
       return;
     }
+
+    console.log({questionsResult})
     setQuestions(questionsResult);
     setFeedback(feedbackResult);
   }
@@ -96,9 +98,15 @@ export function QaLog() {
                 <div key={i} className="border border-border rounded-lg p-3.5 bg-card">
                   <div className="flex items-baseline justify-between gap-3 mb-2">
                     <span className="flex-1 min-w-0 text-0_75 font-semibold">{q.question}</span>
+                     <span className="text-0_6 text-muted-foreground shrink-0">
+                      {q.ip}
+            
+                    </span>
                     <span className="text-0_6 text-muted-foreground shrink-0">
+                     
                       {timeAgo(new Date(q.createdAt).getTime())}
                     </span>
+                    
                   </div>
                   <div className="text-0_7 leading-relaxed text-muted-foreground [&_p]:mb-2 [&_p:last-child]:mb-0 [&_strong]:font-semibold [&_code]:font-mono [&_code]:text-0_6 [&_code]:bg-muted [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded">
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>{q.answer}</ReactMarkdown>

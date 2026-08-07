@@ -19,18 +19,19 @@ export type AskedQuestion = {
   question: string;
   answer: string;
   createdAt: string;
+  ip : string;
 };
 
-/** Returns null when the password doesn't match — callers should treat that as "not authorized", not "no data". */
+
 export async function getAskedQuestions(password: string): Promise<AskedQuestion[] | null> {
   if (password !== process.env.QA_LOG_PASSWORD) return null;
 
   const rows = (await sql`
-    SELECT question, answer, created_at
+    SELECT question, answer, created_at,ip
     FROM asked_questions
     ORDER BY created_at DESC
     LIMIT 100
-  `) as { question: string; answer: string; created_at: string }[];
+  `) as { question: string; answer: string; created_at: string,ip : string }[];
 
-  return rows.map((r) => ({ question: r.question, answer: r.answer, createdAt: r.created_at }));
+  return rows.map((r) => ({ question: r.question, answer: r.answer, createdAt: r.created_at,ip : r.ip }));
 }
