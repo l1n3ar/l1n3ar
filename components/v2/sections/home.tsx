@@ -6,8 +6,8 @@ import { NAV_ICONS } from '@/components/v2/nav-icons';
 import { projectIcon } from '@/components/v2/sections/project-icons';
 import { sectionHref } from '@/components/v2/section-routes';
 import { useSite } from '@/components/v2/site-context';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { useSystemMetrics } from '@/hooks/system-metrics';
-import { useNowPlaying } from '@/hooks/spotify';
 import { useLeetcodeProfile } from '@/hooks/coding';
 import { HOME_TILE_HUES, hueForKey, pastelChipStyle } from '@/lib/pastel';
 import { cn } from '@/lib/utils';
@@ -137,39 +137,12 @@ function MiniLeetCode({ handle }: { handle: string }) {
   );
 }
 
-function MiniNowPlaying() {
-  const { data, isLoading, isError } = useNowPlaying();
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-3">
-        <Loader2 className="size-icon-sm animate-spin text-muted-foreground" strokeWidth={ICON_STROKE} />
-      </div>
-    );
-  }
-  if (isError || !data) return null;
-
-  return (
-    <iframe
-      key={data.embedUrl}
-      src={data.embedUrl}
-      title={`${data.track} — ${data.artist}`}
-      width="100%"
-      height="80"
-      loading="lazy"
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-      className="rounded-md mb-2"
-    />
-  );
-}
-
 function L1n3arEmbeds({ description, leetcodeHandle }: { description?: string; leetcodeHandle?: string }) {
   return (
     <div className="flex flex-col">
       {description && <p className="text-0_6 text-muted-foreground leading-snug">{description}</p>}
       <div className="mt-2 flex flex-col gap-2 min-h-0 overflow-y-auto gz-scroll">
         {leetcodeHandle && <MiniLeetCode handle={leetcodeHandle} />}
-        <MiniNowPlaying />
       </div>
     </div>
   );
@@ -231,6 +204,7 @@ export function Home({
   const { site, projects } = useSite();
   const byKey = new Map(tiles.map((t) => [t.key, t]));
   const { data: metrics } = useSystemMetrics();
+  const isMobile = useIsMobile();
 
   const extraFor = (key: HomeTileKey): React.ReactNode => {
     if (!metrics) return null;
@@ -246,7 +220,10 @@ export function Home({
   };
 
   const componentFor = (key: HomeTileKey, content: HomeTileContent): React.ReactNode => {
+    // Work/Ask/Metrics keep their content on mobile too — only the bespoke embeds for
+    // projects/recommendations/l1n3ar are desktop-only, falling back to plain description+button.
     if (key === 'work') return <WorkHistoryTimeline entries={workHistory} />;
+    if (isMobile) return undefined;
     if (key === 'projects') {
       return <FeaturedProjects description={content.description} projects={projects} />;
     }

@@ -44,15 +44,21 @@ export function Navbar({
 
         <Tooltip>
           <TooltipTrigger
-            render={<Button variant="ghost" size='icon-xs' aria-label="switch to v1" className="hidden sm:inline-flex" render={<NextLink href="/v1" />} />}
+            render={<Button variant="ghost" size='icon-xs' aria-label="switch to v1" render={<NextLink href="/v1" />} />}
           >
             <History className="size-icon-xs text-foreground" strokeWidth={ICON_STROKE} />
           </TooltipTrigger>
           <TooltipContent className="text-0_6 font-sans not-italic">Switch to v1</TooltipContent>
         </Tooltip>
 
-        <Separator orientation="vertical" className="hidden sm:block h-4 bg-muted-foreground/30 data-[orientation=vertical]:self-center" />
-        <Button variant="outline" size="sm" className="gap-1.5 px-2 sm:px-3" onClick={() => setFeedbackOpen(true)}>
+        <Separator orientation="vertical" className="h-4 bg-muted-foreground/30 data-[orientation=vertical]:self-center" />
+        <Button
+          variant="ghost"
+          size="icon-xs"
+          aria-label="feedback"
+          className="sm:w-auto sm:h-7 sm:px-2.5 sm:gap-1.5 sm:rounded-sm sm:border sm:border-border sm:bg-background sm:hover:bg-muted dark:sm:border-input dark:sm:bg-input/30 dark:sm:hover:bg-input/50"
+          onClick={() => setFeedbackOpen(true)}
+        >
           <MessageSquare className="size-icon-xs sm:hidden" strokeWidth={ICON_STROKE} />
           <span className="hidden sm:inline text-0_7 text-foreground">Feedback</span>
         </Button>
