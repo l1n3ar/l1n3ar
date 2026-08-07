@@ -1,5 +1,6 @@
 import { PortableText, type PortableTextComponents } from '@portabletext/react';
 import { urlFor } from '@/sanity/lib/image';
+import { slugify } from '@/lib/utils';
 import type { CaseBodyBlock, TableBlockBlock } from '@/lib/types';
 
 const proseComponents: PortableTextComponents = {
@@ -18,7 +19,7 @@ export function CaseStudyBody({ body }: { body?: CaseBodyBlock[] }) {
         switch (block._type) {
           case 'caseSection':
             return (
-              <section key={block._key}>
+              <section key={block._key} id={slugify(block.heading)} className="scroll-mt-14">
                 <h3 className="text-0_9 font-semibold mb-2 capitalize">{block.heading}</h3>
                 <PortableText value={block.body ?? []} components={proseComponents} />
               </section>

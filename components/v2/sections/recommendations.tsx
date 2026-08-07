@@ -24,7 +24,7 @@ function RecommendationCard({ rec, onReadMore }: { rec: Recommendation; onReadMo
   return (
     <div className="border border-border rounded-lg p-4 bg-card flex gap-2.5">
       <div
-        className="pastel-chip size-icon-lg rounded-full flex items-center justify-center text-0_6 font-semibold shrink-0"
+        className="pastel-chip size-icon-lg rounded-md flex items-center justify-center text-0_6 font-semibold shrink-0"
         style={chipStyle}
       >
         {initials(name)}
@@ -68,7 +68,7 @@ export function Recommendations({ recommendations }: { recommendations: Recommen
             <>
               <div className="flex items-center gap-2.5">
                 <div
-                  className="pastel-chip size-icon-lg rounded-full flex items-center justify-center text-0_6 font-semibold shrink-0"
+                  className="pastel-chip size-icon-lg rounded-md flex items-center justify-center text-0_6 font-semibold shrink-0"
                   style={chipStyle}
                 >
                   {initials(openInfo.name)}

@@ -182,7 +182,7 @@ export function AskChat({
         onChange={handleInputChange}
         placeholder={placeholderSuggestion ?? 'Ask me about my work!'}
         disabled={isLoading}
-        className="flex-1 min-w-0 h-auto border-none shadow-none px-0 bg-transparent text-0_7 focus-visible:ring-0 capitalize"
+        className="flex-1 min-w-0 h-auto border-none shadow-none px-0 bg-transparent text-0_7 focus-visible:ring-0"
       />
       <Button
         type="submit"

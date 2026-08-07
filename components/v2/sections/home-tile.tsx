@@ -22,10 +22,11 @@ const SIZE: Record<HomeCardSize, {
 // (e.g. the work-history timeline) or the standard description + button. Size controls
 // every text size; title/description/buttonLabel are Sanity content, everything else is layout.
 export function HomeCard({
-  size = 'md', hue, image, icon, title, description, className,
+  size = 'md', hue, image, icon, title, description, extra, className,
   component, buttonLabel, onClick,
 }: {
   size?: HomeCardSize; hue: number; image?: string; icon: ReactNode; title: string; description?: string;
+  extra?: ReactNode;
   className?: string; component?: ReactNode; buttonLabel?: string; onClick?: () => void;
 }) {
   const s = SIZE[size];
@@ -56,19 +57,22 @@ export function HomeCard({
             {description && (
               <p className={cn(s.description, 'text-muted-foreground leading-snug mb-2.5')}>{description}</p>
             )}
-            {buttonLabel && onClick && (
-              <button
-                type="button"
-                onClick={onClick}
-                className={cn(
-                  s.description,
-                  'mt-auto self-start font-semibold text-foreground underline decoration-transparent hover:decoration-current transition-colors',
-                )}
-              >
-                {buttonLabel}
-              </button>
+            {extra && (
+              <div className={cn(s.description, 'flex flex-col gap-1 mt-2.5 mb-2.5')}>{extra}</div>
             )}
           </>
+        )}
+        {buttonLabel && onClick && (
+          <button
+            type="button"
+            onClick={onClick}
+            className={cn(
+              s.description,
+              'mt-auto self-start shrink-0 pt-2.5 font-semibold text-foreground underline decoration-transparent hover:decoration-current transition-colors',
+            )}
+          >
+            {buttonLabel}
+          </button>
         )}
       </div>
     </div>
