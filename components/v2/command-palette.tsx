@@ -1,7 +1,7 @@
 'use client';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { BookOpen, FileText, Mail } from 'lucide-react';
+import { BookOpen, FileText, Mail, SunMoon } from 'lucide-react';
 import {
   CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem,
 } from '@/components/ui/command';
@@ -10,6 +10,7 @@ import { useCommandPalette } from '@/components/v2/command-palette-context';
 import { sectionHref } from '@/components/v2/section-routes';
 import { useSite } from '@/components/v2/site-context';
 import { BRAND_ICONS } from '@/components/v2/tech-icons';
+import { toggleTheme } from '@/lib/theme';
 import { hasCaseStudy } from '@/lib/types';
 
 const ICON_STROKE = 1.75;
@@ -95,14 +96,14 @@ export function CommandPalette() {
         </CommandGroup>
 
         <CommandGroup heading="Actions" className={GROUP_CLASS}>
-          {/* <CommandItem
+          <CommandItem
             value="toggle theme dark light mode"
             onSelect={() => run(toggleTheme)}
             className={ITEM_CLASS}
           >
             <SunMoon strokeWidth={ICON_STROKE} />
             Toggle dark / light mode
-          </CommandItem> */}
+          </CommandItem>
           {site.footerLinks.map((l) => {
             const isGithub = l.label.toLowerCase().includes('github');
             const isLinkedin = l.label.toLowerCase().includes('linkedin');
