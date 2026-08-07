@@ -60,7 +60,7 @@ export function QaLog() {
           {questions.map((q, i) => (
             <div key={i} className="border border-border rounded-lg p-3.5 bg-card">
               <div className="flex items-baseline justify-between gap-3 mb-2">
-                <span className="text-0_75 font-semibold">{q.question}</span>
+                <span className="flex-1 min-w-0 text-0_75 font-semibold">{q.question}</span>
                 <span className="text-0_6 text-muted-foreground shrink-0">
                   {timeAgo(new Date(q.createdAt).getTime())}
                 </span>

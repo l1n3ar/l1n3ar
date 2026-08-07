@@ -16,15 +16,14 @@ export function ProjectDetail({ project }: { project: Project }) {
   return (
     <div
       ref={containerRef}
-      className="h-full min-h-0 flex"
+      className="min-h-0 flex flex-col md:h-full md:flex-row"
+      style={{ '--split-left': `${leftPercent}%` } as React.CSSProperties}
       onPointerMove={onResizeMove}
       onPointerUp={endResize}
       onPointerCancel={endResize}
     >
-      <div
-        className="min-w-0 overflow-y-auto border border-border rounded-lg p-4 thin-scroll"
-        style={{ width: `${leftPercent}%` }}
-      >
+      <div className="min-w-0 overflow-y-auto border border-border rounded-lg p-4 thin-scroll w-full md:w-[var(--split-left)]">
+
         <h1 className="text-1_2 font-semibold mb-1">{project.name}</h1>
         <div className="text-0_7 text-muted-foreground mb-3.5">
           {project.org} · {project.year} · {project.role}
@@ -72,7 +71,7 @@ export function ProjectDetail({ project }: { project: Project }) {
 
       <div
         onPointerDown={startResize}
-        className="w-2.5 shrink-0 cursor-col-resize flex items-center justify-center group"
+        className="hidden md:flex w-2.5 shrink-0 cursor-col-resize items-center justify-center group"
       >
         <div className="w-px h-8 bg-muted-foreground/40 group-hover:bg-muted-foreground/50" />
       </div>
@@ -82,8 +81,7 @@ export function ProjectDetail({ project }: { project: Project }) {
         suggestions={project.asks}
         apiBody={{ projectId: project.id, projectName: project.name }}
         inputPosition="bottom"
-        className="shrink-0"
-        style={{ width: `${100 - leftPercent}%` }}
+        className="shrink-0 mt-3.5 md:mt-0 min-h-[24rem] md:min-h-0 w-full md:w-[calc(100%-var(--split-left))]"
       />
     </div>
   );

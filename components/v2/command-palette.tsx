@@ -51,7 +51,7 @@ export function CommandPalette() {
       onOpenChange={setOpen}
       title="Command palette"
       description="Jump to a section, a project or view links"
-      className="rounded-lg border-border max-w-lg font-sans not-italic"
+      className="rounded-lg border-border max-w-dialog-md font-sans not-italic"
       commandClassName="bg-popover text-foreground font-sans"
     >
       <CommandInput

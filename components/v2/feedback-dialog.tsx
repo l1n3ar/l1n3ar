@@ -39,7 +39,7 @@ export function FeedbackDialog({ open, onOpenChange }: { open: boolean; onOpenCh
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-w-md rounded-lg font-sans not-italic">
+      <DialogContent className="max-w-dialog-sm rounded-lg font-sans not-italic">
         {
           !sent &&  <DialogTitle className="text-0_8 font-semibold">Send feedback</DialogTitle>
         }

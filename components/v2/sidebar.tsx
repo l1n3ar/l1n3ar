@@ -79,7 +79,7 @@ export function AppSidebar({ section }: { section: V2Section }) {
                     size="sm"
                     isActive={section === item.section}
                     render={<NextLink href={sectionHref(item.section)} />}
-                    className="text-0_7 gap-2 text-sidebar-foreground/70 data-active:text-sidebar-foreground"
+                    className="text-0_7 gap-2 text-sidebar-foreground/70 data-[active]:text-sidebar-foreground"
                   >
                     <Icon strokeWidth={ICON_STROKE} />
                     <span>{item.label}</span>
@@ -115,20 +115,20 @@ export function AppSidebar({ section }: { section: V2Section }) {
 
         <SidebarSeparator className="mx-0" />
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           {release ? (
             <a
               href={release.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 text-0_6 font-mono text-foreground"
+              className="flex items-center gap-1 min-w-0 text-0_6 font-mono text-foreground"
             >
-              <Tag className="size-icon-xs" strokeWidth={ICON_STROKE} />
-              {release.tag}
+              <Tag className="size-icon-xs shrink-0" strokeWidth={ICON_STROKE} />
+              <span className="truncate">{release.tag}</span>
             </a>
           ) : <span />}
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 shrink-0">
             {site.footerLinks.map((l) => {
               const isGithub = l.label.toLowerCase().includes('github');
               const isLinkedin = l.label.toLowerCase().includes('linkedin');
