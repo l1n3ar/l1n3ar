@@ -34,13 +34,13 @@ export function HomeCard({
 
   return (
     <div
-      className={cn('relative overflow-hidden border border-border flex flex-col p-4 shadow-sm hover:cursor-pointer', s.radius,  className)}
-      style={component ? undefined : { background: pastel.bg }}
-           onClick={onClick}
+      className={cn('tile-pastel relative overflow-hidden border border-border flex flex-col p-4 shadow-sm hover:cursor-pointer', s.radius, className)}
+      style={pastel}
+      onClick={onClick}
     >
       {image && (
         <div
-          className="absolute inset-0 opacity-55"
+          className="absolute inset-0 opacity-55 dark:hidden"
           style={{ backgroundImage: `url(${image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
         />
       )}
