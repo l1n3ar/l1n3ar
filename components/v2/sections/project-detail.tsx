@@ -72,9 +72,7 @@ export function ProjectDetail({ project }: { project: Project }) {
         </TabsContent>
         <TabsContent value="ask" className="min-h-0 flex-1 flex flex-col">
           <AskChat
-            title={askTitle}
-            suggestions={project.asks}
-            apiBody={{ projectId: project.id, projectName: project.name }}
+            project={project}
             inputPosition="bottom"
             className="flex-1 min-h-0"
           />
@@ -103,9 +101,7 @@ export function ProjectDetail({ project }: { project: Project }) {
       </div>
 
       <AskChat
-        title={askTitle}
-        suggestions={project.asks}
-        apiBody={{ projectId: project.id, projectName: project.name }}
+        project={project}
         inputPosition="bottom"
         className="shrink-0"
         style={{ width: `${100 - leftPercent}%` }}

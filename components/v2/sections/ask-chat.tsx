@@ -3,7 +3,7 @@ import { useEffect, useState, type CSSProperties, type FormEvent } from 'react';
 import { useChat } from 'ai/react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { ChevronDown, Send } from 'lucide-react';
+import { ArrowUp, ChevronDown, Send } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,7 +13,9 @@ import { useSite } from '@/components/v2/site-context';
 import { useAutoScroll } from '@/hooks/use-auto-scroll';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { getCitations, type Citation } from '@/lib/citations';
+import { hueForKey } from '@/lib/pastel';
 import { cn } from '@/lib/utils';
+import { Project } from '@/lib/types';
 
 const MOBILE_MAX_SUGGESTIONS = 3;
 
@@ -82,11 +84,10 @@ function CitationsList({ citations,isMobile }: { citations: Citation[],isMobile?
 }
 
 export function AskChat({
-  suggestions, apiBody, title, inputPosition = 'bottom', className, style,
+  project, inputPosition = 'bottom', className, style,suggestions
 }: {
-  suggestions: string[];
-  apiBody?: Record<string, unknown>;
-  title?: string;
+  project?: Project;
+  suggestions? : string[]
   inputPosition?: 'bottom' | 'center';
   className?: string;
   style?: CSSProperties;
@@ -94,10 +95,19 @@ export function AskChat({
   const { site } = useSite();
   const initials = site.name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase();
   const isMobile = useIsMobile();
-  const visibleSuggestions = isMobile ? suggestions.slice(0, MOBILE_MAX_SUGGESTIONS) : suggestions;
+  const visibleSuggestions = project ? isMobile ? project.asks.slice(0,MOBILE_MAX_SUGGESTIONS) : project.asks : suggestions
+  // Picked once per mount (lazy initializer), not on every render — otherwise this would
+  // reroll on every keystroke, since typing re-renders the controlled Input below.
+  const [placeholderSuggestion] = useState(() => (
+    visibleSuggestions && visibleSuggestions.length > 0
+      ? visibleSuggestions[Math.floor(Math.random() * visibleSuggestions.length)]
+      : undefined
+  ));
   const {
     messages, input, setInput, handleInputChange, append, setMessages, isLoading, error,
-  } = useChat({ api: '/api/ask', body: apiBody });
+  } = useChat({ api: '/api/ask' });
+
+
 
   const hasMessages = messages.length > 0;
   const lastMessage = messages[messages.length - 1];
@@ -133,17 +143,29 @@ export function AskChat({
 
   const suggestionChips = (
     <>
-      {visibleSuggestions.map((suggestion) => (
-        <Button
-          key={suggestion}
-          type="button"
-          variant="outline"
-          onClick={() => ask(suggestion)}
-          className="bg-muted h-auto max-w-full whitespace-normal text-0_7 text-left justify-start px-3 py-2 rounded-lg self-start border-transparent capitalize"
-        >
-          {suggestion}
-        </Button>
-      ))}
+      {visibleSuggestions?.map((suggestion) => {
+        const hue = hueForKey(suggestion);
+        const isDark = () => document.documentElement.classList.contains('dark');
+        return (
+          <Button
+            key={suggestion}
+            type="button"
+            variant="outline"
+            onClick={() => ask(suggestion)}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = isDark() ? `oklch(0.28 0.035 ${hue})` : `oklch(0.93 0.032 ${hue})`;
+              e.currentTarget.style.color = isDark() ? `oklch(0.76 0.07 ${hue})` : `oklch(0.49 0.075 ${hue})`;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '';
+              e.currentTarget.style.color = '';
+            }}
+            className="bg-muted h-auto max-w-full whitespace-normal text-0_7 text-left justify-start px-3 py-2 rounded-lg self-start border-transparent capitalize transition-colors"
+          >
+            {suggestion}
+          </Button>
+        );
+      })}
     </>
   );
 
@@ -158,26 +180,26 @@ export function AskChat({
       <Input
         value={input}
         onChange={handleInputChange}
-        placeholder="ask something…"
+        placeholder={placeholderSuggestion ?? 'Ask me about my work!'}
         disabled={isLoading}
-        className="flex-1 min-w-0 h-auto border-none shadow-none px-0 bg-transparent text-0_7 focus-visible:ring-0"
+        className="flex-1 min-w-0 h-auto border-none shadow-none px-0 bg-transparent text-0_7 focus-visible:ring-0 capitalize"
       />
       <Button
         type="submit"
         size="icon-xs"
         disabled={isLoading || !input.trim()}
         aria-label="send"
-        className="size-icon-xl rounded-md bg-foreground text-background hover:bg-foreground/90 shrink-0"
+        className="size-icon-xl rounded-sm bg-foreground text-background hover:bg-foreground/90 shrink-0"
       >
-        <Send className="size-icon-xs" strokeWidth={ICON_STROKE} />
+        <ArrowUp className="size-icon-xs" strokeWidth={ICON_STROKE} />
       </Button>
     </form>
   );
 
   return (
     <div className={cn('min-w-0 flex flex-col border border-border rounded-lg p-4', className)} style={style}>
-      {title && (
-        <div className="text-0_6 text-muted-foreground tracking-wide mb-3">{title}</div>
+      {project?.description && !hasMessages && isMobile && (
+        <div className="text-0_6 text-muted-foreground tracking-wide mb-3 p-2 border border-dashed rounded-lg">{project.description}</div>
       )}
 
       <div className="flex-1 min-h-0 min-w-0 flex flex-col mb-2.5">

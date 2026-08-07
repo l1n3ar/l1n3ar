@@ -16,6 +16,7 @@ import { useCommandPalette } from '@/components/v2/command-palette-context';
 import { useSite } from '@/components/v2/site-context';
 import { useRelease } from '@/hooks/release';
 import type { V2Section } from '@/lib/types';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 // Base icon weight for this UI — see Global look / Icons in the design handoff.
 const ICON_STROKE = 1.75;
@@ -51,6 +52,7 @@ export function AppSidebar({ section }: { section: V2Section }) {
   const { setOpenMobile } = useSidebar();
   const initials = site.name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase();
   const closeMobile = () => setOpenMobile(false);
+  const isMobile = useIsMobile()
 
   return (
     <SidebarPrimitive collapsible="offcanvas">
@@ -99,7 +101,7 @@ export function AppSidebar({ section }: { section: V2Section }) {
 
       {/* <SidebarSeparator className="mx-0" /> */}
 
-      <SidebarFooter className={`gap-3 pt-3 pb-3 ${INSET}`}>
+      <SidebarFooter className={`gap-3 pt-3 ${isMobile ? 'pb-6' : 'pb-3'} ${INSET}`}>
         <div className="relative">
           <Search
             className="size-icon-xs absolute left-2.5 top-1/2 -translate-y-1/2 text-sidebar-foreground/40 pointer-events-none"
@@ -120,15 +122,22 @@ export function AppSidebar({ section }: { section: V2Section }) {
 
         <div className="flex items-center justify-between gap-2">
           {release ? (
-            <a
-              href={release.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1 min-w-0 text-0_6 font-mono text-foreground"
-            >
-              <Tag className="size-icon-xs shrink-0" strokeWidth={ICON_STROKE} />
-              <span className="truncate">{release.tag}</span>
-            </a>
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <a
+                    href={release.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1 min-w-0 text-0_6 font-mono text-foreground"
+                  />
+                }
+              >
+                <Tag className="size-icon-xs shrink-0" strokeWidth={ICON_STROKE} />
+                <span className="truncate">{release.tag}</span>
+              </TooltipTrigger>
+              <TooltipContent className="text-0_6 font-sans not-italic">Latest Release</TooltipContent>
+            </Tooltip>
           ) : <span />}
 
           <div className="flex gap-2 shrink-0">

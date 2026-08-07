@@ -22,10 +22,14 @@ export function Navbar({
       <div className="flex items-center gap-1 min-w-0">
         <SidebarTrigger aria-label="toggle sidebar" />
         {onBack && (
-          <Button variant="ghost" size="icon-xs" onClick={onBack} className="gap-1 flex items-center">
-            <ArrowLeft className="size-icon-xs" strokeWidth={ICON_STROKE} />
-            {/* <div className="text-0_7">Back to projects</div> */}
-          </Button>
+          <Tooltip>
+            <TooltipTrigger
+              render={<Button variant="ghost" size="icon-xs" onClick={onBack} aria-label="back to projects" className="gap-1 flex items-center" />}
+            >
+              <ArrowLeft className="size-icon-xs" strokeWidth={ICON_STROKE} />
+            </TooltipTrigger>
+            <TooltipContent className="text-0_6 font-sans not-italic">Back to projects</TooltipContent>
+          </Tooltip>
         )}
       </div>
 

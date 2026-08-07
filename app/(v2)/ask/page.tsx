@@ -15,7 +15,6 @@ export default async function AskPage() {
   return (
     <AskChat
       suggestions={suggestions}
-      apiBody={{}}
       inputPosition="center"
       className="flex-1 min-h-0"
     />
