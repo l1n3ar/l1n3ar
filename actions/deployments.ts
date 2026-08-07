@@ -27,7 +27,7 @@ export async function getDeployments(limit = 10, until?: number): Promise<GetDep
     return { ok: false, error: 'VERCEL_ACCESS_TOKEN is not set' };
   }
 
-  const params = new URLSearchParams({ limit: String(limit), target: 'production' });
+  const params = new URLSearchParams({ limit: String(limit)});
   const projectId = process.env.VERCEL_PROJECT_ID;
   if (projectId) params.set('projectId', projectId);
   const teamId = process.env.VERCEL_TEAM_ID;

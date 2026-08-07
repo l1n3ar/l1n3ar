@@ -14,6 +14,8 @@ export function Deployments() {
 
   const deployments = data?.pages.flatMap((p) => p.deployments) ?? [];
 
+  console.log({data})
+
   return (
     <div>
       <h1 className="text-0_9 font-semibold mb-3.5">Deployments</h1>
@@ -48,6 +50,8 @@ export function Deployments() {
                   <span className={`shrink-0 text-0_6 font-medium px-2 py-0.5 rounded-sm ${stateBadgeClass(d.state)}`}>
                     {d.state ?? 'unknown'}
                   </span>
+
+                  
                   {d.target && <Badge variant="outline" className="shrink-0 capitalize">{d.target}</Badge>}
                   <span className="text-0_6 text-muted-foreground shrink-0 font-mono flex items-center gap-1">
                     <GitCommitHorizontal className="size-icon-xs" strokeWidth={ICON_STROKE} />

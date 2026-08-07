@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { Code2, Loader2 } from 'lucide-react';
+import { Code2 } from 'lucide-react';
 import { HomeCard, HOME_CARD_ICON_SIZE } from '@/components/v2/sections/home-tile';
 import { NAV_ICONS } from '@/components/v2/nav-icons';
 import { projectIcon } from '@/components/v2/sections/project-icons';
