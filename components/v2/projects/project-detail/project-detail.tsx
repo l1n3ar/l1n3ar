@@ -1,104 +1,17 @@
 'use client';
-import { useState } from 'react';
-import { ExternalLink, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { AskChat } from '@/components/v2/sections/ask-chat';
-import { CaseStudyBody } from '@/components/v2/sections/case-study-body';
+import { ExternalLink } from 'lucide-react';
+import { AskChat } from '@/components/v2/ask/ask-chat';
+import { CaseStudyBody } from '@/components/v2/projects/project-detail/case-study-body';
+import { SectionToc } from '@/components/v2/projects/project-detail/section-toc';
+import { ProjectNav } from '@/components/v2/projects/project-detail/project-nav';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { BRAND_ICONS } from '@/components/v2/tech-icons';
 import { useSite } from '@/components/v2/site-context';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useSplitResize } from '@/hooks/use-split-resize';
-import { cn, slugify } from '@/lib/utils';
 import { hasCaseStudy, type Project } from '@/lib/types';
 
 const ICON_STROKE = 1.75;
-
-function SectionToc({ project }: { project: Project }) {
-  const [open, setOpen] = useState(true);
-  const sections = (project.body ?? [])
-    .filter((b) => b._type === 'caseSection')
-    .map((b) => ({ id: slugify(b.heading), heading: b.heading }));
-  if (sections.length < 2) return null;
-
-  const jumpTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
-  return (
-    <div className="sticky top-0 z-10 mb-4 bg-card">
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center justify-between gap-2 py-1 text-0_6 font-semibold text-muted-foreground uppercase tracking-wide"
-      >
-        Jump to a section
-        <ChevronDown className={cn('size-icon-xs transition-transform', open && 'rotate-180')} strokeWidth={ICON_STROKE} />
-      </button>
-  
-      <div className={cn('grid transition-[grid-template-rows] duration-200 ease-out', open ? 'grid-rows-[1fr] mt-2' : 'grid-rows-[0fr]')}>
-        <div className="overflow-hidden">
-          <ol className="bg-muted text-foreground rounded-lg p-3">
-            {sections.map((s, i) => {
-              const isLast = i === sections.length - 1;
-              return (
-                <li key={s.id} className="flex gap-2.5">
-                  <div className="flex flex-col items-center w-2.5 shrink-0">
-                    <span className="w-[0.4375rem] h-[0.4375rem] rounded-full mt-1 shrink-0 bg-foreground/60" />
-                    {!isLast && <span className="w-px flex-1 bg-foreground/25 mt-0.5" />}
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => jumpTo(s.id)}
-                    className="flex-1 min-w-0 text-left text-0_7 capitalize text-foreground/80 truncate pb-2.5 hover:text-foreground"
-                  >
-                    {s.heading}
-                  </button>
-                </li>
-              );
-            })}
-          </ol>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ProjectNav({ prev, next }: { prev?: Project; next?: Project }) {
-  const router = useRouter();
-  if (!prev && !next) return null;
-
-  return (
-    <div className="flex items-stretch gap-2.5 mt-6 pt-4 border-t border-border">
-      {prev ? (
-        <button
-          type="button"
-          onClick={() => router.push(`/projects/${prev.id}`)}
-          className="flex-1 min-w-0 flex items-center gap-1.5 text-left px-3 py-2 rounded-lg border border-border bg-card hover:bg-muted"
-        >
-          <ChevronLeft className="size-icon-xs shrink-0 text-muted-foreground" strokeWidth={ICON_STROKE} />
-          <span className="min-w-0">
-            <span className="block text-0_6 text-muted-foreground">Previous</span>
-            <span className="block text-0_7 font-semibold truncate">{prev.name}</span>
-          </span>
-        </button>
-      ) : <div className="flex-1" />}
-      {next ? (
-        <button
-          type="button"
-          onClick={() => router.push(`/projects/${next.id}`)}
-          className="flex-1 min-w-0 flex items-center justify-end gap-1.5 text-right px-3 py-2 rounded-lg border border-border bg-card hover:bg-muted"
-        >
-          <span className="min-w-0">
-            <span className="block text-0_6 text-muted-foreground">Next</span>
-            <span className="block text-0_7 font-semibold truncate">{next.name}</span>
-          </span>
-          <ChevronRight className="size-icon-xs shrink-0 text-muted-foreground" strokeWidth={ICON_STROKE} />
-        </button>
-      ) : <div className="flex-1" />}
-    </div>
-  );
-}
 
 export function ProjectDetail({ project }: { project: Project }) {
   const { containerRef, leftPercent, startResize, onResizeMove, endResize } = useSplitResize();

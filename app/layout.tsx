@@ -32,9 +32,6 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: 'swap',
 });
 
-// VERCEL_PROJECT_PRODUCTION_URL is Vercel's stable production domain — VERCEL_URL is
-// per-deployment (drifts on every preview/prod deploy) and shouldn't be the primary
-// fallback, since a stale/mismatched og:image URL is exactly why social previews break.
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
   ?? (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : undefined)
   ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
@@ -62,11 +59,6 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-// The 'theme_v2' key literal here must match THEME_STORAGE_KEY in lib/theme.ts — this script
-// has to run before any JS module loads, so it can't import the constant directly. Also clears
-// the old 'theme' key once per visit so returning visitors' stale dark-mode choice is wiped.
-// Default is always light — dark only applies if the visitor explicitly toggled it on this
-// site before (no system-preference fallback).
 const noFlashScript = `(function(){try{localStorage.removeItem('theme');if(localStorage.getItem('theme_v2')==='dark')document.documentElement.classList.add('dark');}catch(e){}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

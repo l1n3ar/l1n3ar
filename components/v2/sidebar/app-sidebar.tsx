@@ -8,32 +8,20 @@ import {
 } from '@/components/ui/sidebar';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { NAV_ICONS } from '@/components/v2/nav-icons';
 import { BRAND_ICONS } from '@/components/v2/tech-icons';
-import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { sectionHref } from '@/components/v2/section-routes';
 import { useCommandPalette } from '@/components/v2/command-palette-context';
 import { useSite } from '@/components/v2/site-context';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { useRelease } from '@/hooks/release';
 import type { V2Section } from '@/lib/types';
-import { useIsMobile } from '@/hooks/use-mobile';
 
-// Base icon weight for this UI — see Global look / Icons in the design handoff.
 const ICON_STROKE = 1.75;
-
-// One consistent horizontal inset for every row in the sidebar (header, search, nav,
-// footer) so separators — which sit flush with no margin of their own — line up with
-// everything above and below them instead of appearing narrower/wider at each nesting depth.
 const INSET = 'px-4';
-
-// Nav items render as one flat list — a separator marks the end of "explore" (after
-// off the clock) and the end of "live status" (after deployments), without group labels.
 const SEPARATOR_AFTER: V2Section[] = ['l1n3ar', 'deployments'];
 
-// GitHub gets its real Simple Icons brand mark (see BRAND_ICONS, rendered separately below);
-// LinkedIn isn't in Simple Icons (removed after a trademark takedown request), so it uses
-// a dropped-in PNG asset (public/images/tiles/linkedin.png, rendered separately below) instead.
-// FOOTER_ICONS.linkedin below is unused for rendering but keeps the tooltip-label lookup working.
 const FOOTER_ICONS: Record<string, typeof LinkIcon> = {
   linkedin: LinkIcon,
   resume: FileText,
@@ -50,9 +38,9 @@ export function AppSidebar({ section }: { section: V2Section }) {
   const { setOpen: setPaletteOpen } = useCommandPalette();
   const { data: release } = useRelease();
   const { setOpenMobile } = useSidebar();
+  const isMobile = useIsMobile();
   const initials = site.name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase();
   const closeMobile = () => setOpenMobile(false);
-  const isMobile = useIsMobile()
 
   return (
     <SidebarPrimitive collapsible="offcanvas">
@@ -69,8 +57,6 @@ export function AppSidebar({ section }: { section: V2Section }) {
           </span>
         </NextLink>
       </SidebarHeader>
-
-      {/* <SidebarSeparator className="mx-0" /> */}
 
       <SidebarContent className={`gap-0 py-3 ${INSET} gz-scroll`}>
         <SidebarMenu className="gap-1">
@@ -98,8 +84,6 @@ export function AppSidebar({ section }: { section: V2Section }) {
           })}
         </SidebarMenu>
       </SidebarContent>
-
-      {/* <SidebarSeparator className="mx-0" /> */}
 
       <SidebarFooter className={`gap-3 pt-3 ${isMobile ? 'pb-6' : 'pb-3'} ${INSET}`}>
         <div className="relative">

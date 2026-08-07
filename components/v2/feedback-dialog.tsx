@@ -1,11 +1,11 @@
 'use client';
 import { useState, type FormEvent } from 'react';
+import { Loader2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { submitFeedback } from '@/actions/feedback';
-import { Loader2 } from 'lucide-react';
 
 export function FeedbackDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
   const [name, setName] = useState('');
@@ -40,10 +40,7 @@ export function FeedbackDialog({ open, onOpenChange }: { open: boolean; onOpenCh
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="max-w-dialog-sm rounded-lg font-sans not-italic">
-        {
-          !sent &&  <DialogTitle className="text-0_8 font-semibold">Send feedback</DialogTitle>
-        }
-       
+        {!sent && <DialogTitle className="text-0_8 font-semibold">Send feedback</DialogTitle>}
 
         {sent ? (
           <p className="text-0_75 text-muted-foreground">Thank you, I always appreciate feedback!</p>
@@ -65,7 +62,7 @@ export function FeedbackDialog({ open, onOpenChange }: { open: boolean; onOpenCh
             />
             {error && <p className="text-0_7 text-destructive">{error}</p>}
             <Button type="submit" size="sm" disabled={isSubmitting || !content.trim()} className="self-end">
-              {isSubmitting ? <Loader2 className='h-4 w-4 animate-spin'/> : 'Send'}
+              {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Send'}
             </Button>
           </form>
         )}

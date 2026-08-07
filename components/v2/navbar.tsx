@@ -44,7 +44,7 @@ export function Navbar({
 
         <Tooltip>
           <TooltipTrigger
-            render={<Button variant="ghost" size='icon-xs' aria-label="switch to v1" render={<NextLink href="/v1" />} />}
+            render={<Button variant="ghost" size="icon-xs" aria-label="switch to v1" render={<NextLink href="/v1" />} />}
           >
             <History className="size-icon-xs text-foreground" strokeWidth={ICON_STROKE} />
           </TooltipTrigger>

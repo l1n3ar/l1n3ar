@@ -2,10 +2,6 @@ import type { ReactNode } from 'react';
 import { tilePastel } from '@/lib/pastel';
 import { cn } from '@/lib/utils';
 
-// One gradient for every tile: solid page-bg at the top (so the icon/title sit on a
-// clean surface), fading out to reveal the watercolor image lower down. The transparent
-// stop sits deep (88%) so text/timeline content anywhere in the card stays on a legible
-// backdrop — only a thin band near the very bottom shows the image at full strength.
 const GRADIENT_CSS = 'linear-gradient(to bottom, rgb(var(--background)) 0%, transparent 97%)';
 
 type HomeCardSize = 'lg' | 'md' | 'sm';
@@ -18,9 +14,6 @@ const SIZE: Record<HomeCardSize, {
   sm: { icon: 'size-icon-md', title: 'text-0_7', description: 'text-0_6', radius: 'rounded-xl' },
 };
 
-// One card, one layout: icon, then title below it, then either a bespoke `component`
-// (e.g. the work-history timeline) or the standard description + button. Size controls
-// every text size; title/description/buttonLabel are Sanity content, everything else is layout.
 export function HomeCard({
   size = 'md', hue, image, icon, title, description, extra, className,
   component, buttonLabel, onClick,

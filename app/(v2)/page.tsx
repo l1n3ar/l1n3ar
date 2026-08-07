@@ -1,4 +1,4 @@
-import { Home } from '@/components/v2/sections/home';
+import { Home } from '@/components/v2/home/home';
 import { getWorkHistory, getHomeTiles, getRecommendations } from '@/lib/content';
 
 export default async function HomePage() {

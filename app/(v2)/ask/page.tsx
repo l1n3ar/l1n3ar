@@ -1,4 +1,4 @@
-import { AskChat } from '@/components/v2/sections/ask-chat';
+import { AskChat } from '@/components/v2/ask/ask-chat';
 import { getAllProjects } from '@/lib/content';
 
 const MAX_SUGGESTIONS = 5;

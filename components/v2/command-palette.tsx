@@ -15,9 +15,6 @@ import { hasCaseStudy } from '@/lib/types';
 
 const ICON_STROKE = 1.75;
 
-// Mirrors components/v2/sidebar.tsx's footer icon logic exactly, so the same link
-// shows the same icon in both places — github/linkedin get real brand marks, resume
-// falls back to FileText, anything else (e.g. email) falls back to Mail.
 const FOOTER_ICONS: Record<string, typeof FileText> = {
   resume: FileText,
 };
@@ -43,8 +40,6 @@ export function CommandPalette() {
   }, [open, setOpen]);
 
   useEffect(() => {
-    // Reads `document`'s current class, so it can't be a lazy useState initializer (no
-    // `document` during SSR) — this is a justified exception to set-state-in-effect.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setDark(getTheme() === 'dark');
     const onChange = () => setDark(getTheme() === 'dark');

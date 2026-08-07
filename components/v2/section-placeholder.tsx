@@ -1,4 +1,3 @@
-// Temporary stand-in for a section's real UI — replaced screen by screen in upcoming milestones.
 export function SectionPlaceholder({ title, note }: { title: string; note: string }) {
   return (
     <div className="rounded-lg border border-border p-8 text-center text-muted-foreground">

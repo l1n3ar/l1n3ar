@@ -1,4 +1,4 @@
-import { Recommendations } from '@/components/v2/sections/recommendations';
+import { Recommendations } from '@/components/v2/recommendations/recommendations';
 import { getRecommendations } from '@/lib/content';
 
 export default async function RecommendationsPage() {

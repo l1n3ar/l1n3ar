@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ExternalLink, Info } from 'lucide-react';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
-import { projectIcon } from '@/components/v2/sections/project-icons';
+import { projectIcon } from '@/components/v2/projects/project-icons';
 import { BRAND_ICONS } from '@/components/v2/tech-icons';
 import { hueForKey, pastelChipStyle } from '@/lib/pastel';
 import { cn } from '@/lib/utils';
@@ -16,11 +16,6 @@ export function ProjectCard({ project, showCategory }: { project: Project; showC
   const Icon = projectIcon(project.id);
   const chipStyle = pastelChipStyle(hueForKey(project.id));
   const hasLinks = Boolean(project.github || project.demo);
-  // Hover reveals the description for free on devices that can hover — but touch
-  // devices have no hover at all, so tapping the card would otherwise just flash the
-  // overlay via :hover-on-tap and navigate away. This gives touch users an explicit
-  // toggle instead; the button itself is hidden on hover-capable devices via CSS
-  // (see its className) since they don't need it.
   const [showDescription, setShowDescription] = useState(false);
 
   const openLink = (e: React.MouseEvent, href: string) => {

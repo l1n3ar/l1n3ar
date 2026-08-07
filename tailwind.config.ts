@@ -33,6 +33,10 @@ export default {
         destructive: {
           DEFAULT: 'rgb(var(--destructive) / <alpha-value>)',
         },
+        codeBlock: {
+          DEFAULT: 'rgb(var(--code-block-bg) / <alpha-value>)',
+          foreground: 'rgb(var(--code-block-fg) / <alpha-value>)',
+        },
         popover: {
           DEFAULT: 'rgb(var(--popover) / <alpha-value>)',
           foreground: 'rgb(var(--popover-foreground) / <alpha-value>)',
@@ -65,6 +69,9 @@ export default {
         lg: 'var(--radius-lg, 0.5rem)',
       },
       fontSize: {
+        '0_625': '0.625rem',
+        '0_65': '0.65rem',
+        '0_8-static': '0.8rem',
         '0_6': 'var(--text-0_6, 0.6rem)',
         '0_7': 'var(--text-0_7, 0.7rem)',
         '0_8': 'var(--text-0_8, 0.8rem)',
@@ -75,12 +82,19 @@ export default {
         '2_6': 'var(--text-2_6, 2.6rem)',
       },
       size: {
+        dot: 'var(--dot-size, 0.4375rem)',
         'icon-xs': 'var(--icon-xs, 0.75rem)',
         'icon-sm': 'var(--icon-sm, 0.875rem)',
         'icon-md': 'var(--icon-md, 1rem)',
         'icon-lg': 'var(--icon-lg, 1.25rem)',
         'icon-xl': 'var(--icon-xl, 1.5rem)',
         'icon-2xl': 'var(--icon-2xl, 1.75rem)',
+      },
+      minHeight: {
+        'home-tile-xs': 'var(--home-tile-xs, 8.125rem)',
+        'home-tile-sm': 'var(--home-tile-sm, 9.375rem)',
+        'home-tile-md': 'var(--home-tile-md, 11rem)',
+        'home-tile-lg': 'var(--home-tile-lg, 17.5rem)',
       },
       maxWidth: {
         dialog: 'min(47.5rem, 92vw)',

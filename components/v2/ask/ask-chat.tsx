@@ -3,17 +3,17 @@ import { useEffect, useState, type CSSProperties, type FormEvent } from 'react';
 import { useChat } from 'ai/react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { ArrowUp, ChevronDown, Send } from 'lucide-react';
+import { ArrowUp, ChevronDown } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { CitationsList } from '@/components/v2/ask/citations-list';
 import { useSite } from '@/components/v2/site-context';
 import { useAutoScroll } from '@/hooks/use-auto-scroll';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { getCitations, type Citation } from '@/lib/citations';
-import { hueForKey } from '@/lib/pastel';
+import { getCitations } from '@/lib/citations';
+import { hueForKey, pastelChipStyle } from '@/lib/pastel';
 import { cn } from '@/lib/utils';
 import { Project } from '@/lib/types';
 
@@ -21,7 +21,6 @@ const MOBILE_MAX_SUGGESTIONS = 3;
 
 const ICON_STROKE = 1.75;
 
-// Cycled while waiting for the first token, so a slow answer doesn't just sit on "thinking…".
 const THINKING_MESSAGES = [
   'frobnicating',
   'zhuzhing the answer',
@@ -56,33 +55,6 @@ function formatTimestamp(date?: Date) {
   return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
 }
 
-// Mirrors v1's citations-marker.tsx layout (source / confidence rows with a progress
-// bar) at v2 scale/tokens — deliberately not v1's component, which is styled with
-// v1-only classes (text-ink, border-g, italic) that don't resolve inside .v2.
-function CitationsList({ citations,isMobile }: { citations: Citation[],isMobile? : boolean }) {
-  if (citations.length === 0) return null;
-  return (
-    <div className={`w-full min-w-0  max-w-[85%] ml-8 border-l-2 border-border pl-2 py-1 mb-4`}>
-      <div className="flex items-center gap-2 min-w-0 text-[0.625rem] text-muted-foreground/70 uppercase tracking-wide px-1 pb-1 mb-1 border-b border-border">
-        <span className="flex-1 min-w-0">source</span>
-        <span className="w-14 shrink-0 text-right">confidence</span>
-      </div>
-      <div className="flex flex-col gap-0.5 min-w-0 max-h-24 overflow-y-auto overflow-x-hidden gz-scroll">
-        {citations.map((c) => {
-          const pct = Math.round(c.score * 100);
-          return (
-            <div key={c.source} className="flex items-center gap-2 min-w-0 text-[0.65rem] text-muted-foreground px-1 font-light">
-              <span className="truncate min-w-0 flex-1">{c.label}</span>
-              <Progress value={pct} className="w-10 shrink-0" indicatorClassName="bg-green-700 dark:bg-green-500" />
-              <span className="text-muted-foreground/70 shrink-0 font-mono w-6 text-right">{pct}</span>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
 export function AskChat({
   project, inputPosition = 'bottom', className, style,suggestions
 }: {
@@ -96,8 +68,6 @@ export function AskChat({
   const initials = site.name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase();
   const isMobile = useIsMobile();
   const visibleSuggestions = project ? isMobile ? project.asks.slice(0,MOBILE_MAX_SUGGESTIONS) : project.asks : suggestions
-  // Picked once per mount (lazy initializer), not on every render — otherwise this would
-  // reroll on every keystroke, since typing re-renders the controlled Input below.
   const [placeholderSuggestion] = useState(() => (
     visibleSuggestions && visibleSuggestions.length > 0
       ? visibleSuggestions[Math.floor(Math.random() * visibleSuggestions.length)]
@@ -107,8 +77,6 @@ export function AskChat({
     messages, input, setInput, handleInputChange, append, setMessages, isLoading, error,
   } = useChat({ api: '/api/ask' });
 
-
-
   const hasMessages = messages.length > 0;
   const lastMessage = messages[messages.length - 1];
   const isWaitingForFirstToken = isLoading && lastMessage?.role !== 'assistant';
@@ -116,9 +84,6 @@ export function AskChat({
 
   const { scrollRef, showScrollButton, handleScroll, scrollToBottom, resetScroll } = useAutoScroll(messages);
 
-
-  // Each new question starts a fresh exchange rather than a running conversation —
-  // the panel only ever shows the latest question and its answer.
   const ask = (content: string) => {
     if (!content.trim() || isLoading) return;
     setMessages([]);
@@ -134,9 +99,6 @@ export function AskChat({
   };
 
   const centering = inputPosition === 'center';
-  // Grows to push the suggestions+input toward the vertical middle while the chat is
-  // empty, then smoothly collapses to 0 on the first message so the input settles at
-  // the bottom instead of jumping there — flex-grow is a plain number, so it animates.
   const spacer = centering && (
     <div className={`transition-[flex-grow] duration-500 ease-out ${hasMessages ? 'grow-0' : 'grow'}`} />
   );
@@ -145,7 +107,6 @@ export function AskChat({
     <>
       {visibleSuggestions?.map((suggestion) => {
         const hue = hueForKey(suggestion);
-        const isDark = () => document.documentElement.classList.contains('dark');
         return (
           <Button
             key={suggestion}
@@ -153,12 +114,14 @@ export function AskChat({
             variant="outline"
             onClick={() => ask(suggestion)}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = isDark() ? `oklch(0.28 0.035 ${hue})` : `oklch(0.93 0.032 ${hue})`;
-              e.currentTarget.style.color = isDark() ? `oklch(0.76 0.07 ${hue})` : `oklch(0.49 0.075 ${hue})`;
+              const target = e.currentTarget;
+              Object.entries(pastelChipStyle(hue)).forEach(([k, v]) => target.style.setProperty(k, String(v)));
+              target.classList.add('pastel-chip');
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = '';
-              e.currentTarget.style.color = '';
+              const target = e.currentTarget;
+              target.classList.remove('pastel-chip');
+              Object.keys(pastelChipStyle(hue)).forEach((k) => target.style.removeProperty(k));
             }}
             className="bg-muted h-auto max-w-full whitespace-normal text-0_7 text-left justify-start px-3 py-2 rounded-lg self-start border-transparent capitalize transition-colors"
           >
@@ -217,7 +180,7 @@ export function AskChat({
                   const citations = m.role === 'assistant' ? getCitations(m) : [];
                   return (
                     <div key={m.id} className={`min-w-0 w-full flex flex-col gap-1 ${m.role === 'user' ? 'items-end' : 'items-start'}`}>
-                      <CitationsList citations={citations} isMobile/>
+                      <CitationsList citations={citations} />
                       <div className={`min-w-0 max-w-full flex items-start gap-2 ${m.role === 'user' ? 'flex-row-reverse' : ''}`}>
                         {m.role === 'assistant' && (
                           <Avatar size="sm" className="shrink-0 rounded-md bg-primary after:rounded-md">
@@ -251,7 +214,7 @@ export function AskChat({
                         {initials}
                       </AvatarFallback>
                     </Avatar>
-                    <div className="text-[0.8rem] font-light text-muted-foreground px-1 animate-pulse">{thinkingMessage}</div>
+                    <div className="text-0_8-static font-light text-muted-foreground px-1 animate-pulse">{thinkingMessage}</div>
                   </div>
                 )}
                 {error && (
