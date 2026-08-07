@@ -51,11 +51,12 @@ export function ProjectCard({ project, showCategory }: { project: Project; showC
         </div>
 
         <div
-          className="pastel-chip absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center p-4"
+          className="pastel-chip absolute inset-0 opacity-0 [@media(hover:hover)]:group-hover:opacity-100 transition-opacity flex items-center p-4"
           style={chipStyle}
         >
           <p className="text-0_7 leading-relaxed">{project.description}</p>
         </div>
+
       </div>
 
       {hasLinks && (

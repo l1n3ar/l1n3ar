@@ -116,7 +116,7 @@ export function Metrics() {
 
       {data && (
         <div className="flex flex-col gap-3.5">
-          <div className="grid grid-cols-4 gap-2.5">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
             <StatCard label="live visitors" value={data.traffic.liveVisitors} live />
             <StatCard label="questions today" value={data.traffic.questionsToday} />
             <StatCard label="errors today" value={data.reliability.errorsToday} />

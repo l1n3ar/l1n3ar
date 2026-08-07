@@ -4,7 +4,7 @@ import NextLink from 'next/link';
 import { Search, Link as LinkIcon, FileText, Tag } from 'lucide-react';
 import {
   Sidebar as SidebarPrimitive, SidebarHeader, SidebarContent, SidebarFooter,
-  SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarSeparator,
+  SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarSeparator, useSidebar,
 } from '@/components/ui/sidebar';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -16,6 +16,7 @@ import { useCommandPalette } from '@/components/v2/command-palette-context';
 import { useSite } from '@/components/v2/site-context';
 import { useRelease } from '@/hooks/release';
 import type { V2Section } from '@/lib/types';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 // Base icon weight for this UI — see Global look / Icons in the design handoff.
 const ICON_STROKE = 1.75;
@@ -48,12 +49,15 @@ export function AppSidebar({ section }: { section: V2Section }) {
   const { site, navItems } = useSite();
   const { setOpen: setPaletteOpen } = useCommandPalette();
   const { data: release } = useRelease();
+  const { setOpenMobile } = useSidebar();
   const initials = site.name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase();
+  const closeMobile = () => setOpenMobile(false);
+  const isMobile = useIsMobile()
 
   return (
     <SidebarPrimitive collapsible="offcanvas">
       <SidebarHeader className={`gap-2 pt-4 ${INSET}`}>
-        <NextLink href={sectionHref('home')} className="flex items-start gap-2 min-w-0">
+        <NextLink href={sectionHref('home')} onClick={closeMobile} className="flex items-start gap-2 min-w-0">
           <Avatar size="sm" className="rounded-md bg-primary after:rounded-md shrink-0">
             <AvatarFallback className="rounded-md bg-primary text-primary-foreground text-0_6">
               {initials}
@@ -78,8 +82,9 @@ export function AppSidebar({ section }: { section: V2Section }) {
                   <SidebarMenuButton
                     size="sm"
                     isActive={section === item.section}
+                    onClick={closeMobile}
                     render={<NextLink href={sectionHref(item.section)} />}
-                    className="text-0_7 gap-2 text-sidebar-foreground/70 data-active:text-sidebar-foreground"
+                    className="text-0_7 gap-2 text-sidebar-foreground/70 data-[active]:text-sidebar-foreground"
                   >
                     <Icon strokeWidth={ICON_STROKE} />
                     <span>{item.label}</span>
@@ -96,7 +101,7 @@ export function AppSidebar({ section }: { section: V2Section }) {
 
       {/* <SidebarSeparator className="mx-0" /> */}
 
-      <SidebarFooter className={`gap-3 pt-3 pb-3 ${INSET}`}>
+      <SidebarFooter className={`gap-3 pt-3 ${isMobile ? 'pb-6' : 'pb-3'} ${INSET}`}>
         <div className="relative">
           <Search
             className="size-icon-xs absolute left-2.5 top-1/2 -translate-y-1/2 text-sidebar-foreground/40 pointer-events-none"
@@ -115,20 +120,27 @@ export function AppSidebar({ section }: { section: V2Section }) {
 
         <SidebarSeparator className="mx-0" />
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           {release ? (
-            <a
-              href={release.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1 text-0_6 font-mono text-foreground"
-            >
-              <Tag className="size-icon-xs" strokeWidth={ICON_STROKE} />
-              {release.tag}
-            </a>
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <a
+                    href={release.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1 min-w-0 text-0_6 font-mono text-foreground"
+                  />
+                }
+              >
+                <Tag className="size-icon-xs shrink-0" strokeWidth={ICON_STROKE} />
+                <span className="truncate">{release.tag}</span>
+              </TooltipTrigger>
+              <TooltipContent className="text-0_6 font-sans not-italic">Latest Release</TooltipContent>
+            </Tooltip>
           ) : <span />}
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 shrink-0">
             {site.footerLinks.map((l) => {
               const isGithub = l.label.toLowerCase().includes('github');
               const isLinkedin = l.label.toLowerCase().includes('linkedin');

@@ -54,11 +54,11 @@ function DifficultyBar({ solvedByDifficulty }: { solvedByDifficulty: { difficult
         <div className="bg-yellow-300 dark:bg-yellow-800" style={{ width: `${(medium / total) * 100}%` }} />
         <div className="bg-red-300 dark:bg-red-800" style={{ width: `${(hard / total) * 100}%` }} />
       </div>
-      <div className="flex gap-3.5 text-0_6 text-muted-foreground">
+      {/* <div className="flex gap-3.5 text-0_6 text-muted-foreground">
         <span>easy {easy}</span>
         <span>medium {medium}</span>
         <span>hard {hard}</span>
-      </div>
+      </div> */}
     </div>
   );
 }
@@ -80,7 +80,7 @@ function RecentActivity({ rows }: { rows: ActivityRow[] }) {
           rel="noopener noreferrer"
           className="flex items-center justify-between gap-2 px-3 py-2 border-t border-border text-0_7 text-foreground/85 hover:bg-muted/50"
         >
-          <span className="truncate">{r.title}</span>
+          <span className="flex-1 min-w-0 truncate">{r.title}</span>
           <span className="text-0_6 text-muted-foreground shrink-0">{timeAgo(r.when * 1000)}</span>
         </a>
       ))}
@@ -106,7 +106,7 @@ function CodingPractice({ profiles }: { profiles?: CodingProfiles }) {
 
   return (
     <div>
-      <div className="grid grid-cols-2 gap-2.5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
         {profiles.leetcode && (
           <StatCardShell
             hue={LEETCODE_HUE}
@@ -127,7 +127,7 @@ function CodingPractice({ profiles }: { profiles?: CodingProfiles }) {
           >
             {codeforces.isError && <p className="text-0_6 text-destructive">couldn&apos;t load Codeforces stats.</p>}
             {cf && !codeforces.isError && (
-              <p className="text-0_7 text-muted-foreground">
+              <p className="text-0_7 ml-8 text-muted-foreground">
                 {cf.rank ?? 'unrated'}
                 {cf.maxRating !== undefined && ` · max ${cf.maxRating}`}
               </p>
@@ -280,7 +280,7 @@ function OffTheClock({ content }: { content: OffTheClock }) {
       <div className="text-0_6 font-semibold text-muted-foreground uppercase tracking-wide mb-2.5">
         Bands I am in
       </div>
-      <div className="grid grid-cols-2 gap-2.5 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-6">
         {content.music.map((entry) => <BandCard key={entry.band} entry={entry} />)}
       </div>
       <div className="text-0_6 font-semibold text-muted-foreground uppercase tracking-wide mb-2.5">

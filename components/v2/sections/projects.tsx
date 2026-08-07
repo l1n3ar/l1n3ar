@@ -38,13 +38,13 @@ export function Projects({ projects }: { projects: Project[] }) {
 
   return (
     <div>
-      <h1 className="text-0_9 font-semibold mb-3.5">Projects</h1>
+      <h1 className="text-0_9 font-semibold mb-3.5 ml-1">Projects</h1>
 
-      <div className="flex items-center justify-between gap-4  mb-4">
-        <Tabs value={category} onValueChange={(v) => selectCategory(v as CategoryFilter)}>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4">
+        <Tabs value={category} onValueChange={(v) => selectCategory(v as CategoryFilter)} className="overflow-x-auto gz-scroll">
           <TabsList variant="line">
             {(['all', ...categories] as const).map((cat) => (
-              <TabsTrigger key={cat} value={cat} className="text-0_7 capitalize">
+              <TabsTrigger key={cat} value={cat} className="text-0_7 capitalize shrink-0">
                 {cat}
               </TabsTrigger>
             ))}
@@ -52,7 +52,7 @@ export function Projects({ projects }: { projects: Project[] }) {
         </Tabs>
 
         <div className="flex items-center gap-2 pb-2">
-          <div className="relative w-40">
+          <div className="relative w-full sm:w-40">
             <Search
               className="size-icon-xs absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground"
               strokeWidth={ICON_STROKE}
@@ -111,7 +111,7 @@ export function Projects({ projects }: { projects: Project[] }) {
         </div>
       )}
 
-      <div className="grid grid-cols-3 gap-2.5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
         {filtered.map((p) => (
           <ProjectCard key={p.id} project={p} showCategory={category === 'all'} />
         ))}

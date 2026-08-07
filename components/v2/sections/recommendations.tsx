@@ -22,7 +22,7 @@ function RecommendationCard({ rec, onReadMore }: { rec: Recommendation; onReadMo
   const preview = isLong ? `${rec.quote.slice(0, PREVIEW_LEN)}…` : rec.quote;
 
   return (
-    <div className="border border-border rounded-lg p-3.5 bg-card flex gap-2.5">
+    <div className="border border-border rounded-lg p-4 bg-card flex gap-2.5">
       <div
         className="pastel-chip size-icon-lg rounded-full flex items-center justify-center text-0_6 font-semibold shrink-0"
         style={chipStyle}
@@ -56,14 +56,14 @@ export function Recommendations({ recommendations }: { recommendations: Recommen
     <div>
       <h1 className="text-0_9 font-semibold mb-3.5">Recommendations</h1>
 
-      <div className="grid grid-cols-3 gap-2.5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
         {recommendations.map((r) => (
           <RecommendationCard key={r.who} rec={r} onReadMore={() => setOpen(r)} />
         ))}
       </div>
 
       <Dialog open={Boolean(open)} onOpenChange={(next) => !next && setOpen(null)}>
-        <DialogContent className="max-w-md rounded-lg font-sans not-italic">
+        <DialogContent className="max-w-dialog-sm rounded-lg font-sans not-italic">
           {open && openInfo && (
             <>
               <div className="flex items-center gap-2.5">
