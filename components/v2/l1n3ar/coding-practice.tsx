@@ -1,12 +1,12 @@
 import { Code2 } from 'lucide-react';
-import { useCodeforcesProfile, useLeetcodeProfile } from '@/hooks/coding';
+import { ICON_STROKE } from '@/components/v2/constants';
+import { totalSolved, useCodeforcesProfile, useLeetcodeProfile } from '@/hooks/coding';
 import { timeAgo } from '@/lib/deployment-meta';
 import { pastelChipStyle } from '@/lib/pastel';
 import type { CodingProfiles } from '@/lib/types';
 import type { CodeforcesProfile } from '@/actions/codeforces';
 import type { LeetcodeProfile } from '@/actions/leetcode';
 
-const ICON_STROKE = 1.75;
 const LEETCODE_HUE = 55;
 const CODEFORCES_HUE = 250;
 
@@ -97,7 +97,7 @@ export function CodingPractice({ profiles }: { profiles?: CodingProfiles }) {
             hue={LEETCODE_HUE}
             label="LeetCode"
             handle={profiles.leetcode}
-            value={leetcode.isLoading ? '—' : leetcode.isError ? '—' : lc?.solvedByDifficulty.reduce((sum, d) => sum + d.count, 0) ?? 0}
+            value={leetcode.isLoading || leetcode.isError ? '—' : totalSolved(lc?.solvedByDifficulty)}
           >
             {leetcode.isError && <p className="text-0_6 text-destructive">couldn&apos;t load LeetCode stats.</p>}
             {lc && !leetcode.isError && <DifficultyBar solvedByDifficulty={lc.solvedByDifficulty} />}

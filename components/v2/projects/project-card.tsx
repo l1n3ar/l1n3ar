@@ -3,18 +3,17 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ExternalLink, Info } from 'lucide-react';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import { ICON_STROKE } from '@/components/v2/constants';
 import { projectIcon } from '@/components/v2/projects/project-icons';
 import { BRAND_ICONS } from '@/components/v2/tech-icons';
-import { hueForKey, pastelChipStyle } from '@/lib/pastel';
+import { keyedPastelChipStyle } from '@/lib/pastel';
 import { cn } from '@/lib/utils';
 import type { Project } from '@/lib/types';
-
-const ICON_STROKE = 1.75;
 
 export function ProjectCard({ project, showCategory }: { project: Project; showCategory?: boolean }) {
   const router = useRouter();
   const Icon = projectIcon(project.id);
-  const chipStyle = pastelChipStyle(hueForKey(project.id));
+  const chipStyle = keyedPastelChipStyle(project.id);
   const hasLinks = Boolean(project.github || project.demo);
   const [showDescription, setShowDescription] = useState(false);
 

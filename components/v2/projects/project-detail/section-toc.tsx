@@ -1,10 +1,10 @@
 'use client';
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { ICON_STROKE } from '@/components/v2/constants';
+import { TimelineDot } from '@/components/v2/timeline-dot';
 import { cn, slugify } from '@/lib/utils';
 import type { Project } from '@/lib/types';
-
-const ICON_STROKE = 1.75;
 
 export function SectionToc({ project }: { project: Project }) {
   const [open, setOpen] = useState(true);
@@ -35,10 +35,7 @@ export function SectionToc({ project }: { project: Project }) {
               const isLast = i === sections.length - 1;
               return (
                 <li key={s.id} className="flex gap-2.5">
-                  <div className="flex flex-col items-center w-2.5 shrink-0">
-                    <span className="size-dot rounded-full mt-1 shrink-0 bg-foreground/60" />
-                    {!isLast && <span className="w-px flex-1 bg-foreground/25 mt-0.5" />}
-                  </div>
+                  <TimelineDot isLast={isLast} dotClassName="bg-foreground/60" />
                   <button
                     type="button"
                     onClick={() => jumpTo(s.id)}

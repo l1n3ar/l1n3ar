@@ -1,12 +1,13 @@
-import { splitWho, initials } from '@/components/v2/recommendations/recommendation-utils';
-import { hueForKey, pastelChipStyle } from '@/lib/pastel';
+import { initials } from '@/components/v2/initials';
+import { splitWho } from '@/components/v2/recommendations/recommendation-utils';
+import { keyedPastelChipStyle } from '@/lib/pastel';
 import type { Recommendation } from '@/lib/types';
 
 const PREVIEW_LEN = 220;
 
 export function RecommendationCard({ rec, onReadMore }: { rec: Recommendation; onReadMore: () => void }) {
   const { name, role } = splitWho(rec.who);
-  const chipStyle = pastelChipStyle(hueForKey(rec.who));
+  const chipStyle = keyedPastelChipStyle(rec.who);
   const isLong = rec.quote.length > PREVIEW_LEN;
   const preview = isLong ? `${rec.quote.slice(0, PREVIEW_LEN)}…` : rec.quote;
 

@@ -1,12 +1,11 @@
 import { Camera, Link2, Music2, Play, Video } from 'lucide-react';
 import { SiInstagram, SiSpotify, SiYoutube, type IconType } from '@icons-pack/react-simple-icons';
+import { ICON_STROKE } from '@/components/v2/constants';
 import { NowPlayingCard } from '@/components/v2/l1n3ar/now-playing-card';
-import { hueForKey, pastelChipStyle } from '@/lib/pastel';
+import { keyedPastelChipStyle } from '@/lib/pastel';
 import {
   OFF_THE_CLOCK_LINK_KINDS, type OffTheClock as OffTheClockContent, type MusicEntry, type OffTheClockLink,
 } from '@/lib/types';
-
-const ICON_STROKE = 1.75;
 
 const LINK_ICON: Record<OffTheClockLink['kind'], typeof Video> = {
   youtube: Video,
@@ -83,7 +82,7 @@ function BandSocialLinks({ links }: { links: OffTheClockLink[] }) {
 }
 
 function BandCard({ entry }: { entry: MusicEntry }) {
-  const chipStyle = pastelChipStyle(hueForKey(entry.band));
+  const chipStyle = keyedPastelChipStyle(entry.band);
   const thumbnailLinks = entry.links.filter((l) => l.kind == 'link');
 
   return (

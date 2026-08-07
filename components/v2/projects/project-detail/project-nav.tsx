@@ -1,9 +1,8 @@
 'use client';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { ICON_STROKE } from '@/components/v2/constants';
 import type { Project } from '@/lib/types';
-
-const ICON_STROKE = 1.75;
 
 export function ProjectNav({ prev, next }: { prev?: Project; next?: Project }) {
   const router = useRouter();

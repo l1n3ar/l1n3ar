@@ -1,15 +1,16 @@
 'use client';
 import { useState } from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { initials } from '@/components/v2/initials';
 import { RecommendationCard } from '@/components/v2/recommendations/recommendation-card';
-import { splitWho, initials } from '@/components/v2/recommendations/recommendation-utils';
-import { hueForKey, pastelChipStyle } from '@/lib/pastel';
+import { splitWho } from '@/components/v2/recommendations/recommendation-utils';
+import { keyedPastelChipStyle } from '@/lib/pastel';
 import type { Recommendation } from '@/lib/types';
 
 export function Recommendations({ recommendations }: { recommendations: Recommendation[] }) {
   const [open, setOpen] = useState<Recommendation | null>(null);
   const openInfo = open ? splitWho(open.who) : null;
-  const chipStyle = open ? pastelChipStyle(hueForKey(open.who)) : undefined;
+  const chipStyle = open ? keyedPastelChipStyle(open.who) : undefined;
 
   return (
     <div>

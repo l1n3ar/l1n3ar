@@ -1,8 +1,7 @@
 import type { ReactNode } from 'react';
 import { HelpCircle } from 'lucide-react';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
-
-const ICON_STROKE = 1.75;
+import { ICON_STROKE } from '@/components/v2/constants';
 
 export function InfoTooltip({ children }: { children: ReactNode }) {
   return (

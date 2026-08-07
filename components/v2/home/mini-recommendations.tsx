@@ -1,5 +1,6 @@
-import { splitWho, initials } from '@/components/v2/recommendations/recommendation-utils';
-import { hueForKey, pastelChipStyle } from '@/lib/pastel';
+import { initials } from '@/components/v2/initials';
+import { splitWho } from '@/components/v2/recommendations/recommendation-utils';
+import { keyedPastelChipStyle } from '@/lib/pastel';
 import type { Recommendation } from '@/lib/types';
 
 export function MiniRecommendations({ description, recommendations }: { description?: string; recommendations: Recommendation[] }) {
@@ -12,7 +13,7 @@ export function MiniRecommendations({ description, recommendations }: { descript
         <div className="mt-6 flex flex-col gap-2 min-h-0 overflow-y-auto gz-scroll">
           {shown.map((r) => {
             const { name } = splitWho(r.who);
-            const chipStyle = pastelChipStyle(hueForKey(r.who));
+            const chipStyle = keyedPastelChipStyle(r.who);
             return (
               <div key={r.who} className="flex items-start gap-2">
                 <div

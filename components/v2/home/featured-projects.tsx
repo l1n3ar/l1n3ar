@@ -1,9 +1,8 @@
 import { useRouter } from 'next/navigation';
+import { ICON_STROKE } from '@/components/v2/constants';
 import { projectIcon } from '@/components/v2/projects/project-icons';
-import { hueForKey, pastelChipStyle } from '@/lib/pastel';
+import { keyedPastelChipStyle } from '@/lib/pastel';
 import type { Project } from '@/lib/types';
-
-const ICON_STROKE = 1.75;
 const FEATURED_PROJECT_NAMES = ['phoenix', 'l1n3ar', 'eiger'];
 
 export function FeaturedProjects({
@@ -25,7 +24,7 @@ export function FeaturedProjects({
           <div className="flex gap-2 flex-wrap">
             {featured.map((p) => {
               const Icon = projectIcon(p.id);
-              const chipStyle = pastelChipStyle(hueForKey(p.id));
+              const chipStyle = keyedPastelChipStyle(p.id);
               return (
                 <button
                   key={p.id}

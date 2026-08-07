@@ -9,8 +9,10 @@ import {
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import { ICON_STROKE } from '@/components/v2/constants';
+import { FooterLinkIcon } from '@/components/v2/footer-link-icon';
+import { initials } from '@/components/v2/initials';
 import { NAV_ICONS } from '@/components/v2/nav-icons';
-import { BRAND_ICONS } from '@/components/v2/tech-icons';
 import { sectionHref } from '@/components/v2/section-routes';
 import { useCommandPalette } from '@/components/v2/command-palette-context';
 import { useSite } from '@/components/v2/site-context';
@@ -18,7 +20,6 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useRelease } from '@/hooks/release';
 import type { V2Section } from '@/lib/types';
 
-const ICON_STROKE = 1.75;
 const INSET = 'px-4';
 const SEPARATOR_AFTER: V2Section[] = ['l1n3ar', 'deployments'];
 
@@ -39,7 +40,7 @@ export function AppSidebar({ section }: { section: V2Section }) {
   const { data: release } = useRelease();
   const { setOpenMobile } = useSidebar();
   const isMobile = useIsMobile();
-  const initials = site.name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase();
+  const ownerInitials = initials(site.name);
   const closeMobile = () => setOpenMobile(false);
 
   return (
@@ -48,7 +49,7 @@ export function AppSidebar({ section }: { section: V2Section }) {
         <NextLink href={sectionHref('home')} onClick={closeMobile} className="flex items-start gap-2 min-w-0">
           <Avatar size="sm" className="rounded-md bg-primary after:rounded-md shrink-0">
             <AvatarFallback className="rounded-md bg-primary text-primary-foreground text-0_6">
-              {initials}
+              {ownerInitials}
             </AvatarFallback>
           </Avatar>
           <span className="flex flex-col min-w-0 text-left">
@@ -126,8 +127,6 @@ export function AppSidebar({ section }: { section: V2Section }) {
 
           <div className="flex gap-2 shrink-0">
             {site.footerLinks.map((l) => {
-              const isGithub = l.label.toLowerCase().includes('github');
-              const isLinkedin = l.label.toLowerCase().includes('linkedin');
               const key = Object.keys(FOOTER_ICONS).find((k) => l.label.toLowerCase().includes(k));
               const Icon = key ? FOOTER_ICONS[key] : FileText;
               const tooltipLabel = key ? FOOTER_LABELS[key] : l.label;
@@ -144,14 +143,7 @@ export function AppSidebar({ section }: { section: V2Section }) {
                       />
                     }
                   >
-                    {isGithub ? (
-                      <BRAND_ICONS.github className="size-icon-xs" color="currentColor" />
-                    ) : isLinkedin ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src="/images/tiles/linkedin.png" alt="" className="size-icon-xs object-contain" />
-                    ) : (
-                      <Icon className="size-icon-xs" strokeWidth={ICON_STROKE} />
-                    )}
+                    <FooterLinkIcon label={l.label} fallback={Icon} className="size-icon-xs" />
                   </TooltipTrigger>
                   <TooltipContent className="text-0_6 font-sans not-italic">{tooltipLabel}</TooltipContent>
                 </Tooltip>

@@ -5,13 +5,12 @@ import { CaseStudyBody } from '@/components/v2/projects/project-detail/case-stud
 import { SectionToc } from '@/components/v2/projects/project-detail/section-toc';
 import { ProjectNav } from '@/components/v2/projects/project-detail/project-nav';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { ICON_STROKE } from '@/components/v2/constants';
 import { BRAND_ICONS } from '@/components/v2/tech-icons';
 import { useSite } from '@/components/v2/site-context';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useSplitResize } from '@/hooks/use-split-resize';
 import { hasCaseStudy, type Project } from '@/lib/types';
-
-const ICON_STROKE = 1.75;
 
 export function ProjectDetail({ project }: { project: Project }) {
   const { containerRef, leftPercent, startResize, onResizeMove, endResize } = useSplitResize();

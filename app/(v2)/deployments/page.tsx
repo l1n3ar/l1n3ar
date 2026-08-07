@@ -2,10 +2,10 @@
 import { GitCommitHorizontal, Loader2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { LoadingSpinner, ErrorMessage } from '@/components/v2/async-state';
+import { ICON_STROKE } from '@/components/v2/constants';
 import { useDeploymentsInfinite } from '@/hooks/deployments';
 import { commitMessage, commitRef, commitSha, stateBadgeClass, timeAgo } from '@/lib/deployment-meta';
-
-const ICON_STROKE = 1.75;
 
 export default function DeploymentsPage() {
   const {
@@ -18,15 +18,9 @@ export default function DeploymentsPage() {
     <div>
       <h1 className="text-0_9 font-semibold mb-3.5">Deployments</h1>
 
-      {isLoading && (
-        <div className="flex justify-center py-10">
-          <Loader2 className="size-icon-sm animate-spin text-muted-foreground" strokeWidth={ICON_STROKE} />
-        </div>
-      )}
+      {isLoading && <LoadingSpinner />}
 
-      {isError && (
-        <p className="text-0_8 text-destructive">{error?.message ?? 'something went wrong.'}</p>
-      )}
+      {isError && <ErrorMessage error={error} />}
 
       {!isLoading && !isError && deployments.length === 0 && (
         <p className="text-0_8 text-muted-foreground">No deployments found.</p>

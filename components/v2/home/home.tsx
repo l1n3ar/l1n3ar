@@ -6,6 +6,7 @@ import { WorkHistoryTimeline } from '@/components/v2/home/work-history-timeline'
 import { FeaturedProjects } from '@/components/v2/home/featured-projects';
 import { MiniRecommendations } from '@/components/v2/home/mini-recommendations';
 import { L1n3arEmbeds } from '@/components/v2/home/l1n3ar-embeds';
+import { ICON_STROKE } from '@/components/v2/constants';
 import { NAV_ICONS } from '@/components/v2/nav-icons';
 import { sectionHref } from '@/components/v2/section-routes';
 import { useSite } from '@/components/v2/site-context';
@@ -16,8 +17,6 @@ import { cn } from '@/lib/utils';
 import type {
   WorkHistoryEntry, V2Section, HomeTileKey, HomeTileContent, NavIconName, Recommendation,
 } from '@/lib/types';
-
-const ICON_STROKE = 1.75;
 
 const TILE_LAYOUT: Record<HomeTileKey, {
   size: 'lg' | 'md' | 'sm'; hue: number; image?: string;

@@ -1,12 +1,10 @@
 'use client';
-import { Loader2 } from 'lucide-react';
+import { LoadingSpinner, ErrorMessage } from '@/components/v2/async-state';
 import { StatCard } from '@/components/v2/metrics/stat-card';
 import { LatencyTable } from '@/components/v2/metrics/latency-table';
 import { DetailsTable } from '@/components/v2/metrics/details-table';
 import { useSystemMetrics } from '@/hooks/system-metrics';
 import { timeAgo } from '@/lib/deployment-meta';
-
-const ICON_STROKE = 1.75;
 
 function formatMs(ms: number | null): string {
   return ms === null ? '—' : `${Math.round(ms)}ms`;
@@ -32,13 +30,9 @@ export default function MetricsPage() {
     <div>
       <h1 className="text-0_9 font-semibold mb-3.5">Metrics</h1>
 
-      {isLoading && (
-        <div className="flex justify-center py-10">
-          <Loader2 className="size-icon-sm animate-spin text-muted-foreground" strokeWidth={ICON_STROKE} />
-        </div>
-      )}
+      {isLoading && <LoadingSpinner />}
 
-      {isError && <p className="text-0_8 text-destructive">{error?.message ?? 'something went wrong.'}</p>}
+      {isError && <ErrorMessage error={error} />}
 
       {data && (
         <div className="flex flex-col gap-3.5">
