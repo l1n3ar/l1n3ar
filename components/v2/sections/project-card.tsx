@@ -6,7 +6,6 @@ import { projectIcon } from '@/components/v2/sections/project-icons';
 import { BRAND_ICONS } from '@/components/v2/tech-icons';
 import { hueForKey, pastelChipStyle } from '@/lib/pastel';
 import type { Project } from '@/lib/types';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 const ICON_STROKE = 1.75;
 
@@ -15,7 +14,6 @@ export function ProjectCard({ project, showCategory }: { project: Project; showC
   const Icon = projectIcon(project.id);
   const chipStyle = pastelChipStyle(hueForKey(project.id));
   const hasLinks = Boolean(project.github || project.demo);
-  const isMobile = useIsMobile()
 
   const openLink = (e: React.MouseEvent, href: string) => {
     e.stopPropagation();
@@ -52,14 +50,12 @@ export function ProjectCard({ project, showCategory }: { project: Project; showC
           ))}
         </div>
 
-        {
-          !isMobile && <div
-            className="pastel-chip absolute inset-0 opacity-0 group-hover:opacity-100  transition-opacity flex items-center p-4"
-            style={chipStyle}
-          >
-            <p className="text-0_7 leading-relaxed">{project.description}</p>
-          </div>
-        }
+        <div
+          className="pastel-chip absolute inset-0 opacity-0 [@media(hover:hover)]:group-hover:opacity-100 transition-opacity flex items-center p-4"
+          style={chipStyle}
+        >
+          <p className="text-0_7 leading-relaxed">{project.description}</p>
+        </div>
 
       </div>
 
