@@ -6,3 +6,5 @@ makefile
 .env.local
 docs/case-studies/
 scripts/
+.DS_Store
+.claude/
