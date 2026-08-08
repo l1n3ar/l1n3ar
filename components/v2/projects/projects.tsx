@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { ICON_STROKE } from '@/components/v2/constants';
+import { PageBody } from '@/components/v2/page-body';
 import { ProjectCard } from '@/components/v2/projects/project-card';
 import { TechIcon } from '@/components/v2/tech-icons';
 import { PROJECT_CATEGORIES, type Project, type ProjectCategory } from '@/lib/types';
@@ -35,66 +36,66 @@ export function Projects({ projects }: { projects: Project[] }) {
     setTech(null);
   };
 
-  return (
-    <div >
-      <h1 className="text-0_9 font-semibold mb-3.5">Projects</h1>
+  const subheader = (
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+      <Tabs value={category} onValueChange={(v) => selectCategory(v as CategoryFilter)} className="overflow-x-auto gz-scroll">
+        <TabsList variant="line">
+          {(['all', ...categories] as const).map((cat) => (
+            <TabsTrigger key={cat} value={cat} className="text-0_7 capitalize shrink-0">
+              {cat}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </Tabs>
 
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4">
-        <Tabs value={category} onValueChange={(v) => selectCategory(v as CategoryFilter)} className="overflow-x-auto gz-scroll">
-          <TabsList variant="line">
-            {(['all', ...categories] as const).map((cat) => (
-              <TabsTrigger key={cat} value={cat} className="text-0_7 capitalize shrink-0">
-                {cat}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-        </Tabs>
-
-        <div className="flex items-center gap-2 pb-2">
-          <div className="relative w-full sm:w-40">
-            <Search
-              className="size-icon-xs absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground"
-              strokeWidth={ICON_STROKE}
-            />
-            <Input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search…"
-              className="pl-7 h-7 text-0_6"
-            />
-          </div>
-
-          {techOptions.length > 0 && (
-            <Popover>
-              <PopoverTrigger
-                render={
-                  <Button variant={tech ? 'secondary' : 'outline'} size="icon-sm" aria-label="filter by tech" />
-                }
-              >
-                <Filter className="size-icon-sm" strokeWidth={ICON_STROKE} />
-              </PopoverTrigger>
-              <PopoverContent className="w-56 max-h-72 overflow-y-auto font-sans not-italic" align="end">
-                <div className="flex flex-col gap-0.5">
-                  {techOptions.map((t) => (
-                    <button
-                      key={t}
-                      type="button"
-                      onClick={() => setTech((current) => (current === t ? null : t))}
-                      className={`text-0_7 capitalize text-left px-2 py-1.5 rounded-md flex items-center gap-2 ${
-                        tech === t ? 'bg-foreground text-background' : 'hover:bg-muted'
-                      }`}
-                    >
-                      <TechIcon name={t} className="size-icon-xs" />
-                      {t}
-                    </button>
-                  ))}
-                </div>
-              </PopoverContent>
-            </Popover>
-          )}
+      <div className="flex items-center gap-2 pb-2">
+        <div className="relative w-full sm:w-40">
+          <Search
+            className="size-icon-xs absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground"
+            strokeWidth={ICON_STROKE}
+          />
+          <Input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search…"
+            className="pl-7 h-7 text-0_6"
+          />
         </div>
-      </div>
 
+        {techOptions.length > 0 && (
+          <Popover>
+            <PopoverTrigger
+              render={
+                <Button variant={tech ? 'secondary' : 'outline'} size="icon-sm" aria-label="filter by tech" />
+              }
+            >
+              <Filter className="size-icon-sm" strokeWidth={ICON_STROKE} />
+            </PopoverTrigger>
+            <PopoverContent className="w-56 max-h-72 overflow-y-auto font-sans not-italic" align="end">
+              <div className="flex flex-col gap-0.5">
+                {techOptions.map((t) => (
+                  <button
+                    key={t}
+                    type="button"
+                    onClick={() => setTech((current) => (current === t ? null : t))}
+                    className={`text-0_7 capitalize text-left px-2 py-1.5 rounded-md flex items-center gap-2 ${
+                      tech === t ? 'bg-foreground text-background' : 'hover:bg-muted'
+                    }`}
+                  >
+                    <TechIcon name={t} className="size-icon-xs" />
+                    {t}
+                  </button>
+                ))}
+              </div>
+            </PopoverContent>
+          </Popover>
+        )}
+      </div>
+    </div>
+  );
+
+  return (
+    <PageBody title="Projects" subheader={subheader}>
       {tech && (
         <div className="flex items-center gap-1.5 mb-4">
           <span className="text-0_6 text-muted-foreground">Filtered by</span>
@@ -110,11 +111,11 @@ export function Projects({ projects }: { projects: Project[] }) {
         </div>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 overflow-y-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
         {filtered.map((p) => (
           <ProjectCard key={p.id} project={p} showCategory={category === 'all'} />
         ))}
       </div>
-    </div>
+    </PageBody>
   );
 }

@@ -20,7 +20,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useRelease } from '@/hooks/release';
 
 const INSET = 'px-4';
-const SEPARATOR_AFTER = ['/l1n3ar', '/deployments'];
+const SEPARATOR_AFTER = ['/recommendations', '/deployments'];
 
 const FOOTER_ICONS: Record<string, typeof LinkIcon> = {
   resume: FileText,

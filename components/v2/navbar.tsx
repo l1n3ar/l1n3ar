@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import NextLink from 'next/link';
-import { ArrowLeft, History, MessageSquare } from 'lucide-react';
+import { ArrowLeft, History, MessageSquare, TriangleDashed } from 'lucide-react';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -9,6 +9,7 @@ import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip
 import { ThemeToggle } from '@/components/theme-toggle';
 import { ICON_STROKE } from '@/components/v2/constants';
 import { FeedbackDialog } from '@/components/v2/feedback-dialog';
+import { useRouter } from 'next/navigation';
 
 export function Navbar({
   title, onBack,
@@ -16,6 +17,8 @@ export function Navbar({
   title: string; onBack?: () => void;
 }) {
   const [feedbackOpen, setFeedbackOpen] = useState(false);
+  const router = useRouter()
+
   return (
     <div className="h-11 shrink-0 border-b border-border grid grid-cols-[1fr_auto_1fr] items-center px-3">
       <div className="flex items-center gap-1 min-w-0">
@@ -50,12 +53,33 @@ export function Navbar({
           <TooltipContent className="text-0_6 font-sans not-italic">Switch to v1</TooltipContent>
         </Tooltip>
 
+           <Button
+          variant="ghost"
+          aria-label="feedback"
+          className="sm:w-auto mr-1 sm:h-7 sm:px-2.5 sm:gap-1.5 sm:rounded-sm sm:border sm:border-border sm:bg-background sm:hover:bg-muted dark:sm:border-input dark:sm:bg-input/30 dark:sm:hover:bg-input/50"
+          onClick={() => router.push('/ask')}
+        >
+          <TriangleDashed className="size-icon-xs sm:hidden" strokeWidth={ICON_STROKE} />
+          <span className="hidden sm:inline text-0_7 text-foreground">Feedback</span>
+        </Button>
+
+           <Button
+          variant='secondary'
+          size="icon-xs"
+          aria-label="feedback"
+          className="sm:w-auto mr-1 sm:h-7 sm:px-2.5 sm:gap-1.5 sm:rounded-sm sm:border sm:border-border sm:bg-background sm:hover:bg-muted dark:sm:border-input dark:sm:bg-input/30 dark:sm:hover:bg-input/50"
+          onClick={() => setFeedbackOpen(true)}
+        >
+          <MessageSquare className="size-icon-xs sm:hidden" strokeWidth={ICON_STROKE} />
+          <span className="hidden sm:inline text-0_7 text-foreground">Ask</span>
+        </Button>
+
         <Separator orientation="vertical" className="h-4 bg-muted-foreground/30 data-[orientation=vertical]:self-center" />
         <Button
           variant="ghost"
           size="icon-xs"
           aria-label="feedback"
-          className="sm:w-auto mr-1 sm:h-7 sm:px-2.5 sm:gap-1.5 sm:rounded-sm sm:border sm:border-border sm:bg-background sm:hover:bg-muted dark:sm:border-input dark:sm:bg-input/30 dark:sm:hover:bg-input/50"
+          className="sm:w-auto mr-2 sm:h-7 sm:px-2.5 sm:gap-1.5 sm:rounded-sm sm:border sm:border-border sm:bg-background sm:hover:bg-muted dark:sm:border-input dark:sm:bg-input/30 dark:sm:hover:bg-input/50"
           onClick={() => setFeedbackOpen(true)}
         >
           <MessageSquare className="size-icon-xs sm:hidden" strokeWidth={ICON_STROKE} />

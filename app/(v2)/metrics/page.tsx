@@ -1,5 +1,6 @@
 'use client';
 import { LoadingSpinner, ErrorMessage } from '@/components/v2/async-state';
+import { PageBody } from '@/components/v2/page-body';
 import { StatCard } from '@/components/v2/metrics/stat-card';
 import { LatencyTable } from '@/components/v2/metrics/latency-table';
 import { DetailsTable } from '@/components/v2/metrics/details-table';
@@ -27,9 +28,7 @@ export default function MetricsPage() {
   const { data, isLoading, isError, error } = useSystemMetrics();
 
   return (
-    <div>
-      <h1 className="text-0_9 font-semibold mb-3.5">Metrics</h1>
-
+    <PageBody title="Metrics">
       {isLoading && <LoadingSpinner />}
 
       {isError && <ErrorMessage error={error} />}
@@ -90,6 +89,6 @@ export default function MetricsPage() {
           />
         </div>
       )}
-    </div>
+    </PageBody>
   );
 }

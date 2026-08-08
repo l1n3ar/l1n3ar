@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { LoadingSpinner, ErrorMessage } from '@/components/v2/async-state';
 import { ICON_STROKE } from '@/components/v2/constants';
+import { PageBody } from '@/components/v2/page-body';
 import { useDeploymentsInfinite } from '@/hooks/deployments';
 import { commitMessage, commitRef, commitSha, stateBadgeClass, timeAgo } from '@/lib/deployment-meta';
 
@@ -15,9 +16,7 @@ export default function DeploymentsPage() {
   const deployments = data?.pages.flatMap((p) => p.deployments) ?? [];
 
   return (
-    <div>
-      <h1 className="text-0_9 font-semibold mb-3.5">Deployments</h1>
-
+    <PageBody title="Deployments">
       {isLoading && <LoadingSpinner />}
 
       {isError && <ErrorMessage error={error} />}
@@ -72,6 +71,6 @@ export default function DeploymentsPage() {
           )}
         </div>
       )}
-    </div>
+    </PageBody>
   );
 }

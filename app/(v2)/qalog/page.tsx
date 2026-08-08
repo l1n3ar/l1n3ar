@@ -6,6 +6,7 @@ import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { PageBody } from '@/components/v2/page-body';
 import { getAskedQuestions, type AskedQuestion } from '@/actions/logs';
 import { getFeedback, type FeedbackEntry } from '@/actions/feedback';
 import { timeAgo } from '@/lib/deployment-meta';
@@ -57,9 +58,8 @@ export default function QaLogPage() {
   }
 
   return (
-    <div className="px-2">
-      <h1 className="text-0_9 font-semibold mb-3.5">Admin</h1>
-      <Tabs defaultValue="questions">
+    <PageBody title="Admin" titleClassName="px-2">
+      <Tabs defaultValue="questions" className="px-2">
         <TabsList variant="line" className="mb-4">
           <TabsTrigger value="questions" className="text-0_7">Questions</TabsTrigger>
           <TabsTrigger value="feedback" className="text-0_7">Feedback</TabsTrigger>
@@ -108,6 +108,6 @@ export default function QaLogPage() {
           )}
         </TabsContent>
       </Tabs>
-    </div>
+    </PageBody>
   );
 }

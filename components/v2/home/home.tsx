@@ -13,7 +13,7 @@ import { keyedPastelChipStyle } from '@/lib/pastel';
 import type { Project, Recommendation } from '@/lib/types';
 import { Separator } from '@/components/ui/separator';
 
-const FEATURED_PROJECT_NAMES = ['l1n3ar', 'eiger', 'phoenix'];
+const FEATURED_PROJECT_NAMES = ['phoenix' ,'l1n3ar', 'eiger'];
 
 export function Home({
   recommendation,

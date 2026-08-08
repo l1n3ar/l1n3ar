@@ -48,7 +48,9 @@ export function hasCaseStudy(project: Pick<Project, 'body'>): boolean {
   return Boolean(project.body && project.body.length > 0);
 }
 
-export type WorkHistoryEntry = { org: string; role: string; range: string; order: number };
+export type WorkHistoryEntry = {
+  id: string; org: string; role: string; range: string; description?: string[]; order: number;
+};
 
 export type Recommendation = { who: string; quote: string; order: number };
 

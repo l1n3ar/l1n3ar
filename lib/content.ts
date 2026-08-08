@@ -11,7 +11,7 @@ export async function getSiteConfig(): Promise<SiteConfig> {
 
 export async function getWorkHistory(): Promise<WorkHistoryEntry[]> {
   return client.fetch(`*[_type == "workHistoryEntry"] | order(order desc){
-    org, role, range, order
+    id, org, role, range, description, order
   }`);
 }
 
