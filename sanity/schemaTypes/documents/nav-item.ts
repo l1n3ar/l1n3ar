@@ -1,5 +1,5 @@
 import { defineField, defineType } from 'sanity';
-import { V2_SECTIONS, NAV_GROUPS, NAV_ICON_NAMES } from '@/lib/types';
+import { NAV_GROUPS } from '@/lib/types';
 
 export default defineType({
   name: 'navItem',
@@ -7,24 +7,16 @@ export default defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'section',
+      name: 'href',
       type: 'string',
-      description: 'Which v2 view this item opens — fixed to views that actually exist in code.',
-      options: { list: [...V2_SECTIONS] },
-      validation: (Rule) => Rule.required(),
+      description: 'The path this item links to, e.g. /projects (use / for home). The icon is chosen in code based on this path.',
+      validation: (Rule) => Rule.required().regex(/^\//, { name: 'leading slash' }),
     }),
     defineField({ name: 'label', type: 'string', validation: (Rule) => Rule.required() }),
     defineField({
       name: 'group',
       type: 'string',
       options: { list: [...NAV_GROUPS] },
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'icon',
-      type: 'string',
-      description: 'Fixed to icon names actually bundled in the sidebar (see components/v2/nav-icons.ts).',
-      options: { list: [...NAV_ICON_NAMES] },
       validation: (Rule) => Rule.required(),
     }),
     defineField({ name: 'order', type: 'number', initialValue: 0 }),
@@ -34,6 +26,6 @@ export default defineType({
     { title: 'Order, ascending', name: 'orderAsc', by: [{ field: 'order', direction: 'asc' }] },
   ],
   preview: {
-    select: { title: 'label', subtitle: 'group' },
+    select: { title: 'label', subtitle: 'href' },
   },
 });

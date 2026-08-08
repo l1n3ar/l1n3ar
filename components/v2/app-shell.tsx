@@ -6,7 +6,7 @@ import { AppSidebar } from '@/components/v2/sidebar/app-sidebar';
 import { CommandPalette } from '@/components/v2/command-palette';
 import { CommandPaletteProvider } from '@/components/v2/command-palette-context';
 import { Navbar } from '@/components/v2/navbar';
-import { sectionFromPathname, sectionHref } from '@/components/v2/section-routes';
+import { sectionHref, topLevelPath } from '@/components/v2/section-routes';
 import { SiteProvider } from '@/components/v2/site-context';
 import { useIsMobile } from '@/hooks/use-mobile';
 import type { SiteConfig, NavItem, Project } from '@/lib/types';
@@ -31,10 +31,10 @@ export function AppShell({
     };
   }, []);
 
-  const section = sectionFromPathname(pathname);
+  const currentPath = topLevelPath(pathname);
   const projectSlug = pathname.match(PROJECT_DETAIL)?.[1];
   const project = projectSlug ? projects.find((p) => p.id === projectSlug) : undefined;
-  const title = project?.name ?? navItems.find((i) => i.section === section)?.label ?? section;
+  const title = project?.name ?? navItems.find((i) => i.href === currentPath)?.label ?? currentPath;
   const onBack = projectSlug ? () => router.push(sectionHref('projects')) : undefined;
 
   return (
@@ -42,7 +42,7 @@ export function AppShell({
       <CommandPaletteProvider>
         <div className="v2 font-sans">
           <SidebarProvider style={{ '--sidebar-width': 'clamp(14rem, 18vw, 18rem)' } as React.CSSProperties}>
-            <AppSidebar section={section} />
+            <AppSidebar currentPath={currentPath} />
             <SidebarInset className="h-screen-safe">
               <Navbar title={title} onBack={onBack} />
               <div className="flex-1 min-h-0 bg-muted/20">

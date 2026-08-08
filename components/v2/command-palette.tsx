@@ -7,9 +7,8 @@ import {
 } from '@/components/ui/command';
 import { ICON_STROKE } from '@/components/v2/constants';
 import { FooterLinkIcon } from '@/components/v2/footer-link-icon';
-import { NAV_ICONS } from '@/components/v2/nav-icons';
+import { iconForRoute } from '@/components/v2/nav-icons';
 import { useCommandPalette } from '@/components/v2/command-palette-context';
-import { sectionHref } from '@/components/v2/section-routes';
 import { useSite } from '@/components/v2/site-context';
 import { getTheme, toggleTheme, THEME_CHANGE_EVENT } from '@/lib/theme';
 import { hasCaseStudy } from '@/lib/types';
@@ -71,12 +70,12 @@ export function CommandPalette() {
 
         <CommandGroup heading="Go to" className={GROUP_CLASS}>
           {navItems.map((item) => {
-            const Icon = NAV_ICONS[item.icon];
+            const Icon = iconForRoute(item.href);
             return (
               <CommandItem
-                key={item.section}
+                key={item.href}
                 value={item.label}
-                onSelect={() => run(() => router.push(sectionHref(item.section)))}
+                onSelect={() => run(() => router.push(item.href))}
                 className={ITEM_CLASS}
               >
                 <Icon strokeWidth={ICON_STROKE} />

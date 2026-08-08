@@ -30,7 +30,7 @@ export async function getOffTheClock(): Promise<OffTheClock> {
 
 export async function getNavItems(): Promise<NavItem[]> {
   return client.fetch(`*[_type == "navItem" && hidden != true] | order(order asc){
-    section, label, group, icon, order, hidden
+    href, label, group, order, hidden
   }`);
 }
 

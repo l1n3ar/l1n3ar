@@ -1,10 +1,10 @@
-import { V2_SECTIONS, type V2Section } from '@/lib/types';
+import { type V2Section } from '@/lib/types';
 
 export function sectionHref(section: V2Section): string {
   return section === 'home' ? '/' : `/${section}`;
 }
 
-export function sectionFromPathname(pathname: string): V2Section {
+export function topLevelPath(pathname: string): string {
   const first = pathname.split('/').filter(Boolean)[0];
-  return (V2_SECTIONS as readonly string[]).includes(first) ? (first as V2Section) : 'home';
+  return first ? `/${first}` : '/';
 }

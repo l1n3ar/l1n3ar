@@ -11,6 +11,7 @@ import { sectionHref } from '@/components/v2/section-routes';
 import { useSite } from '@/components/v2/site-context';
 import { keyedPastelChipStyle } from '@/lib/pastel';
 import type { Project, Recommendation } from '@/lib/types';
+import { Separator } from '@/components/ui/separator';
 
 const FEATURED_PROJECT_NAMES = ['l1n3ar', 'eiger', 'phoenix'];
 
@@ -32,11 +33,11 @@ export function Home({
   return (
     <div className="flex flex-col gap-10">
       <div>
-        <h1 className="text-lg flex items-center gap-2 flex-wrap">
-          Currently building AI systems at
-          <Image src="/images/logos/barbri.png" alt="BARBRI" width={96} height={96} className="h-10 w-auto align-middle" />
+        <h1 className="text-lg lg:text-xl flex font-light items-center gap-2 flex-wrap">
+          tech @ BARBRI <Separator orientation="vertical" className="h-4 hidden lg:inline bg-muted-foreground data-[orientation=vertical]:self-center" /> <span className='hidden lg:inline'>previously @ lega.ai (acquired by BARBRI)</span>
+          {/* <Image src="/images/logos/barbri.png" alt="BARBRI" width={96} height={96} className="h-10 w-auto align-middle" /> */}
         </h1>
-        <Button variant="link" onClick={() => router.push(sectionHref('work'))} className="h-auto px-0 gap-1 text-0_7 font-semibold">
+        <Button variant="link" onClick={() => router.push(sectionHref('work'))} className="h-auto px-0 lg:mt-2 gap-1 text-0_7 font-semibold">
           View work experience
           <ArrowRight className="size-icon-xs" strokeWidth={ICON_STROKE} />
         </Button>

@@ -12,16 +12,15 @@ import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip
 import { ICON_STROKE } from '@/components/v2/constants';
 import { FooterLinkIcon } from '@/components/v2/footer-link-icon';
 import { initials } from '@/components/v2/initials';
-import { NAV_ICONS } from '@/components/v2/nav-icons';
+import { iconForRoute } from '@/components/v2/nav-icons';
 import { sectionHref } from '@/components/v2/section-routes';
 import { useCommandPalette } from '@/components/v2/command-palette-context';
 import { useSite } from '@/components/v2/site-context';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useRelease } from '@/hooks/release';
-import type { V2Section } from '@/lib/types';
 
 const INSET = 'px-4';
-const SEPARATOR_AFTER: V2Section[] = ['l1n3ar', 'deployments'];
+const SEPARATOR_AFTER = ['/l1n3ar', '/deployments'];
 
 const FOOTER_ICONS: Record<string, typeof LinkIcon> = {
   resume: FileText,
@@ -33,7 +32,7 @@ const FOOTER_LABELS: Record<string, string> = {
   resume: 'Download resume',
 };
 
-export function AppSidebar({ section }: { section: V2Section }) {
+export function AppSidebar({ currentPath }: { currentPath: string }) {
   const { site, navItems } = useSite();
   const { setOpen: setPaletteOpen } = useCommandPalette();
   const { data: release } = useRelease();
@@ -61,22 +60,22 @@ export function AppSidebar({ section }: { section: V2Section }) {
       <SidebarContent className={`gap-0 py-3 ${INSET} gz-scroll`}>
         <SidebarMenu className="gap-1">
           {navItems.map((item) => {
-            const Icon = NAV_ICONS[item.icon];
+            const Icon = iconForRoute(item.href);
             return (
-              <Fragment key={item.section}>
+              <Fragment key={item.href}>
                 <SidebarMenuItem>
                   <SidebarMenuButton
                     size="sm"
-                    isActive={section === item.section}
+                    isActive={currentPath === item.href}
                     onClick={closeMobile}
-                    render={<NextLink href={sectionHref(item.section)} />}
+                    render={<NextLink href={item.href} />}
                     className="text-0_7 gap-2 text-sidebar-foreground/70 data-[active]:text-sidebar-foreground"
                   >
                     <Icon strokeWidth={ICON_STROKE} />
                     <span>{item.label}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-                {SEPARATOR_AFTER.includes(item.section) && (
+                {SEPARATOR_AFTER.includes(item.href) && (
                   <SidebarSeparator className="mx-0 my-2" />
                 )}
               </Fragment>

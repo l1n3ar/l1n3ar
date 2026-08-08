@@ -78,10 +78,9 @@ export const NAV_ICON_NAMES = [
 export type NavIconName = (typeof NAV_ICON_NAMES)[number];
 
 export type NavItem = {
-  section: V2Section;
+  href: string;
   label: string;
   group: NavGroupName;
-  icon: NavIconName;
   order: number;
   hidden?: boolean;
 };
