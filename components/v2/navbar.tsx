@@ -55,7 +55,7 @@ export function Navbar({
           variant="ghost"
           size="icon-xs"
           aria-label="feedback"
-          className="sm:w-auto sm:h-7 sm:px-2.5 sm:gap-1.5 sm:rounded-sm sm:border sm:border-border sm:bg-background sm:hover:bg-muted dark:sm:border-input dark:sm:bg-input/30 dark:sm:hover:bg-input/50"
+          className="sm:w-auto mr-1 sm:h-7 sm:px-2.5 sm:gap-1.5 sm:rounded-sm sm:border sm:border-border sm:bg-background sm:hover:bg-muted dark:sm:border-input dark:sm:bg-input/30 dark:sm:hover:bg-input/50"
           onClick={() => setFeedbackOpen(true)}
         >
           <MessageSquare className="size-icon-xs sm:hidden" strokeWidth={ICON_STROKE} />

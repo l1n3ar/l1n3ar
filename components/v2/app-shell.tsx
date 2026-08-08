@@ -46,7 +46,7 @@ export function AppShell({
             <SidebarInset className="h-screen-safe">
               <Navbar title={title} onBack={onBack} />
               <div className="flex-1 min-h-0 bg-muted/20">
-                <div className={`max-w-[100rem] mx-auto h-full overflow-y-auto gz-scroll p-3 ${isMobile ? 'pb-6' : ''} flex flex-col`}>
+                <div className={`max-w-[100rem] mx-auto h-full overflow-y-auto gz-scroll px-5 py-3 ${isMobile ? 'pb-6' : ''} flex flex-col`}>
                   {children}
                 </div>
               </div>
