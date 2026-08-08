@@ -1,9 +1,12 @@
 import { Home } from '@/components/v2/home/home';
-import { getWorkHistory, getHomeTiles, getRecommendations } from '@/lib/content';
+import { getRecommendations } from '@/lib/content';
+
+export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
-  const [workHistory, homeTiles, recommendations] = await Promise.all([
-    getWorkHistory(), getHomeTiles(), getRecommendations(),
-  ]);
-  return <Home tiles={homeTiles} workHistory={workHistory} recommendations={recommendations} />;
+  const recommendations = await getRecommendations();
+  const recommendation = recommendations.length > 0
+    ? recommendations[Math.floor(Math.random() * recommendations.length)]
+    : undefined;
+  return <Home recommendation={recommendation} />;
 }

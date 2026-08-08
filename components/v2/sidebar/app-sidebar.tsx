@@ -24,7 +24,6 @@ const INSET = 'px-4';
 const SEPARATOR_AFTER: V2Section[] = ['l1n3ar', 'deployments'];
 
 const FOOTER_ICONS: Record<string, typeof LinkIcon> = {
-  linkedin: LinkIcon,
   resume: FileText,
 };
 
@@ -87,21 +86,7 @@ export function AppSidebar({ section }: { section: V2Section }) {
       </SidebarContent>
 
       <SidebarFooter className={`gap-3 pt-3 ${isMobile ? 'pb-6' : 'pb-3'} ${INSET}`}>
-        <div className="relative">
-          <Search
-            className="size-icon-xs absolute left-2.5 top-1/2 -translate-y-1/2 text-sidebar-foreground/40 pointer-events-none"
-            strokeWidth={ICON_STROKE}
-          />
-          <Input
-            readOnly
-            placeholder="Search…"
-            onClick={() => setPaletteOpen(true)}
-            className="pl-7 pr-9 text-0_7 cursor-pointer"
-          />
-          <kbd className="absolute right-2.5 top-1/2 -translate-y-1/2 text-0_6 font-mono text-sidebar-foreground/40">
-            ⌘K
-          </kbd>
-        </div>
+
 
         <SidebarSeparator className="mx-0" />
 

@@ -63,7 +63,7 @@ export type MusicEntry = { band: string; tagline: string; now?: string; links: O
 export type OffTheClock = { music: MusicEntry[] };
 
 export const V2_SECTIONS = [
-  'home', 'projects', 'ask', 'recommendations', 'l1n3ar', 'metrics', 'deployments', 'qalog',
+  'home', 'projects', 'ask', 'recommendations', 'l1n3ar', 'metrics', 'deployments', 'qalog', 'work',
 ] as const;
 export type V2Section = (typeof V2_SECTIONS)[number];
 
