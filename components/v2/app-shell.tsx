@@ -36,6 +36,7 @@ export function AppShell({
   const project = projectSlug ? projects.find((p) => p.id === projectSlug) : undefined;
   const title = project?.name ?? navItems.find((i) => i.href === currentPath)?.label ?? currentPath;
   const onBack = projectSlug ? () => router.push(sectionHref('projects')) : undefined;
+  const resumeHref = site.footerLinks.find((l) => l.label.toLowerCase().includes('resume'))?.href;
 
   return (
     <SiteProvider site={site} navItems={navItems} projects={projects}>
@@ -44,7 +45,7 @@ export function AppShell({
           <SidebarProvider style={{ '--sidebar-width': 'clamp(14rem, 18vw, 18rem)' } as React.CSSProperties}>
             <AppSidebar currentPath={currentPath} />
             <SidebarInset className="h-screen-safe">
-              <Navbar title={title} onBack={onBack} />
+              <Navbar title={title} onBack={onBack} resumeHref={resumeHref} />
               <div className="flex-1 min-h-0 bg-muted/20">
                 <div className={`max-w-[100rem] mx-auto h-full overflow-y-auto gz-scroll px-5 py-3 ${isMobile ? 'pb-6' : ''} flex flex-col`}>
                   {children}
