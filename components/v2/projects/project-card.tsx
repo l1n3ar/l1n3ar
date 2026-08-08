@@ -36,7 +36,7 @@ export function ProjectCard({ project, showCategory }: { project: Project; showC
       onClick={() => router.push(`/projects/${project.id}`)}
       className="group relative flex flex-col text-left border border-border rounded-lg bg-card overflow-hidden shadow-sm"
     >
-      {!isMobile && (
+
         <div className="relative w-full h-40 shrink-0 overflow-hidden">
           <Image src={`/images/projects/${project.id}.png`} alt="" fill className="object-cover opacity-60"  />
           <div
@@ -44,7 +44,7 @@ export function ProjectCard({ project, showCategory }: { project: Project; showC
             style={chipStyle}
           />
         </div>
-      )}
+      
 
       <div className="relative flex-1 flex flex-col gap-2 p-3.5">
         <div className="flex items-start justify-between">

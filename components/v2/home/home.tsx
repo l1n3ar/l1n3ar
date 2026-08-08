@@ -63,7 +63,7 @@ export function Home({
       {recommendation && recInfo && (
         <div>
           <p className="text-0_8 leading-relaxed text-muted-foreground max-w-2xl">&quot;{recommendation.quote}&quot;</p>
-          <div className="flex items-center gap-2.5 mt-4">
+          <div className="flex items-start gap-2.5 mt-4">
             <span
               className="pastel-chip size-icon-lg rounded-md flex items-center justify-center text-0_6 font-semibold shrink-0"
               style={recChipStyle}
