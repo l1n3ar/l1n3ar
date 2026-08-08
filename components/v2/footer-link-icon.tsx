@@ -21,7 +21,7 @@ export function FooterLinkIcon({
   if (isLinkedinLink(label)) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
-      <img src="/images/tiles/linkedin.png" alt="" className={`${className} object-contain`} />
+      <img src="/images/linkedin.png" alt="" className={`${className} object-contain`} />
     );
   }
   return <Fallback className={className} strokeWidth={ICON_STROKE} />;

@@ -9,6 +9,8 @@ import { BRAND_ICONS } from '@/components/v2/tech-icons';
 import { keyedPastelChipStyle } from '@/lib/pastel';
 import { cn } from '@/lib/utils';
 import type { Project } from '@/lib/types';
+import Image from 'next/image';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 export function ProjectCard({ project, showCategory }: { project: Project; showCategory?: boolean }) {
   const router = useRouter();
@@ -16,6 +18,7 @@ export function ProjectCard({ project, showCategory }: { project: Project; showC
   const chipStyle = keyedPastelChipStyle(project.id);
   const hasLinks = Boolean(project.github || project.demo);
   const [showDescription, setShowDescription] = useState(false);
+  const isMobile = useIsMobile()
 
   const openLink = (e: React.MouseEvent, href: string) => {
     e.stopPropagation();
@@ -33,6 +36,16 @@ export function ProjectCard({ project, showCategory }: { project: Project; showC
       onClick={() => router.push(`/projects/${project.id}`)}
       className="group relative flex flex-col text-left border border-border rounded-lg bg-card overflow-hidden shadow-sm"
     >
+      {!isMobile && (
+        <div className="relative w-full h-40 shrink-0 overflow-hidden">
+          <Image src={`/images/projects/${project.id}.png`} alt="" fill className="object-cover opacity-60"  />
+          <div
+            className="pastel-chip absolute inset-0 opacity-0 [@media(hover:hover)]:group-hover:opacity-100 transition-opacity mix-blend-color"
+            style={chipStyle}
+          />
+        </div>
+      )}
+
       <div className="relative flex-1 flex flex-col gap-2 p-3.5">
         <div className="flex items-start justify-between">
           <div className="pastel-chip size-icon-2xl rounded-lg flex items-center justify-center" style={chipStyle}>
@@ -49,7 +62,7 @@ export function ProjectCard({ project, showCategory }: { project: Project; showC
               type="button"
               onClick={toggleDescription}
               aria-label={showDescription ? 'hide description' : 'show description'}
-              className="relative z-20 [@media(hover:hover)]:hidden -mr-1 size-icon-lg shrink-0 rounded-md flex items-start justify-center pt-0.5 text-muted-foreground hover:bg-muted"
+              className="relative z-30 [@media(hover:hover)]:hidden -mr-1 size-icon-lg shrink-0 rounded-md flex items-start justify-center pt-0.5 text-muted-foreground hover:bg-muted"
             >
               <Info className="size-icon-xs" strokeWidth={ICON_STROKE} />
             </button>
@@ -66,17 +79,16 @@ export function ProjectCard({ project, showCategory }: { project: Project; showC
             </span>
           ))}
         </div>
+      </div>
 
-        <div
-          className={cn(
-            'pastel-chip absolute inset-0 z-10 opacity-0 [@media(hover:hover)]:group-hover:opacity-100 transition-opacity flex items-center p-4',
-            showDescription && 'opacity-100',
-          )}
-          style={chipStyle}
-        >
-          <p className="text-0_7 leading-relaxed">{project.description}</p>
-        </div>
-
+      <div
+        className={cn(
+          'pastel-chip absolute inset-0 z-20 opacity-0 [@media(hover:hover)]:group-hover:opacity-100 transition-opacity flex items-center justify-center text-center p-4',
+          showDescription && 'opacity-100',
+        )}
+        style={chipStyle}
+      >
+        <p className="text-0_7 leading-relaxed">{project.description}</p>
       </div>
 
       {hasLinks && (
