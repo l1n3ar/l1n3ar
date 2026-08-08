@@ -12,6 +12,24 @@ const proseComponents: PortableTextComponents = {
   },
 };
 
+function CaseTable({ rows }: { rows: TableBlockBlock['rows'] }) {
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full border-collapse text-0_75">
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.label} className="border-b border-border">
+              <td className="py-2 pr-4 font-medium whitespace-nowrap">{row.label}</td>
+              <td className="py-2 pr-4 text-muted-foreground">{row.description}</td>
+              <td className="py-2 text-right font-mono text-0_7 text-muted-foreground">{row.count}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 export function CaseStudyBody({ body }: { body?: CaseBodyBlock[] }) {
   return (
     <div className="flex flex-col gap-6">
@@ -28,7 +46,7 @@ export function CaseStudyBody({ body }: { body?: CaseBodyBlock[] }) {
             return (
               <pre
                 key={block._key}
-                className="font-mono text-0_75 leading-relaxed bg-[#1c1c1e] text-[#e4e4e7] rounded-lg p-4 overflow-x-auto thin-scroll"
+                className="font-mono text-0_75 leading-relaxed bg-codeBlock text-codeBlock-foreground rounded-lg p-4 overflow-x-auto thin-scroll"
               >
                 <code>{block.code}</code>
               </pre>
@@ -61,24 +79,6 @@ export function CaseStudyBody({ body }: { body?: CaseBodyBlock[] }) {
             return null;
         }
       })}
-    </div>
-  );
-}
-
-function CaseTable({ rows }: { rows: TableBlockBlock['rows'] }) {
-  return (
-    <div className="overflow-x-auto">
-      <table className="w-full border-collapse text-0_75">
-        <tbody>
-          {rows.map((row) => (
-            <tr key={row.label} className="border-b border-border">
-              <td className="py-2 pr-4 font-medium whitespace-nowrap">{row.label}</td>
-              <td className="py-2 pr-4 text-muted-foreground">{row.description}</td>
-              <td className="py-2 text-right font-mono text-0_7 text-muted-foreground">{row.count}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
     </div>
   );
 }

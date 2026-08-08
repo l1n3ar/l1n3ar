@@ -7,9 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { ICON_STROKE } from '@/components/v2/constants';
 import { FeedbackDialog } from '@/components/v2/feedback-dialog';
-
-const ICON_STROKE = 1.75;
 
 export function Navbar({
   title, onBack,
@@ -44,7 +43,7 @@ export function Navbar({
 
         <Tooltip>
           <TooltipTrigger
-            render={<Button variant="ghost" size='icon-xs' aria-label="switch to v1" render={<NextLink href="/v1" />} />}
+            render={<Button variant="ghost" size="icon-xs" aria-label="switch to v1" render={<NextLink href="/v1" />} />}
           >
             <History className="size-icon-xs text-foreground" strokeWidth={ICON_STROKE} />
           </TooltipTrigger>

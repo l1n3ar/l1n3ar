@@ -1,4 +1,4 @@
-import { L1n3ar } from '@/components/v2/sections/l1n3ar';
+import { L1n3ar } from '@/components/v2/l1n3ar/l1n3ar';
 import { getOffTheClock, getSiteConfig } from '@/lib/content';
 
 export default async function L1n3arPage() {

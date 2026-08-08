@@ -19,6 +19,11 @@ export function pastelChipStyle(hue: number): CSSProperties {
   } as CSSProperties;
 }
 
+/** Shorthand for the common `pastelChipStyle(hueForKey(key))` pairing. */
+export function keyedPastelChipStyle(key: string): CSSProperties {
+  return pastelChipStyle(hueForKey(key));
+}
+
 /** Inline style for the `.tile-pastel` utility (see globals.css) — light mode is a flat washed-out
  * pastel; dark mode (handled entirely in CSS) swaps to a hue-tinted gradient via --tile-hue. */
 export function tilePastel(hue: number): CSSProperties {

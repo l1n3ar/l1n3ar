@@ -8,32 +8,21 @@ import {
 } from '@/components/ui/sidebar';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { NAV_ICONS } from '@/components/v2/nav-icons';
-import { BRAND_ICONS } from '@/components/v2/tech-icons';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import { ICON_STROKE } from '@/components/v2/constants';
+import { FooterLinkIcon } from '@/components/v2/footer-link-icon';
+import { initials } from '@/components/v2/initials';
+import { NAV_ICONS } from '@/components/v2/nav-icons';
 import { sectionHref } from '@/components/v2/section-routes';
 import { useCommandPalette } from '@/components/v2/command-palette-context';
 import { useSite } from '@/components/v2/site-context';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { useRelease } from '@/hooks/release';
 import type { V2Section } from '@/lib/types';
-import { useIsMobile } from '@/hooks/use-mobile';
 
-// Base icon weight for this UI — see Global look / Icons in the design handoff.
-const ICON_STROKE = 1.75;
-
-// One consistent horizontal inset for every row in the sidebar (header, search, nav,
-// footer) so separators — which sit flush with no margin of their own — line up with
-// everything above and below them instead of appearing narrower/wider at each nesting depth.
 const INSET = 'px-4';
-
-// Nav items render as one flat list — a separator marks the end of "explore" (after
-// off the clock) and the end of "live status" (after deployments), without group labels.
 const SEPARATOR_AFTER: V2Section[] = ['l1n3ar', 'deployments'];
 
-// GitHub gets its real Simple Icons brand mark (see BRAND_ICONS, rendered separately below);
-// LinkedIn isn't in Simple Icons (removed after a trademark takedown request), so it uses
-// a dropped-in PNG asset (public/images/tiles/linkedin.png, rendered separately below) instead.
-// FOOTER_ICONS.linkedin below is unused for rendering but keeps the tooltip-label lookup working.
 const FOOTER_ICONS: Record<string, typeof LinkIcon> = {
   linkedin: LinkIcon,
   resume: FileText,
@@ -50,9 +39,9 @@ export function AppSidebar({ section }: { section: V2Section }) {
   const { setOpen: setPaletteOpen } = useCommandPalette();
   const { data: release } = useRelease();
   const { setOpenMobile } = useSidebar();
-  const initials = site.name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase();
+  const isMobile = useIsMobile();
+  const ownerInitials = initials(site.name);
   const closeMobile = () => setOpenMobile(false);
-  const isMobile = useIsMobile()
 
   return (
     <SidebarPrimitive collapsible="offcanvas">
@@ -60,7 +49,7 @@ export function AppSidebar({ section }: { section: V2Section }) {
         <NextLink href={sectionHref('home')} onClick={closeMobile} className="flex items-start gap-2 min-w-0">
           <Avatar size="sm" className="rounded-md bg-primary after:rounded-md shrink-0">
             <AvatarFallback className="rounded-md bg-primary text-primary-foreground text-0_6">
-              {initials}
+              {ownerInitials}
             </AvatarFallback>
           </Avatar>
           <span className="flex flex-col min-w-0 text-left">
@@ -69,8 +58,6 @@ export function AppSidebar({ section }: { section: V2Section }) {
           </span>
         </NextLink>
       </SidebarHeader>
-
-      {/* <SidebarSeparator className="mx-0" /> */}
 
       <SidebarContent className={`gap-0 py-3 ${INSET} gz-scroll`}>
         <SidebarMenu className="gap-1">
@@ -98,8 +85,6 @@ export function AppSidebar({ section }: { section: V2Section }) {
           })}
         </SidebarMenu>
       </SidebarContent>
-
-      {/* <SidebarSeparator className="mx-0" /> */}
 
       <SidebarFooter className={`gap-3 pt-3 ${isMobile ? 'pb-6' : 'pb-3'} ${INSET}`}>
         <div className="relative">
@@ -142,8 +127,6 @@ export function AppSidebar({ section }: { section: V2Section }) {
 
           <div className="flex gap-2 shrink-0">
             {site.footerLinks.map((l) => {
-              const isGithub = l.label.toLowerCase().includes('github');
-              const isLinkedin = l.label.toLowerCase().includes('linkedin');
               const key = Object.keys(FOOTER_ICONS).find((k) => l.label.toLowerCase().includes(k));
               const Icon = key ? FOOTER_ICONS[key] : FileText;
               const tooltipLabel = key ? FOOTER_LABELS[key] : l.label;
@@ -160,14 +143,7 @@ export function AppSidebar({ section }: { section: V2Section }) {
                       />
                     }
                   >
-                    {isGithub ? (
-                      <BRAND_ICONS.github className="size-icon-xs" color="currentColor" />
-                    ) : isLinkedin ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src="/images/tiles/linkedin.png" alt="" className="size-icon-xs object-contain" />
-                    ) : (
-                      <Icon className="size-icon-xs" strokeWidth={ICON_STROKE} />
-                    )}
+                    <FooterLinkIcon label={l.label} fallback={Icon} className="size-icon-xs" />
                   </TooltipTrigger>
                   <TooltipContent className="text-0_6 font-sans not-italic">{tooltipLabel}</TooltipContent>
                 </Tooltip>

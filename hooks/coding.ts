@@ -5,6 +5,10 @@ import { getLeetcodeProfile, type LeetcodeProfile } from '@/actions/leetcode';
 
 const STALE_TIME = 60 * 60 * 1000;
 
+export function totalSolved(solvedByDifficulty: LeetcodeProfile['solvedByDifficulty'] | undefined): number {
+  return solvedByDifficulty?.reduce((sum, d) => sum + d.count, 0) ?? 0;
+}
+
 export function useCodeforcesProfile(handle: string) {
   return useQuery<CodeforcesProfile, Error>({
     queryKey: ['codeforces-profile', handle],

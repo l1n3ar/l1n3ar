@@ -5,19 +5,15 @@ import { BookOpen, FileText, Mail, SunMoon } from 'lucide-react';
 import {
   CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem,
 } from '@/components/ui/command';
+import { ICON_STROKE } from '@/components/v2/constants';
+import { FooterLinkIcon } from '@/components/v2/footer-link-icon';
 import { NAV_ICONS } from '@/components/v2/nav-icons';
 import { useCommandPalette } from '@/components/v2/command-palette-context';
 import { sectionHref } from '@/components/v2/section-routes';
 import { useSite } from '@/components/v2/site-context';
-import { BRAND_ICONS } from '@/components/v2/tech-icons';
 import { getTheme, toggleTheme, THEME_CHANGE_EVENT } from '@/lib/theme';
 import { hasCaseStudy } from '@/lib/types';
 
-const ICON_STROKE = 1.75;
-
-// Mirrors components/v2/sidebar.tsx's footer icon logic exactly, so the same link
-// shows the same icon in both places — github/linkedin get real brand marks, resume
-// falls back to FileText, anything else (e.g. email) falls back to Mail.
 const FOOTER_ICONS: Record<string, typeof FileText> = {
   resume: FileText,
 };
@@ -43,8 +39,6 @@ export function CommandPalette() {
   }, [open, setOpen]);
 
   useEffect(() => {
-    // Reads `document`'s current class, so it can't be a lazy useState initializer (no
-    // `document` during SSR) — this is a justified exception to set-state-in-effect.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setDark(getTheme() === 'dark');
     const onChange = () => setDark(getTheme() === 'dark');
@@ -116,8 +110,6 @@ export function CommandPalette() {
             {dark ? 'Switch to light mode' : 'Switch to dark mode'}
           </CommandItem>
           {site.footerLinks.map((l) => {
-            const isGithub = l.label.toLowerCase().includes('github');
-            const isLinkedin = l.label.toLowerCase().includes('linkedin');
             const key = Object.keys(FOOTER_ICONS).find((k) => l.label.toLowerCase().includes(k));
             const Icon = key ? FOOTER_ICONS[key] : Mail;
             return (
@@ -127,14 +119,7 @@ export function CommandPalette() {
                 onSelect={() => run(() => window.open(l.href, '_blank', 'noopener,noreferrer'))}
                 className={ITEM_CLASS}
               >
-                {isGithub ? (
-                  <BRAND_ICONS.github className="size-icon-xs" color="currentColor" />
-                ) : isLinkedin ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src="/images/tiles/linkedin.png" alt="" className="size-icon-xs object-contain" />
-                ) : (
-                  <Icon className="size-icon-xs" strokeWidth={ICON_STROKE} />
-                )}
+                <FooterLinkIcon label={l.label} fallback={Icon} className="size-icon-xs" />
                 {l.label}
               </CommandItem>
             );

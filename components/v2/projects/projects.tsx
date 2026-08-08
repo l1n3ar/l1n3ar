@@ -5,11 +5,10 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
-import { ProjectCard } from '@/components/v2/sections/project-card';
+import { ICON_STROKE } from '@/components/v2/constants';
+import { ProjectCard } from '@/components/v2/projects/project-card';
 import { TechIcon } from '@/components/v2/tech-icons';
 import { PROJECT_CATEGORIES, type Project, type ProjectCategory } from '@/lib/types';
-
-const ICON_STROKE = 1.75;
 type CategoryFilter = ProjectCategory | 'all';
 
 export function Projects({ projects }: { projects: Project[] }) {
