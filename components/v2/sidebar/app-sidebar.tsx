@@ -13,6 +13,7 @@ import { ICON_STROKE } from '@/components/v2/constants';
 import { FooterLinkIcon } from '@/components/v2/footer-link-icon';
 import { initials } from '@/components/v2/initials';
 import { iconForRoute } from '@/components/v2/nav-icons';
+import { ScrambleLink } from '@/components/v2/scramble-link';
 import { sectionHref } from '@/components/v2/section-routes';
 import { useCommandPalette } from '@/components/v2/command-palette-context';
 import { useSite } from '@/components/v2/site-context';
@@ -21,6 +22,7 @@ import { useRelease } from '@/hooks/release';
 
 const INSET = 'px-4';
 const SEPARATOR_AFTER = ['/recommendations', '/deployments'];
+const L1n3arIcon = iconForRoute('/l1n3ar');
 
 const FOOTER_ICONS: Record<string, typeof LinkIcon> = {
   resume: FileText,
@@ -85,7 +87,13 @@ export function AppSidebar({ currentPath }: { currentPath: string }) {
       </SidebarContent>
 
       <SidebarFooter className={`gap-3 pt-3 ${isMobile ? 'pb-6' : 'pb-3'} ${INSET}`}>
-
+        <ScrambleLink
+          href={sectionHref('l1n3ar')}
+          text="l1n3ar"
+          icon={<L1n3arIcon strokeWidth={ICON_STROKE} />}
+          onClick={closeMobile}
+          className="flex w-full items-center gap-2 rounded-md h-7 p-2 text-0_7 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors [&_svg]:size-icon-xs [&_svg]:shrink-0"
+        />
 
         <SidebarSeparator className="mx-0" />
 

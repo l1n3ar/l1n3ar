@@ -1,7 +1,7 @@
 import { AskChat } from '@/components/v2/ask/ask-chat';
 import { getAllProjects } from '@/lib/content';
 
-const MAX_SUGGESTIONS = 5;
+const MAX_SUGGESTIONS = 3;
 
 function pickRandom<T>(items: T[], count: number): T[] {
   return [...items].sort(() => Math.random() - 0.5).slice(0, count);

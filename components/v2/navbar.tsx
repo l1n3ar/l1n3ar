@@ -25,7 +25,7 @@ export function Navbar({
   const router = useRouter();
 
   return (
-    <div className="h-11 shrink-0 border-b border-border grid grid-cols-[1fr_auto_1fr] items-center px-3">
+    <div className="h-11 shrink-0 border-b border-border grid grid-cols-[1fr_auto_1fr] items-center px-3 ">
       <div className="flex items-center gap-1 min-w-0">
         <SidebarTrigger aria-label="toggle sidebar" />
         {onBack && (
@@ -71,6 +71,7 @@ export function Navbar({
         <DropdownMenu>
           <DropdownMenuTrigger
             render={<Button variant="ghost" size="icon-xs" aria-label="more options" />}
+            className='mr-2'
           >
             <MoreHorizontal className="size-icon-xs" strokeWidth={ICON_STROKE} />
           </DropdownMenuTrigger>

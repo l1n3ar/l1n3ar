@@ -3,7 +3,9 @@ import { useEffect, useState, type CSSProperties, type FormEvent } from 'react';
 import { useChat } from 'ai/react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { ArrowUp, ChevronDown } from 'lucide-react';
+import {
+  ArrowUp, ChevronDown, CornerDownRight, X,
+} from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -18,6 +20,7 @@ import { getCitations } from '@/lib/citations';
 import { keyedPastelChipStyle } from '@/lib/pastel';
 import { cn } from '@/lib/utils';
 import { Project } from '@/lib/types';
+import { Separator } from '@/components/ui/separator';
 
 const MOBILE_MAX_SUGGESTIONS = 3;
 
@@ -66,13 +69,14 @@ function OwnerAvatar({ initials }: { initials: string }) {
 }
 
 export function AskChat({
-  project, inputPosition = 'bottom', className, style, suggestions,
+  project, inputPosition = 'bottom', className, style, suggestions, onClose,
 }: {
   project?: Project;
   suggestions?: string[];
   inputPosition?: 'bottom' | 'center';
   className?: string;
   style?: CSSProperties;
+  onClose?: () => void;
 }) {
   const { site } = useSite();
   const ownerInitials = initials(site.name);
@@ -121,18 +125,9 @@ export function AskChat({
           type="button"
           variant="outline"
           onClick={() => ask(suggestion)}
-          onMouseEnter={(e) => {
-            const target = e.currentTarget;
-            Object.entries(keyedPastelChipStyle(suggestion)).forEach(([k, v]) => target.style.setProperty(k, String(v)));
-            target.classList.add('pastel-chip');
-          }}
-          onMouseLeave={(e) => {
-            const target = e.currentTarget;
-            target.classList.remove('pastel-chip');
-            Object.keys(keyedPastelChipStyle(suggestion)).forEach((k) => target.style.removeProperty(k));
-          }}
-          className="bg-muted h-auto max-w-full whitespace-normal text-0_7 text-left justify-start px-3 py-2 rounded-lg self-start border-transparent capitalize transition-colors"
+          className="h-auto max-w-full bg-transparent whitespace-normal text-0_7 text-left justify-center px-3 py-2 rounded-lg self-start border-transparent transition-colors flex items-start"
         >
+          <CornerDownRight />
           {suggestion}
         </Button>
       ))}
@@ -167,10 +162,31 @@ export function AskChat({
   );
 
   return (
-    <div className={cn('min-w-0 flex flex-col border border-border rounded-lg p-4', className)} style={style}>
+    <div className={cn('relative min-w-0 flex flex-col  rounded-lg p-4 lg:shadow-md', className)} style={style}>
+      {onClose && (
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon-xs"
+          aria-label="close ask panel"
+          onClick={onClose}
+          className="absolute top-2 right-2 z-10"
+        >
+          <X className="size-icon-xs" strokeWidth={ICON_STROKE} />
+        </Button>
+      )}
+
       {project?.description && !hasMessages && isMobile && (
         <div className="text-0_6 text-muted-foreground tracking-wide mb-3 p-2 border border-dashed rounded-lg">{project.description}</div>
       )}
+
+      {
+        inputPosition === 'bottom' && !isMobile && 
+        <>
+        <span className='font-light text-xs mb-3'>Ask about <span className='font-semibold'>{project?.name}</span> </span>
+        <Separator />
+        </>
+      }
 
       <div className="flex-1 min-h-0 min-w-0 flex flex-col mb-2.5">
         {spacer}
@@ -237,7 +253,7 @@ export function AskChat({
         ) : centering ? (
           <div className="flex flex-col items-center gap-4 px-4 min-w-0 w-full">
             {inputForm}
-            <div className="flex flex-wrap justify-center gap-2 max-w-2xl min-w-0">
+            <div className="flex flex-wrap justify-center gap-2 max-w-lg min-w-0">
               {suggestionChips}
             </div>
           </div>
