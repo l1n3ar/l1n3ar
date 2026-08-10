@@ -55,8 +55,8 @@ export function ProjectCard({ project, showCategory }: { project: Project; showC
             <div className="text-right">
               <span className="text-0_6 text-muted-foreground block">{project.year}</span>
               {showCategory && (
-                <span className="text-0_6 capitalize text-muted-foreground/70 block">{project.category}</span>
-              )}
+                <span className={`text-0_6 ${project.category === 'oss' ? 'uppercase' : 'capitalize'} text-muted-foreground/70 block`}>{project.category}</span>
+              )} 
             </div>
             <button
               type="button"

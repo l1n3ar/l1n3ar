@@ -46,6 +46,29 @@ export default defineType({
     defineField({ name: 'github', type: 'url', group: 'card' }),
     defineField({ name: 'demo', type: 'url', group: 'card' }),
     defineField({
+      name: 'repos',
+      title: 'Repositories',
+      description: 'Repos that make up this OSS project (server, UI, microservices, etc.) — used to pull in pull requests.',
+      type: 'array',
+      group: 'card',
+      hidden: ({ document }) => document?.category !== 'oss',
+      of: [
+        {
+          type: 'object',
+          name: 'repo',
+          fields: [
+            defineField({ name: 'label', type: 'string', validation: (Rule) => Rule.required() }),
+            defineField({ name: 'owner', type: 'string', validation: (Rule) => Rule.required() }),
+            defineField({ name: 'repo', type: 'string', validation: (Rule) => Rule.required() }),
+            defineField({ name: 'url', type: 'url', validation: (Rule) => Rule.required() }),
+          ],
+          preview: {
+            select: { title: 'label', subtitle: 'repo' },
+          },
+        },
+      ],
+    }),
+    defineField({
       name: 'metrics',
       type: 'array',
       group: 'card',
