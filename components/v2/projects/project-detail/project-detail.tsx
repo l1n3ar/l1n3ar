@@ -63,7 +63,7 @@ export function ProjectDetail({ project }: { project: Project }) {
         )}
       </div>
 
-      {hasCaseStudy(project) && project.category !=='oss' ? (
+      {hasCaseStudy(project) && project.category !== 'oss' ? (
         <div className="border-t border-border pt-4 overflow-y-auto">
           <SectionToc project={project} />
           <CaseStudyBody body={project.body} />
@@ -78,12 +78,16 @@ export function ProjectDetail({ project }: { project: Project }) {
     return (
       <Tabs defaultValue="case-study" className="flex-1 min-h-0 flex flex-col">
         <TabsList variant="line" className="mb-3 shrink-0">
-          <TabsTrigger value="case-study" className="text-0_7">Case study</TabsTrigger>
-          <TabsTrigger value="ask" className="text-0_7">{askTitle}</TabsTrigger>
+          <TabsTrigger value="case-study" className="text-0_7">{project.category !== 'oss' ? 'Case study' : 'Details'}</TabsTrigger>
+          {
+            project.category !== 'oss' && <TabsTrigger value="ask" className="text-0_7">{askTitle}</TabsTrigger>
+          }
+
         </TabsList>
         <TabsContent value="case-study" className="min-h-0 flex-1 overflow-y-auto p-4 thin-scroll">
           {caseStudyContent}
         </TabsContent>
+
         <TabsContent value="ask" className="min-h-0 flex-1 flex flex-col">
           <AskChat
             project={project}
@@ -101,24 +105,28 @@ export function ProjectDetail({ project }: { project: Project }) {
         {caseStudyContent}
       </div>
 
-      {askOpen ? (
-        <AskChat
-          project={project}
-          inputPosition="bottom"
-          className="shrink-0 border border-border shadow-md"
-          style={{ width: `${100 - LEFT_PERCENT}%` }}
-          onClose={() => setAskOpen(false)}
-        />
-      ) : (
-        <Button
-          type="button"
-          variant="secondary"
-          size="sm"
-          onClick={() => setAskOpen(true)}
-        >
-          <TriangleDashed className="size-icon-xs" strokeWidth={ICON_STROKE} />
-          {askTitle}
-        </Button>
+      {project.category !== 'oss' && (
+        <>
+          {askOpen ? (
+            <AskChat
+              project={project}
+              inputPosition="bottom"
+              className="shrink-0 border border-border shadow-md"
+              style={{ width: `${100 - LEFT_PERCENT}%` }}
+              onClose={() => setAskOpen(false)}
+            />
+          ) : (
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              onClick={() => setAskOpen(true)}
+            >
+              <TriangleDashed className="size-icon-xs" strokeWidth={ICON_STROKE} />
+              {askTitle}
+            </Button>
+          )}
+        </>
       )}
     </div>
   );
