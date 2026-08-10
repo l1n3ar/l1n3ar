@@ -105,7 +105,7 @@ export function ProjectDetail({ project }: { project: Project }) {
         <AskChat
           project={project}
           inputPosition="bottom"
-          className="shrink-0 border border-border"
+          className="shrink-0 border border-border shadow-md"
           style={{ width: `${100 - LEFT_PERCENT}%` }}
           onClose={() => setAskOpen(false)}
         />

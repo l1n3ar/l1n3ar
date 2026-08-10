@@ -162,7 +162,7 @@ export function AskChat({
   );
 
   return (
-    <div className={cn('relative min-w-0 flex flex-col  rounded-lg p-4 lg:shadow-md', className)} style={style}>
+    <div className={cn('relative min-w-0 flex flex-col  rounded-lg p-4', className)} style={style}>
       {onClose && (
         <Button
           type="button"
