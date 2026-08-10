@@ -4,7 +4,7 @@ import { useChat } from 'ai/react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import {
-  ArrowUp, ChevronDown, CornerDownRight, X,
+  ArrowUp, ChevronDown, CornerDownRight, ShieldQuestionMarkIcon, X,
 } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -142,6 +142,7 @@ export function AskChat({
         centering && 'w-full max-w-xl mx-auto',
       )}
     >
+
       <Input
         value={input}
         onChange={handleInputChange}
@@ -183,8 +184,8 @@ export function AskChat({
       {
         inputPosition === 'bottom' && !isMobile && 
         <>
-        <span className='font-light text-xs mb-3'>Ask about <span className='font-semibold'>{project?.name}</span> </span>
-        <Separator />
+        <span className='font-light text-xs mb-2'>Ask about <span className='font-semibold'>{project?.name}</span> </span>
+        <Separator className='mb-4'/>
         </>
       }
 
@@ -252,7 +253,14 @@ export function AskChat({
           </div>
         ) : centering ? (
           <div className="flex flex-col items-center gap-4 px-4 min-w-0 w-full">
+            <>
+            <div className='text-0_6 text-muted-foreground flex items-center gap-1 border border-dashed px-2 rounded-sm bg-slate-100'>
+              <ShieldQuestionMarkIcon className='h-3 w-3 flex-shrink-0' />
+             <span>I cannot answer questions about my OSS projects</span>
+              </div>
             {inputForm}
+            </>
+   
             <div className="flex flex-wrap justify-center gap-2 max-w-lg min-w-0">
               {suggestionChips}
             </div>
