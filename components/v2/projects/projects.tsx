@@ -41,7 +41,7 @@ export function Projects({ projects }: { projects: Project[] }) {
       <Tabs value={category} onValueChange={(v) => selectCategory(v as CategoryFilter)} className="overflow-x-auto gz-scroll">
         <TabsList variant="line">
           {(['all', ...categories] as const).map((cat) => (
-            <TabsTrigger key={cat} value={cat} className="text-0_7 capitalize shrink-0">
+            <TabsTrigger key={cat} value={cat} className= {`text-0_7 ${cat === 'oss' ? 'uppercase' : 'capitalize'} shrink-0`}>
               {cat}
             </TabsTrigger>
           ))}
@@ -113,7 +113,7 @@ export function Projects({ projects }: { projects: Project[] }) {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
         {filtered.map((p) => (
-          <ProjectCard key={p.id} project={p} showCategory={category === 'all'} />
+          <ProjectCard key={p.id} project={p} showCategory={category === 'all'}/>
         ))}
       </div>
     </PageBody>

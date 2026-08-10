@@ -22,6 +22,8 @@ export type Highlight = { label: string; body: string };
 export const PROJECT_CATEGORIES = ['enterprise', 'personal', 'oss'] as const;
 export type ProjectCategory = (typeof PROJECT_CATEGORIES)[number];
 
+export type ProjectRepo = { label: string; owner: string; repo: string; url: string };
+
 export type ProjectFrontmatter = {
   name: string;
   org: string;
@@ -32,6 +34,7 @@ export type ProjectFrontmatter = {
   tech: string[];
   github?: string;
   demo?: string;
+  repos?: ProjectRepo[];
   metrics: Metric[];
   order: number;
   asks: string[];
@@ -72,8 +75,7 @@ export type V2Section = (typeof V2_SECTIONS)[number];
 export const NAV_GROUPS = ['Explore', 'Live status', 'Restricted'] as const;
 export type NavGroupName = (typeof NAV_GROUPS)[number];
 
-// Curated so Studio can only pick an icon name this codebase actually bundles —
-// see components/v2/nav-icons.ts for the name -> Lucide component lookup.
+
 export const NAV_ICON_NAMES = [
   'Home', 'FolderKanban', 'MessageSquare', 'Quote', 'Code2', 'Music2', 'Activity', 'GitBranch', 'Lock', 'Briefcase',
 ] as const;

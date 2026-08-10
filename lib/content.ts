@@ -45,6 +45,7 @@ export async function getAllProjects(): Promise<Project[]> {
     "id": slug.current,
     name, org, year, role, line, description, github, demo, metrics, order, asks, category,
     "tech": tech[]->name,
+    "repos": repos[]{label, owner, repo, url},
     highlights,
     body
   }`);

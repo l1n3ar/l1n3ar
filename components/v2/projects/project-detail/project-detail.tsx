@@ -12,6 +12,7 @@ import { BRAND_ICONS } from '@/components/v2/tech-icons';
 import { useSite } from '@/components/v2/site-context';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { hasCaseStudy, type Project } from '@/lib/types';
+import PrAndIssues from './pr-issue-detail';
 
 const LEFT_PERCENT = 70;
 
@@ -62,12 +63,12 @@ export function ProjectDetail({ project }: { project: Project }) {
         )}
       </div>
 
-      {hasCaseStudy(project) && (
+      {hasCaseStudy(project) && project.category !=='oss' ? (
         <div className="border-t border-border pt-4 overflow-y-auto">
           <SectionToc project={project} />
           <CaseStudyBody body={project.body} />
         </div>
-      )}
+      ) : <PrAndIssues project={project} />}
 
       <ProjectNav prev={prevProject} next={nextProject} />
     </>
