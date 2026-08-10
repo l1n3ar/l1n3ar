@@ -62,7 +62,7 @@ const PrAndIssues = ({ project }: { project: Project }) => {
                                 href={pr.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-2 text-0_7 text-foreground hover:underline"
+                                className="flex items-start gap-2 text-0_7 text-foreground hover:underline"
                             >
                                 <span className={`size-icon-lg shrink-0 rounded-md flex items-center justify-center ${className}`}>
                                     <StatusIcon className="size-icon-xs" strokeWidth={ICON_STROKE} />
