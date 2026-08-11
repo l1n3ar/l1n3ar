@@ -4,6 +4,7 @@ import { SiGithub } from '@icons-pack/react-simple-icons';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { useGithubContributions } from '@/hooks/coding';
 import { heatLevelStyle } from '@/lib/pastel';
+import { Loader2 } from 'lucide-react';
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 const FIRST_YEAR = 2022;
@@ -93,7 +94,7 @@ export function GithubContributions({ usernames }: { usernames: string[] }) {
           GitHub
         </div>
         <span className="text-0_6 text-muted-foreground">
-          {isLoading ? '—' : isError ? "couldn't load GitHub activity." : `${data?.total ?? 0} contributions in ${year}`}
+          {isLoading ? <Loader2 className='h-4 w-4 animate-spin' /> : isError ? "couldn't load GitHub activity." : `${data?.total ?? 0} contributions in ${year}`}
         </span>
       </div>
       <div className="flex gap-3">
