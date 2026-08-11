@@ -1,5 +1,6 @@
 import { Code2 } from 'lucide-react';
 import { ICON_STROKE } from '@/components/v2/constants';
+import { GithubContributions } from '@/components/v2/l1n3ar/github-contributions';
 import { totalSolved, useCodeforcesProfile, useLeetcodeProfile } from '@/hooks/coding';
 import { timeAgo } from '@/lib/deployment-meta';
 import { pastelChipStyle } from '@/lib/pastel';
@@ -76,8 +77,9 @@ function RecentActivity({ rows }: { rows: ActivityRow[] }) {
 export function CodingPractice({ profiles }: { profiles?: CodingProfiles }) {
   const leetcode = useLeetcodeProfile(profiles?.leetcode ?? '');
   const codeforces = useCodeforcesProfile(profiles?.codeforces ?? '');
+  const githubUsernames = profiles?.githubUsernames ?? [];
 
-  if (!profiles?.leetcode && !profiles?.codeforces) {
+  if (!profiles?.leetcode && !profiles?.codeforces && githubUsernames.length === 0) {
     return <p className="text-0_7 text-muted-foreground">No coding profiles configured.</p>;
   }
 
@@ -91,8 +93,9 @@ export function CodingPractice({ profiles }: { profiles?: CodingProfiles }) {
 
   return (
     <div>
+      <GithubContributions usernames={githubUsernames} />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-        {profiles.leetcode && (
+        {profiles?.leetcode && (
           <StatCardShell
             hue={LEETCODE_HUE}
             label="LeetCode"
@@ -103,7 +106,7 @@ export function CodingPractice({ profiles }: { profiles?: CodingProfiles }) {
             {lc && !leetcode.isError && <DifficultyBar solvedByDifficulty={lc.solvedByDifficulty} />}
           </StatCardShell>
         )}
-        {profiles.codeforces && (
+        {profiles?.codeforces && (
           <StatCardShell
             hue={CODEFORCES_HUE}
             label="Codeforces"

@@ -57,7 +57,7 @@ export type WorkHistoryEntry = {
 
 export type Recommendation = { who: string; quote: string; order: number };
 
-export type CodingProfiles = { codeforces?: string; leetcode?: string; atcoder?: string };
+export type CodingProfiles = { codeforces?: string; leetcode?: string; atcoder?: string; githubUsernames?: string[] };
 
 export const OFF_THE_CLOCK_LINK_KINDS = ['youtube', 'spotify', 'instagram', 'link'] as const;
 

@@ -14,7 +14,7 @@ export function L1n3ar({
     <div>
       <Tabs defaultValue="coding">
         <TabsList variant="line" className="mb-4">
-          <TabsTrigger value="coding" className="text-0_7">Coding Practice</TabsTrigger>
+          <TabsTrigger value="coding" className="text-0_7">Coding Activity</TabsTrigger>
           <TabsTrigger value="offclock" className="text-0_7">Off the clock</TabsTrigger>
         </TabsList>
         <TabsContent value="coding">

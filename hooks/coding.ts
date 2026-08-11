@@ -2,6 +2,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getCodeforcesProfile, type CodeforcesProfile } from '@/actions/codeforces';
 import { getLeetcodeProfile, type LeetcodeProfile } from '@/actions/leetcode';
+import { getGithubContributions, type GithubContributionDay } from '@/actions/github-contributions';
 
 const STALE_TIME = 60 * 60 * 1000;
 
@@ -32,5 +33,20 @@ export function useLeetcodeProfile(handle: string) {
     },
     staleTime: STALE_TIME,
     enabled: Boolean(handle),
+  });
+}
+
+export type GithubContributionsYear = { days: GithubContributionDay[]; total: number };
+
+export function useGithubContributions(usernames: string[], year: number) {
+  return useQuery<GithubContributionsYear, Error>({
+    queryKey: ['github-contributions', usernames, year],
+    queryFn: async () => {
+      const result = await getGithubContributions(usernames, year);
+      if (!result.ok) throw new Error(result.error);
+      return result;
+    },
+    staleTime: STALE_TIME,
+    enabled: usernames.length > 0,
   });
 }

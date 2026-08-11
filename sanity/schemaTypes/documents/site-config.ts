@@ -34,6 +34,12 @@ export default defineType({
         defineField({ name: 'codeforces', type: 'string' }),
         defineField({ name: 'leetcode', type: 'string' }),
         defineField({ name: 'atcoder', type: 'string' }),
+        defineField({
+          name: 'githubUsernames',
+          title: 'GitHub usernames',
+          type: 'array',
+          of: [{ type: 'string' }],
+        }),
       ],
     }),
   ],

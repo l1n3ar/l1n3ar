@@ -161,6 +161,13 @@
   background: linear-gradient(145deg, oklch(0.28 0.045 var(--tile-hue)) 0%, oklch(0.16 0.025 var(--tile-hue)) 100%);
 }
 
+.heat-cell {
+  background: var(--heat-bg);
+}
+.dark .heat-cell {
+  background: var(--heat-bg-dark);
+}
+
 @layer base {
   html, body { @apply bg-cream text-ink font-body m-0 h-full overflow-hidden; }
 
