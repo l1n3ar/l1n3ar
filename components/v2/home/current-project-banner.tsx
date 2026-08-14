@@ -1,5 +1,6 @@
 import { ArrowUpRight } from 'lucide-react';
 import { ICON_STROKE } from '@/components/v2/constants';
+import { LiveDot } from '../live-dot';
 
 /** Swap this out whenever there's a new project to spotlight. */
 const CURRENT_PROJECT = {
@@ -16,6 +17,7 @@ export function CurrentProjectBanner() {
       rel="noopener noreferrer"
       className="group flex w-fit items-center gap-2 rounded-md border border-border bg-card px-3 py-1.5 text-left text-foreground shadow-sm hover:bg-muted"
     >
+      <LiveDot />
       <span className="text-0_7 font-semibold text-foreground shrink-0">{CURRENT_PROJECT.name}</span>
       <span className="text-0_7 text-muted-foreground truncate">— {CURRENT_PROJECT.tagline}</span>
       <ArrowUpRight
