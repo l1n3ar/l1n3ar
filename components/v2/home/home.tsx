@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { ICON_STROKE } from '@/components/v2/constants';
+import { CurrentProjectBanner } from '@/components/v2/home/current-project-banner';
 import { initials } from '@/components/v2/initials';
 import { ProjectCard } from '@/components/v2/projects/project-card';
 import { splitWho } from '@/components/v2/recommendations/recommendation-utils';
@@ -32,7 +33,8 @@ export function Home({
 
   return (
     <div className="flex flex-col gap-10">
-      <div>
+      <CurrentProjectBanner />
+      <div className='-mt-4'>
         <h1 className="text-lg lg:text-xl flex font-light items-center gap-2 flex-wrap">
           tech @ BARBRI <Separator orientation="vertical" className="h-4 hidden lg:inline bg-muted-foreground data-[orientation=vertical]:self-center" /> <span className='hidden lg:inline'>previously @ lega.ai (acquired by BARBRI)</span>
           {/* <Image src="/images/logos/barbri.png" alt="BARBRI" width={96} height={96} className="h-10 w-auto align-middle" /> */}
