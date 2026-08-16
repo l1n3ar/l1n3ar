@@ -39,14 +39,14 @@ export function Home({
           tech @ BARBRI <Separator orientation="vertical" className="h-4 hidden lg:inline bg-muted-foreground data-[orientation=vertical]:self-center" /> <span className='hidden lg:inline'>previously @ lega.ai (acquired by BARBRI)</span>
           {/* <Image src="/images/logos/barbri.png" alt="BARBRI" width={96} height={96} className="h-10 w-auto align-middle" /> */}
         </h1>
-        <Button variant="link" onClick={() => router.push(sectionHref('work'))} className="h-auto px-0 lg:mt-2 gap-1 text-0_7 font-semibold">
+        <Button variant="link" onClick={() => router.push(sectionHref('work'))} className="h-auto px-0 lg:mt-2 gap-1 text-0_7 font-medium underline">
           View work experience
           <ArrowRight className="size-icon-xs" strokeWidth={ICON_STROKE} />
         </Button>
       </div>
 
       <div>
-        <div className="text-0_9 font-semibold mb-4">Featured projects</div>
+        <div className="text-xl font-semibold mb-4">Featured projects</div>
 
         {featured.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
@@ -56,13 +56,18 @@ export function Home({
           </div>
         )}
 
-        <Button variant="link" onClick={() => router.push(sectionHref('projects'))} className="h-auto px-0 mt-4 gap-1 text-0_7 font-semibold">
+        <Button variant="link" onClick={() => router.push(sectionHref('projects'))} className="h-auto px-0 mt-4 gap-1 text-0_7 font-medium underline">
           Browse projects
           <ArrowRight className="size-icon-xs" strokeWidth={ICON_STROKE} />
         </Button>
       </div>
+        <Separator />
+ 
+
 
       {recommendation && recInfo && (
+        <>
+         <div className="text-xl font-semibold -mb-6">Recommendations</div>
         <div>
           <p className="text-0_8 leading-relaxed text-muted-foreground max-w-2xl">&quot;{recommendation.quote}&quot;</p>
           <div className="flex items-start gap-2.5 mt-4">
@@ -77,12 +82,15 @@ export function Home({
               {recInfo.role ? `, ${recInfo.role}` : ''}
             </span>
           </div>
-          <Button variant="link" onClick={() => router.push(sectionHref('recommendations'))} className="h-auto px-0 mt-4 gap-1 text-0_7 font-semibold">
+          <Button variant="link" onClick={() => router.push(sectionHref('recommendations'))} className="h-auto px-0 mt-4 gap-1 text-0_7 font-medium underline">
             View all recommendations
             <ArrowRight className="size-icon-xs" strokeWidth={ICON_STROKE} />
           </Button>
         </div>
+        </>
       )}
     </div>
+    
   );
+
 }
