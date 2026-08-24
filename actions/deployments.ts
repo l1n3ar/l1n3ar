@@ -33,6 +33,7 @@ export async function getDeployments(limit = 10, until?: number): Promise<GetDep
   const teamId = process.env.VERCEL_TEAM_ID;
   if (teamId) params.set('teamId', teamId);
   if (until) params.set('until', String(until));
+  params.set('projectId','l1n3ar')
 
   const result = await apiFetch({
     url: `https://api.vercel.com/v6/deployments?${params}`,
