@@ -10,11 +10,15 @@ import { PageBody } from '@/components/v2/page-body';
 import { getAskedQuestions, type AskedQuestion } from '@/actions/logs';
 import { getFeedback, type FeedbackEntry } from '@/actions/feedback';
 import { timeAgo } from '@/lib/deployment-meta';
+import { getApproximateLocation } from '@/actions/ip';
+
+type Location = { regionName: string; country: string };
 
 export default function QaLogPage() {
   const [password, setPassword] = useState('');
   const [questions, setQuestions] = useState<AskedQuestion[] | null>(null);
   const [feedback, setFeedback] = useState<FeedbackEntry[] | null>(null);
+  const [locations, setLocations] = useState<Record<string, Location | null>>({});
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -34,6 +38,15 @@ export default function QaLogPage() {
 
     setQuestions(questionsResult);
     setFeedback(feedbackResult);
+
+    const uniqueIps = Array.from(new Set(questionsResult.map((q) => q.ip)));
+    const resolved = await Promise.all(
+      uniqueIps.map(async (ip) => {
+        const result = await getApproximateLocation(ip);
+        return [ip, result.ok ? result.data : null] as const;
+      })
+    );
+    setLocations(Object.fromEntries(resolved));
   }
 
   if (questions === null || feedback === null) {
@@ -90,11 +103,17 @@ export default function QaLogPage() {
             <p className="text-0_7 text-muted-foreground">No questions yet.</p>
           ) : (
             <div className="flex flex-col gap-3.5">
-              {questions.map((q, i) => (
+              {questions.map((q, i) => {
+                const location = locations[q.ip];
+                return (
                 <div key={i} className="border border-border rounded-lg p-3.5 bg-card">
                   <div className="flex items-baseline justify-between gap-3 mb-2">
                     <span className="flex-1 min-w-0 text-0_75 font-semibold">{q.question}</span>
-                    <span className="text-0_6 text-muted-foreground shrink-0">{q.ip}</span>
+                    {location && (
+                      <span className="text-0_6 text-muted-foreground shrink-0">
+                        {location.regionName}, {location.country}
+                      </span>
+                    )}
                     <span className="text-0_6 text-muted-foreground shrink-0">
                       {timeAgo(new Date(q.createdAt).getTime())}
                     </span>
@@ -103,7 +122,8 @@ export default function QaLogPage() {
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>{q.answer}</ReactMarkdown>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </TabsContent>
