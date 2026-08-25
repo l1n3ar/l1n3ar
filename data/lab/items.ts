@@ -64,28 +64,19 @@ export const labSections: LabSection[] = [
                 component: 'web-product',
                 defaultPosition: { x: 40, y: 40 },
                 props: {
-                    title: 'Shad N-way Switch',
                     url: 'https://shadcn-nway-switch.vercel.app/',
-                    repo : 'https://github.com/l1n3ar/shadcn-nway',
-                    icon: ToggleLeft,
-                    type: 'Complete',
-                    description: 'An exclusive-select toggle switch for any number of options, with icons, labels, and a dedicated off state.',
-                    techStack: ['Next.JS', 'TailwindCSS'],
+                    repo: 'https://github.com/l1n3ar/shadcn-nway',
+
                 },
-               
+
             },
             {
                 id: 'WEB-002',
                 component: 'web-product',
                 defaultPosition: { x: 40, y: 260 },
                 props: {
-                    title: 'markdownR',
                     url: 'https://markdown-r.vercel.app/',
-                     repo : 'https://github.com/l1n3ar/markdownr',
-                    icon: SiMarkdown,
-                    type: 'Complete',
-                    description: 'A web tool to preview markdown formatter text',
-                    techStack: ['Next.JS', 'TailwindCSS', 'React-Markdown'],
+                    repo: 'https://github.com/l1n3ar/markdownr',
                 },
             },
         ],
@@ -99,8 +90,8 @@ export const labSections: LabSection[] = [
                 defaultPosition: { x: 340, y: 40 },
                 props: {
                     title: 'l1n3ar/script-kiddie',
-                    repo : 'https://github.com/l1n3ar/script-kiddie',
-                    type: 'Complete',
+                    repo: 'https://github.com/l1n3ar/script-kiddie',
+   
                 },
             },
         ],
