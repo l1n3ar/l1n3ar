@@ -3,12 +3,12 @@ import { StatusIndicator, type LabItemStatus } from '@/components/v2/lab/status-
 import { LiveDot } from '@/components/v2/live-dot'
 import { ICON_STROKE } from '@/components/v2/constants'
 import { cn } from '@/lib/utils'
-import { LucideIcon } from 'lucide-react'
+import { LucideIcon, Terminal } from 'lucide-react'
 
-interface WebProductProps {
+interface CliProjectProps {
     id: string
     title: string
-    url?: string
+    repo?: string
     description?: string
     type?: LabItemStatus
     icon?: LucideIcon
@@ -19,44 +19,46 @@ interface WebProductProps {
 
 const WINDOW_DOT_COLORS = ['bg-red-500', 'bg-yellow-500', 'bg-green-500']
 
-const WebProduct = ({
+const CliProject = ({
     id,
     title,
-    url,
+    repo,
     description,
     type,
-    icon: Icon,
+    icon: Icon = Terminal,
     techStack,
     className
-}: WebProductProps) => {
+}: CliProjectProps) => {
     return (
-        <div className={cn('flex w-fit flex-col overflow-hidden rounded-lg border border-border bg-card text-card-foreground shadow-md', className)}>
+        <div className={cn('flex w-fit max-w-[20rem] flex-col overflow-hidden rounded-lg border border-border bg-codeBlock text-codeBlock-foreground shadow-md', className)}>
 
-            <div className='flex items-center justify-between gap-4  bg-muted px-3 py-2'>
-                <div className='flex  items-center gap-1.5'>
+            <div className='flex items-center gap-2 bg-black/20 px-3 py-2'>
+                <div className='flex flex-1 items-center gap-1.5'>
                     {WINDOW_DOT_COLORS.map((color) => (
                         <span key={color} className={cn('size-2 rounded-full', color)} />
                     ))}
                 </div>
-                <span className='flex-1 text-center text-0_6  hover:underline hover:cursor-pointer'><a href={url} className='text-muted-foreground hover:text-foreground'>{url}</a></span>
-                <span className='truncate text-0_6 text-muted-foreground'>{id}</span>
+                <span className='flex-1 truncate text-center text-0_6 text-codeBlock-foreground/60'>{repo}</span>
+                <div className='flex flex-1 justify-end'>
+                    <span className='truncate text-0_6 text-codeBlock-foreground/60'>{id}</span>
+                </div>
             </div>
 
             <div className='flex flex-col gap-2 p-4'>
                 <div className='flex items-center justify-between gap-2'>
                     <div className='flex min-w-0 items-center gap-2'>
-                        {Icon && <Icon className='size-icon-sm shrink-0' strokeWidth={ICON_STROKE} />}
+                        <Icon className='size-icon-sm shrink-0' strokeWidth={ICON_STROKE} />
                         <span className='truncate font-semibold'>{title}</span>
                     </div>
                     <StatusIndicator status={type} completeIndicator={<LiveDot />} />
                 </div>
 
-                {description && <p className='text-xs max-w-[20rem] line-clamp-2 font-light text-muted-foreground'>{description}</p>}
+                {description && <p className='text-xs font-light text-codeBlock-foreground/70'>{description}</p>}
 
                 {techStack && techStack.length > 0 && (
-                    <div className='flex flex-wrap gap-1.5 mt-2'>
+                    <div className='flex flex-wrap gap-1.5'>
                         {techStack.map((tech) => (
-                            <Badge key={tech} variant='secondary' className='text-[0.6rem] border'>{tech}</Badge>
+                            <Badge key={tech} variant='outline' className='border-codeBlock-foreground/20 text-codeBlock-foreground/80 text-[0.6rem]'>{tech}</Badge>
                         ))}
                     </div>
                 )}
@@ -65,4 +67,4 @@ const WebProduct = ({
     )
 }
 
-export default WebProduct
+export default CliProject

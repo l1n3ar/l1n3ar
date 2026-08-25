@@ -1,47 +1,68 @@
-import { SwitchCamera, ToggleLeft } from "lucide-react";
+import { ToggleLeft } from "lucide-react";
 import { LabItemConfig } from "./registry";
 import { SiMarkdown } from "@icons-pack/react-simple-icons";
 
-export const labItems: LabItemConfig[] = [
+export interface LabSection {
+    title: string;
+    items: LabItemConfig[];
+}
+
+export const labSections: LabSection[] = [
     {
-        id: 'NOTE-001',
-        component: 'sticky-note',
-        defaultPosition: { x: 150, y: 150 },
-        props: {
-            content: "MCP serverize this portfolio",
-            className: "bg-yellow-100 border-yellow-400",
-            type: 'In Progress',
-            
-        },
+        title: 'Notes',
+        items: [
+            {
+                id: 'NOTE-001',
+                component: 'sticky-note',
+                props: {
+                    content: "MCP serverize this portfolio",
+                    className: "bg-yellow-100 border-yellow-400",
+                    type: 'In Progress',
+                },
+            },
+        ],
     },
     {
-        id: 'CODE-001',
-        component: 'web-product',
-        defaultPosition: { x: 200, y: 200 },
-        props: {
-
-            title: 'ShadCN N-way Switch',
-            url: 'https://shadcn-nway-switch.vercel.app/',
-            icon: ToggleLeft,
-            type : 'Complete',
-            description : 'An exclusive-select toggle switch for any number of options, with icons, labels, and a dedicated off state.',
-            techStack : ['Next.JS','TailwindCSS']
-
-        },
+        title: 'Web Projects',
+        items: [
+            {
+                id: 'CODE-001',
+                component: 'web-product',
+                props: {
+                    title: 'ShadCN N-way Switch',
+                    url: 'https://shadcn-nway-switch.vercel.app/',
+                    icon: ToggleLeft,
+                    type: 'Complete',
+                    description: 'An exclusive-select toggle switch for any number of options, with icons, labels, and a dedicated off state.',
+                    techStack: ['Next.JS', 'TailwindCSS'],
+                },
+            },
+            {
+                id: 'CODE-002',
+                component: 'web-product',
+                props: {
+                    title: 'markdownR',
+                    url: 'https://markdown-r.vercel.app/',
+                    icon: SiMarkdown,
+                    type: 'Complete',
+                    description: 'A web tool to preview markdown formatter text',
+                    techStack: ['Next.JS', 'TailwindCSS', 'React-Markdown'],
+                },
+            },
+        ],
     },
-        {
-        id: 'CODE-002',
-        component: 'web-product',
-        defaultPosition: { x: 100, y: 100 },
-        props: {
-
-            title: 'markdownR',
-            url: 'https://markdown-r.vercel.app/',
-            icon: SiMarkdown,
-            type : 'Complete',
-            description : 'A web tool to preview markdown formatter text',
-            techStack : ['Next.JS','TailwindCSS','React-Markdown']
-
-        },
+    {
+        title: 'CLI Projects',
+        items: [
+            {
+                id: 'CLI-001',
+                component: 'cli-project',
+                props: {
+                    title: 'script-kiddie',
+                    repo: 'l1n3ar/script-kiddie',
+                    type: 'Complete',
+                },
+            },
+        ],
     },
 ]

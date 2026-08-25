@@ -1,9 +1,7 @@
-import { getLabPositions } from "@/actions/lab"
-import { LabCanvas } from "@/components/v2/lab/lab-canvas"
+import { LabBento } from "@/components/v2/lab/lab-bento"
 
-const Lab = async () => {
-  const positions = await getLabPositions()
-  return <LabCanvas initialPositions={positions} />
+const Lab = () => {
+  return <LabBento />
 }
 
 export default Lab
