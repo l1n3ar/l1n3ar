@@ -1,10 +1,12 @@
 'use client'
 
 import { useRef, useState, type ComponentType, type RefObject } from 'react'
+import { motion } from 'motion/react'
 import { LAB_REGISTRY, type LabItemConfig } from '@/data/lab/registry'
 import { labSections } from '@/data/lab/items'
 import { Draggable } from '@/components/v2/lab/draggable'
 import { AnimatedBeam } from '@/components/v2/lab/animated-beam'
+import { LabDotPattern } from '@/components/v2/lab/lab-dot-pattern'
 import { saveLabPosition, type LabPosition } from '@/actions/lab'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -41,7 +43,7 @@ export function LabBoard({ initialPositions }: LabBoardProps) {
         .filter((section) => section.title !== 'Notes')
         .flatMap((section) => section.items)
 
-    const itemRefs = useRef<Record<string, RefObject<HTMLDivElement | null>>>()
+    const itemRefs = useRef<Record<string, RefObject<HTMLDivElement | null>>>(undefined)
     if (!itemRefs.current) {
         itemRefs.current = {}
         for (const item of [...notes, ...freeItems]) itemRefs.current[item.id] = { current: null }
@@ -55,6 +57,7 @@ export function LabBoard({ initialPositions }: LabBoardProps) {
         }
         return merged
     })
+    const [notesOpen, setNotesOpen] = useState(true)
     const [dirtyIds, setDirtyIds] = useState<Set<string>>(new Set())
     const [password, setPassword] = useState('')
     const [isSaving, setIsSaving] = useState(false)
@@ -82,19 +85,33 @@ export function LabBoard({ initialPositions }: LabBoardProps) {
     }
 
     return (
-        <div ref={boardRef} className="relative grid flex-1 min-h-0 grid-cols-1 gap-6 py-2 md:grid-cols-[1fr_2fr]">
-            <div className="relative grid grid-cols-2 content-start gap-6 rounded-xl border border-border bg-card/50 px-4 py-10  shadow-2xl ">
-                <Badge className="absolute -top-3 -left-3 rotate-[-4deg] bg-foreground px-3 py-1 text-[0.65rem] font-semibold tracking-wide text-background shadow-md">
+        <div ref={boardRef} className="relative z-0 flex flex-1 min-h-0 gap-6 py-2">
+            <LabDotPattern />
+
+            <div className="relative shrink-0">
+                <Badge
+                    render={<button type="button" onClick={() => setNotesOpen((v) => !v)} />}
+                    className="absolute -top-3 -left-3 z-10 cursor-pointer rotate-[-4deg] bg-foreground px-3 py-1 text-[0.65rem] font-semibold tracking-wide text-background shadow-md"
+                >
                     NOTES
                 </Badge>
-                {notes.map((item) => (
-                    <div key={item.id} ref={refs[item.id]}>
-                        {renderItem(item)}
+                <motion.div
+                    initial={false}
+                    animate={{ width: notesOpen ? 320 : 0, opacity: notesOpen ? 1 : 0 }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    className="h-full overflow-hidden rounded-xl border border-border bg-card shadow-2xl"
+                >
+                    <div className="grid w-80 grid-cols-2 content-start gap-6 px-4 py-10">
+                        {notes.map((item) => (
+                            <div key={item.id} ref={refs[item.id]}>
+                                {renderItem(item)}
+                            </div>
+                        ))}
                     </div>
-                ))}
+                </motion.div>
             </div>
 
-            <div ref={freeAreaRef} className="relative min-h-full w-full">
+            <div ref={freeAreaRef} className="relative min-h-full w-full flex-1">
                 {freeItems.map((item) => (
                     <Draggable
                         key={item.id}
@@ -108,7 +125,7 @@ export function LabBoard({ initialPositions }: LabBoardProps) {
                 ))}
             </div>
 
-            {CONNECTIONS.map((connection) => (
+            {notesOpen && CONNECTIONS.map((connection) => (
                 <AnimatedBeam
                     key={`${connection.from}->${connection.to}`}
                     containerRef={boardRef}
