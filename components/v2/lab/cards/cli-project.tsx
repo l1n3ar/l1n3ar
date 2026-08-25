@@ -1,69 +1,59 @@
-import { Badge } from '@/components/ui/badge'
-import { StatusIndicator, type LabItemStatus } from '@/components/v2/lab/status-indicator'
-import { LiveDot } from '@/components/v2/live-dot'
-import { ICON_STROKE } from '@/components/v2/constants'
 import { cn } from '@/lib/utils'
-import { LucideIcon, Terminal } from 'lucide-react'
+import { Terminal } from 'lucide-react'
+import { BRAND_ICONS } from '../../tech-icons'
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip'
+import ScriptKiddieDetailDialog from '../cli-projects/script-kiddie-detail-dialog'
+import { useState } from 'react'
 
 interface CliProjectProps {
     id: string
+    displayId?: string
     title: string
     repo?: string
-    description?: string
-    type?: LabItemStatus
-    icon?: LucideIcon
-    techStack?: string[]
-
     className?: string
 }
-
-const WINDOW_DOT_COLORS = ['bg-red-500', 'bg-yellow-500', 'bg-green-500']
 
 const CliProject = ({
     id,
     title,
+    displayId,
     repo,
-    description,
-    type,
-    icon: Icon = Terminal,
-    techStack,
     className
 }: CliProjectProps) => {
+
+    const [scriptKiddieDialogOpen, setScriptKiddieDialogOpen] = useState(false)
+
+    const handleClick = () => {
+        switch (id) {
+            case 'script-kiddie':
+                setScriptKiddieDialogOpen(true)
+        }
+    }
+
+
     return (
-        <div className={cn('flex w-fit max-w-[20rem] flex-col overflow-hidden rounded-lg border border-border bg-codeBlock text-codeBlock-foreground shadow-md', className)}>
-
-            <div className='flex items-center gap-2 bg-black/20 px-3 py-2'>
-                <div className='flex flex-1 items-center gap-1.5'>
-                    {WINDOW_DOT_COLORS.map((color) => (
-                        <span key={color} className={cn('size-2 rounded-full', color)} />
-                    ))}
-                </div>
-                <span className='flex-1 truncate text-center text-0_6 text-codeBlock-foreground/60'>{repo}</span>
-                <div className='flex flex-1 justify-end'>
-                    <span className='truncate text-0_6 text-codeBlock-foreground/60'>{id}</span>
-                </div>
+        <>
+            <div className={cn('flex items-center justify-between gap-4 bg-codeBlock rounded-lg border shadow-md px-3 py-2', className)}>
+                {/* <Terminal className='size-4 text-codeBlock-foreground' /> */}
+                <span className='flex-1  text-center text-0_6 text-codeBlock-foreground hover:cursor-pointer hover:underline' onClick={handleClick}>{title}</span>
+                <Tooltip>
+                    <TooltipTrigger
+                        render={
+                            <a href={repo}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className='text-white' />
+                        }
+                    >
+                        <BRAND_ICONS.github className='size-icon-sm shrink-0' color='currentColor' />
+                    </TooltipTrigger>
+                    <TooltipContent>Code</TooltipContent>
+                </Tooltip>
             </div>
 
-            <div className='flex flex-col gap-2 p-4'>
-                <div className='flex items-center justify-between gap-2'>
-                    <div className='flex min-w-0 items-center gap-2'>
-                        <Icon className='size-icon-sm shrink-0' strokeWidth={ICON_STROKE} />
-                        <span className='truncate font-semibold'>{title}</span>
-                    </div>
-                    <StatusIndicator status={type} completeIndicator={<LiveDot />} />
-                </div>
+            <ScriptKiddieDetailDialog open={scriptKiddieDialogOpen} onOpenChange={setScriptKiddieDialogOpen} />
+        </>
 
-                {description && <p className='text-xs font-light text-codeBlock-foreground/70'>{description}</p>}
-
-                {techStack && techStack.length > 0 && (
-                    <div className='flex flex-wrap gap-1.5'>
-                        {techStack.map((tech) => (
-                            <Badge key={tech} variant='outline' className='border-codeBlock-foreground/20 text-codeBlock-foreground/80 text-[0.6rem]'>{tech}</Badge>
-                        ))}
-                    </div>
-                )}
-            </div>
-        </div>
     )
 }
 

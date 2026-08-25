@@ -12,9 +12,10 @@ export const labSections: LabSection[] = [
         title: 'Notes',
         items: [
             {
-                id: 'NOTE-001',
+                id: 'mcp',
                 component: 'sticky-note',
                 props: {
+                    displayId : 'NOTE-001',
                     content: "MCP serverize this portfolio",
                     className: "bg-yellow-100 border-yellow-400",
                     cellotapeRotateAngle: '8',
@@ -23,9 +24,10 @@ export const labSections: LabSection[] = [
                 },
             },
             {
-                id: 'NOTE-002',
+                id: 'shad-note',
                 component: 'sticky-note',
                 props: {
+                      displayId : 'NOTE-002',
                     title: 'Lega',
                     content: "need a 3-way toggle b/w provider search / app search / off",
                     className: "bg-pink-100 border-pink-400",
@@ -34,9 +36,10 @@ export const labSections: LabSection[] = [
                 },
             },
             {
-                id: 'NOTE-003',
+                id: 'script-kiddie-note',
                 component: 'sticky-note',
                 props: {
+                     displayId : 'NOTE-003',
                     content: "git identity isn't set in new repos, keep getting logged in through different accounts",
                     className: "bg-blue-100 border-blue-400",
                     cellotapeRotateAngle: '-3',
@@ -44,9 +47,10 @@ export const labSections: LabSection[] = [
                 },
             },
             {
-                id: 'NOTE-004',
+                id: 'mac-desktops-note',
                 component: 'sticky-note',
                 props: {
+                      displayId : 'NOTE-004',
                     content: "why the hell can't we rename desktops on mac",
                     className: "bg-green-100 border-green-400",
                     cellotapeRotateAngle: '-2',
@@ -60,29 +64,23 @@ export const labSections: LabSection[] = [
         title: 'Web Projects',
         items: [
             {
-                id: 'WEB-001',
+                id: 'shad',
                 component: 'web-product',
                 defaultPosition: { x: 40, y: 40 },
                 props: {
-                    title: 'ShadCN N-way Switch',
                     url: 'https://shadcn-nway-switch.vercel.app/',
-                    icon: ToggleLeft,
-                    type: 'Complete',
-                    description: 'An exclusive-select toggle switch for any number of options, with icons, labels, and a dedicated off state.',
-                    techStack: ['Next.JS', 'TailwindCSS'],
+                    repo: 'https://github.com/l1n3ar/shadcn-nway',
+
                 },
+
             },
             {
-                id: 'WEB-002',
+                id: 'markdownr',
                 component: 'web-product',
                 defaultPosition: { x: 40, y: 260 },
                 props: {
-                    title: 'markdownR',
                     url: 'https://markdown-r.vercel.app/',
-                    icon: SiMarkdown,
-                    type: 'Complete',
-                    description: 'A web tool to preview markdown formatter text',
-                    techStack: ['Next.JS', 'TailwindCSS', 'React-Markdown'],
+                    repo: 'https://github.com/l1n3ar/markdownr',
                 },
             },
         ],
@@ -91,13 +89,13 @@ export const labSections: LabSection[] = [
         title: 'CLI Projects',
         items: [
             {
-                id: 'CLI-001',
+                id: 'script-kiddie',
                 component: 'cli-project',
                 defaultPosition: { x: 340, y: 40 },
                 props: {
-                    title: 'script-kiddie',
-                    repo: 'l1n3ar/script-kiddie',
-                    type: 'Complete',
+                    title: 'l1n3ar/script-kiddie',
+                    repo: 'https://github.com/l1n3ar/script-kiddie',
+   
                 },
             },
         ],

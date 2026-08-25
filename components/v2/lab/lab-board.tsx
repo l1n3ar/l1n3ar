@@ -14,16 +14,9 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Save } from 'lucide-react'
+import { CONNECTIONS } from './card-connections'
 
-interface LabConnection {
-    from: string
-    to: string
-}
 
-const CONNECTIONS: LabConnection[] = [
-    { from: 'NOTE-002', to: 'WEB-001' },
-    { from: 'NOTE-003', to: 'CLI-001' },
-]
 
 function renderItem(item: LabItemConfig) {
     const Component = LAB_REGISTRY[item.component] as ComponentType<any>
@@ -90,6 +83,7 @@ export function LabBoard({ initialPositions }: LabBoardProps) {
             <div className="relative flex flex-1 min-h-0 items-center justify-center py-2">
                 <StickyNote
                     id="NOTE-000"
+                    displayId='NOTE-000'
                     showId
                     type="In Progress"
                     title="Sorry!"

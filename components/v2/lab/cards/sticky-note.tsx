@@ -6,6 +6,7 @@ import { CheckCircle2 } from 'lucide-react'
 
 interface StickyNoteProps {
     id: string
+    displayId? : string
     type?: LabItemStatus
     title?: string
     content?: string
@@ -17,6 +18,7 @@ interface StickyNoteProps {
 
 const StickyNote = ({
     id,
+    displayId,
     type,
     title,
     content,
@@ -32,7 +34,7 @@ const StickyNote = ({
                 <Badge
                     className="absolute bg-card/95 text-foreground border border-border/90 -top-5 p-4 left-1/2 font-semibold text-[0.7rem]"
                     style={{ transform: `translateX(-50%) rotate(${cellotapeRotateAngle}deg)` }}
-                >{`${id}`}</Badge>
+                >{`${displayId}`}</Badge>
             )}
 
             <div className='flex items-center justify-between gap-2'>
