@@ -17,7 +17,7 @@ export function Draggable({ children, className, containerRef }: DraggableProps)
             dragConstraints={containerRef}
             dragMomentum={false}
             dragElastic={0.05}
-            whileDrag={{ scale: 1.03, zIndex: 50 }}
+            whileDrag={{ scale: 1.2, zIndex: 50 }}
             className={cn('cursor-grab touch-none active:cursor-grabbing', className)}
         >
             {children}
