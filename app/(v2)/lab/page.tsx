@@ -4,11 +4,11 @@ const Lab = () => {
   return (
     <div className='h-full w-full flex items-center justify-center '>
       <StickyNote
-        title="MCP Server"
         id='001'
-        content="Turning this into an MCP server Turning this into an MCP server Turning this into an MCP server Turning this into an MCP server"
-        className="bg-green-300 border rounded-lg"
-        type='To-Do'
+        // title='MCP serverize'
+        content="turn this page into MCP server"
+        className="bg-yellow-100 border-yellow-400"
+        type='Complete'
       />
 
     </div>
