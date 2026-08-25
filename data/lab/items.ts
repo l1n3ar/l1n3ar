@@ -20,13 +20,42 @@ export const labSections: LabSection[] = [
                     type: 'In Progress',
                 },
             },
+            {
+                id: 'NOTE-001',
+                component: 'sticky-note',
+                props: {
+                    content: "MCP serverize this portfolio",
+                    className: "bg-yellow-100 border-yellow-400",
+                    type: 'In Progress',
+                },
+            },
+                 {
+                id: 'NOTE-001',
+                component: 'sticky-note',
+                props: {
+                    content: "MCP serverize this portfolio",
+                    className: "bg-yellow-100 border-yellow-400",
+                    type: 'In Progress',
+                },
+            },
+                 {
+                id: 'NOTE-001',
+                component: 'sticky-note',
+                props: {
+                    content: "MCP serverize this portfolio",
+                    className: "bg-yellow-100 border-yellow-400",
+                    type: 'In Progress',
+                },
+            },
+             
+            
         ],
     },
     {
         title: 'Web Projects',
         items: [
             {
-                id: 'CODE-001',
+                id: 'WEB-001',
                 component: 'web-product',
                 props: {
                     title: 'ShadCN N-way Switch',
@@ -37,8 +66,9 @@ export const labSections: LabSection[] = [
                     techStack: ['Next.JS', 'TailwindCSS'],
                 },
             },
+                
             {
-                id: 'CODE-002',
+                id: 'WEB-002',
                 component: 'web-product',
                 props: {
                     title: 'markdownR',

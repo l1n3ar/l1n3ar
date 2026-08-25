@@ -1,7 +1,7 @@
-import { LabBento } from "@/components/v2/lab/lab-bento"
+import { LabBoard } from "@/components/v2/lab/lab-board"
 
 const Lab = () => {
-  return <LabBento />
+  return <LabBoard />
 }
 
 export default Lab

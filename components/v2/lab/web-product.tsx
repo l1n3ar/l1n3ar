@@ -38,7 +38,7 @@ const WebProduct = ({
                         <span key={color} className={cn('size-2 rounded-full', color)} />
                     ))}
                 </div>
-                <span className='flex-1 text-center text-0_6  hover:underline hover:cursor-pointer'><a href={url} className='text-muted-foreground hover:text-foreground'>{url}</a></span>
+                <span className='flex-1 text-center text-0_6 line-clamp-1 hover:underline hover:cursor-pointer'><a href={url} className='text-muted-foreground hover:text-foreground'>{url}</a></span>
                 <span className='truncate text-0_6 text-muted-foreground'>{id}</span>
             </div>
 
