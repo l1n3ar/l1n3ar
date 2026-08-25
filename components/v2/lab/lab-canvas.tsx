@@ -6,6 +6,7 @@ import { saveLabPosition } from '@/actions/lab'
 import type { LabPosition } from '@/actions/lab'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { Save } from 'lucide-react'
 
 export interface LabItem {
     id: string
@@ -52,7 +53,7 @@ export function LabCanvas({ items, initialPositions }: LabCanvasProps) {
     }
 
     return (
-        <div ref={containerRef} className="relative h-full w-full overflow-hidden">
+        <div ref={containerRef} className="relative flex-1 min-h-0 w-full h-full overflow-hidden ">
             {items.map((item) => (
                 <Draggable
                     key={item.id}
@@ -65,7 +66,8 @@ export function LabCanvas({ items, initialPositions }: LabCanvasProps) {
             ))}
 
             {dirtyIds.size > 0 && (
-                <div className="absolute bottom-4 right-4 flex items-center gap-2 rounded-lg border border-border bg-card p-2 shadow-md">
+                <div className="absolute bottom-4 right-4 flex flex-col items-center gap-2 rounded-lg border border-border bg-card p-2 shadow-md">
+                          {error && <span className="text-0_7 text-destructive">Wrong password</span>}
                     <Input
                         type="password"
                         value={password}
@@ -73,10 +75,10 @@ export function LabCanvas({ items, initialPositions }: LabCanvasProps) {
                         placeholder="Password"
                         className="h-7 w-28 text-0_7"
                     />
-                    <Button size="sm" onClick={handleSave} isSaving={isSaving}>
-                        Save layout
+                    <Button size="sm" onClick={handleSave} isSaving={isSaving} className='w-28'> 
+                       <Save className='size-3 mr-1'/> Save 
                     </Button>
-                    {error && <span className="text-0_7 text-destructive">Wrong password</span>}
+              
                 </div>
             )}
         </div>

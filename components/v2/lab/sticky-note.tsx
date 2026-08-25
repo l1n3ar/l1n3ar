@@ -3,7 +3,7 @@ import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip
 import { ICON_STROKE } from '@/components/v2/constants'
 import { cn } from '@/lib/utils'
 import { Circle, Clock, CheckCircle2 } from 'lucide-react'
-import React from 'react'
+
 
 const TYPE_META = {
     'To-Do': { icon: Circle, className: 'text-muted-foreground' },
