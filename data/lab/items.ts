@@ -17,38 +17,31 @@ export const labSections: LabSection[] = [
                 props: {
                     content: "MCP serverize this portfolio",
                     className: "bg-yellow-100 border-yellow-400",
+                    cellotapeRotateAngle: '-8',
                     type: 'In Progress',
                 },
             },
             {
-                id: 'NOTE-001',
+                id: 'NOTE-002',
                 component: 'sticky-note',
                 props: {
-                    content: "MCP serverize this portfolio",
-                    className: "bg-yellow-100 border-yellow-400",
-                    type: 'In Progress',
+                    title: 'Lega',
+                    content: "need a 3-way toggle b/w provider search / app search / off",
+                    className: "bg-pink-100 border-pink-400",
+                    cellotapeRotateAngle: '4',
+                    type: 'Complete',
                 },
             },
-                 {
-                id: 'NOTE-001',
+            {
+                id: 'NOTE-003',
                 component: 'sticky-note',
                 props: {
-                    content: "MCP serverize this portfolio",
-                    className: "bg-yellow-100 border-yellow-400",
-                    type: 'In Progress',
+                    content: "git identity isn't set in new repos, keep getting logged in through different accounts",
+                    className: "bg-blue-100 border-blue-400",
+                    cellotapeRotateAngle: '-3',
+                    type: 'Complete',
                 },
             },
-                 {
-                id: 'NOTE-001',
-                component: 'sticky-note',
-                props: {
-                    content: "MCP serverize this portfolio",
-                    className: "bg-yellow-100 border-yellow-400",
-                    type: 'In Progress',
-                },
-            },
-             
-            
         ],
     },
     {
@@ -57,6 +50,7 @@ export const labSections: LabSection[] = [
             {
                 id: 'WEB-001',
                 component: 'web-product',
+                defaultPosition: { x: 40, y: 40 },
                 props: {
                     title: 'ShadCN N-way Switch',
                     url: 'https://shadcn-nway-switch.vercel.app/',
@@ -66,10 +60,10 @@ export const labSections: LabSection[] = [
                     techStack: ['Next.JS', 'TailwindCSS'],
                 },
             },
-                
             {
                 id: 'WEB-002',
                 component: 'web-product',
+                defaultPosition: { x: 40, y: 260 },
                 props: {
                     title: 'markdownR',
                     url: 'https://markdown-r.vercel.app/',
@@ -87,6 +81,7 @@ export const labSections: LabSection[] = [
             {
                 id: 'CLI-001',
                 component: 'cli-project',
+                defaultPosition: { x: 340, y: 40 },
                 props: {
                     title: 'script-kiddie',
                     repo: 'l1n3ar/script-kiddie',
