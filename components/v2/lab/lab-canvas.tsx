@@ -4,17 +4,18 @@ import { useRef, useState, type ComponentType } from 'react'
 import { Draggable } from '@/components/v2/lab/draggable'
 import { saveLabPosition } from '@/actions/lab'
 import type { LabPosition } from '@/actions/lab'
-import { LAB_REGISTRY, type LabItemConfig } from '@/data/lab-registry'
+import { LAB_REGISTRY } from '@/data/lab/registry'
+import { labItems } from '@/data/lab/items'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Save } from 'lucide-react'
 
 interface LabCanvasProps {
-    items: LabItemConfig[]
     initialPositions: Record<string, LabPosition>
 }
 
-export function LabCanvas({ items, initialPositions }: LabCanvasProps) {
+export function LabCanvas({ initialPositions }: LabCanvasProps) {
+    const items = labItems
     const containerRef = useRef<HTMLDivElement>(null)
     const [positions, setPositions] = useState<Record<string, LabPosition>>(() => {
         const merged: Record<string, LabPosition> = {}

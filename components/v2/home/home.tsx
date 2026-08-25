@@ -33,8 +33,8 @@ export function Home({
 
   return (
     <div className="flex flex-col gap-10">
-      <CurrentProjectBanner />
-      <div className='-mt-4'>
+      {/* <CurrentProjectBanner /> */}
+      <div>
         <h1 className="text-lg lg:text-xl flex font-light items-center gap-2 flex-wrap">
           tech @ BARBRI <Separator orientation="vertical" className="h-4 hidden lg:inline bg-muted-foreground data-[orientation=vertical]:self-center" /> <span className='hidden lg:inline'>previously @ lega.ai (acquired by BARBRI)</span>
           {/* <Image src="/images/logos/barbri.png" alt="BARBRI" width={96} height={96} className="h-10 w-auto align-middle" /> */}
