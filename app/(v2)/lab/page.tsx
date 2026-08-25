@@ -12,18 +12,13 @@ const Lab = async () => {
       defaultPosition: { x: 160, y: 160 },
       props: {
         content: "MCP serverize this portfolio",
-        className: "bg-pink-100 border-pink-400",
-        type: 'Complete',
+        className: "bg-yellow-100 border-yellow-400",
+        type: 'In Progress',
       },
     },
   ]
 
-  return (
-    <div className="h-full w-full relative">
-      <LabCanvas items={items} initialPositions={positions} />
-    </div>
-  )
-
+  return <LabCanvas items={items} initialPositions={positions} />
 }
 
 export default Lab

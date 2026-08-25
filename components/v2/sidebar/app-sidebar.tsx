@@ -79,26 +79,8 @@ export function AppSidebar({ currentPath }: { currentPath: string }) {
                     </div>
                     {
                       item.isNew &&
-                      <Badge variant='outline' className='bg-muted/50'>
-                        <CanvasText
-                          text="NEW"
-                          backgroundClassName="bg-blue-800 dark:bg-blue-500"
-                          colors={[
-                            "rgba(0, 153, 255, 1)",
-                            "rgba(0, 153, 255, 0.9)",
-                            "rgba(0, 153, 255, 0.8)",
-                            "rgba(0, 153, 255, 0.7)",
-                            "rgba(0, 153, 255, 0.6)",
-                            "rgba(0, 153, 255, 0.5)",
-                            "rgba(0, 153, 255, 0.4)",
-                            "rgba(0, 153, 255, 0.3)",
-                            "rgba(0, 153, 255, 0.2)",
-                            "rgba(0, 153, 255, 0.1)",
-                          ]}
-                          className='text-xs'
-
-                          animationDuration={20}
-                        />
+                      <Badge className='text-[0.6rem] px-1 bg-blue-100 dark:bg-blue-900 text-foreground'>
+                        NEW
                       </Badge>
                     }
 

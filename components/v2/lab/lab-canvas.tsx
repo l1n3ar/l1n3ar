@@ -48,7 +48,7 @@ export function LabCanvas({ items, initialPositions }: LabCanvasProps) {
     }
 
     return (
-        <div ref={containerRef} className="relative w-full h-full p-8 overflow-hidden">
+        <div ref={containerRef} className="relative flex-1 min-h-0 w-full overflow-hidden">
 
             {items.map((item) => {
                 const Component = LAB_REGISTRY[item.component] as ComponentType<any>
