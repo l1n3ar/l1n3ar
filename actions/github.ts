@@ -73,3 +73,50 @@ export async function getGithubPullRequests(repos: ProjectRepo[]): Promise<GetGi
 
   return { ok: true, pullRequests };
 }
+
+const dirEntrySchema = z.object({
+  name: z.string(),
+  path: z.string(),
+  type: z.enum(['file', 'dir']),
+});
+
+export type GithubDirEntry = { name: string; path: string; type: 'file' | 'dir' };
+
+export type GetGithubDirectoryResult = { ok: true; entries: GithubDirEntry[] } | { ok: false; error: string };
+
+
+export async function getGithubDirectory(owner: string, repo: string, path: string = '', ref?: string): Promise<GetGithubDirectoryResult> {
+  const token = process.env.GITHUB_TOKEN;
+  const result = await apiFetch({
+    url: `https://api.github.com/repos/${owner}/${repo}/contents/${path}${ref ? `?ref=${ref}` : ''}`,
+    headers: {
+      Accept: 'application/vnd.github+json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    schema: z.array(dirEntrySchema),
+    errorMessage: (body, status) =>
+      (body as { message?: string } | null)?.message ?? `GitHub API returned ${status}`,
+  });
+
+  if (!result.ok) return result;
+  return { ok: true, entries: result.data };
+}
+
+export type GetGithubFileResult = { ok: true; content: string } | { ok: false; error: string };
+
+export async function getGithubFileContent(owner: string, repo: string, path: string, ref?: string): Promise<GetGithubFileResult> {
+  const token = process.env.GITHUB_TOKEN;
+  const result = await apiFetch({
+    url: `https://api.github.com/repos/${owner}/${repo}/contents/${path}${ref ? `?ref=${ref}` : ''}`,
+    headers: {
+      Accept: 'application/vnd.github.raw+json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    schema: z.string(),
+    errorMessage: (body, status) =>
+      (body as { message?: string } | null)?.message ?? `GitHub API returned ${status}`,
+  });
+
+  if (!result.ok) return result;
+  return { ok: true, content: result.data };
+}
