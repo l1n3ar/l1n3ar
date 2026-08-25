@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils'
 import { BRAND_ICONS } from '../../tech-icons'
 import { Globe } from 'lucide-react'
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip'
 
 interface WebProductProps {
     id: string
@@ -26,12 +27,19 @@ const WebProduct = ({
                 {url}
             </a>
 
-            <a href={repo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className='text-black dark:text-white'>
-                <BRAND_ICONS.github className='size-icon-sm shrink-0' color='currentColor' />
-            </a>
+            <Tooltip>
+                <TooltipTrigger
+                    render={
+                        <a href={repo}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className='text-black dark:text-white' />
+                    }
+                >
+                    <BRAND_ICONS.github className='size-icon-sm shrink-0' color='currentColor' />
+                </TooltipTrigger>
+                <TooltipContent>Code</TooltipContent>
+            </Tooltip>
 
 
         </div>

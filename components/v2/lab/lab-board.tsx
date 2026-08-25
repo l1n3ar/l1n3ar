@@ -83,6 +83,7 @@ export function LabBoard({ initialPositions }: LabBoardProps) {
             <div className="relative flex flex-1 min-h-0 items-center justify-center py-2">
                 <StickyNote
                     id="NOTE-000"
+                    displayId='NOTE-000'
                     showId
                     type="In Progress"
                     title="Sorry!"
