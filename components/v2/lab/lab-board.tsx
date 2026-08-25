@@ -4,9 +4,11 @@ import { useRef, useState, type ComponentType, type RefObject } from 'react'
 import { motion } from 'motion/react'
 import { LAB_REGISTRY, type LabItemConfig } from '@/data/lab/registry'
 import { labSections } from '@/data/lab/items'
+import { useIsMobile } from '@/hooks/use-mobile'
 import { Draggable } from '@/components/v2/lab/draggable'
 import { AnimatedBeam } from '@/components/v2/lab/animated-beam'
 import { LabDotPattern } from '@/components/v2/lab/lab-dot-pattern'
+import StickyNote from '@/components/v2/lab/cards/sticky-note'
 import { saveLabPosition, type LabPosition } from '@/actions/lab'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -35,6 +37,7 @@ interface LabBoardProps {
 }
 
 export function LabBoard({ initialPositions }: LabBoardProps) {
+    const isMobile = useIsMobile()
     const boardRef = useRef<HTMLDivElement>(null)
     const freeAreaRef = useRef<HTMLDivElement>(null)
 
@@ -82,6 +85,22 @@ export function LabBoard({ initialPositions }: LabBoardProps) {
         setIsSaving(false)
         setError(false)
         setDirtyIds(new Set())
+    }
+
+    if (isMobile) {
+        return (
+            <div className="relative flex flex-1 min-h-0 items-center justify-center py-2">
+                <LabDotPattern />
+                <StickyNote
+                    id="NOTE-000"
+                    showId
+                    type="In Progress"
+                    title="Sorry!"
+                    content="lab isn't available on mobile yet"
+                    className="rotate-[-3deg] bg-yellow-100 border-yellow-400"
+                />
+            </div>
+        )
     }
 
     return (
