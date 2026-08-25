@@ -7,11 +7,12 @@ import {
 } from '@/components/ui/command';
 import { ICON_STROKE } from '@/components/v2/constants';
 import { FooterLinkIcon } from '@/components/v2/footer-link-icon';
-import { iconForRoute } from '@/components/v2/nav-icons';
+
 import { useCommandPalette } from '@/components/v2/command-palette-context';
 import { useSite } from '@/components/v2/site-context';
 import { getTheme, toggleTheme, THEME_CHANGE_EVENT } from '@/lib/theme';
 import { hasCaseStudy } from '@/lib/types';
+import { navItems } from '@/data/sidebar';
 
 const FOOTER_ICONS: Record<string, typeof FileText> = {
   resume: FileText,
@@ -21,7 +22,7 @@ const ITEM_CLASS = 'text-0_7 text-foreground data-[selected=true]:bg-muted data-
 const GROUP_CLASS = 'text-foreground [&_[cmdk-group-heading]]:font-sans [&_[cmdk-group-heading]]:not-italic [&_[cmdk-group-heading]]:text-0_6 [&_[cmdk-group-heading]]:text-muted-foreground';
 
 export function CommandPalette() {
-  const { site, navItems, projects } = useSite();
+  const { site, projects } = useSite();
   const { open, setOpen } = useCommandPalette();
   const router = useRouter();
   const [dark, setDark] = useState<boolean | null>(null);
@@ -70,7 +71,7 @@ export function CommandPalette() {
 
         <CommandGroup heading="Go to" className={GROUP_CLASS}>
           {navItems.map((item) => {
-            const Icon = iconForRoute(item.href);
+            const Icon = item.icon;
             return (
               <CommandItem
                 key={item.href}

@@ -1,28 +1,27 @@
 'use client';
+
 import { Fragment } from 'react';
 import NextLink from 'next/link';
-import { Search, Link as LinkIcon, FileText, Tag } from 'lucide-react';
+import { Link as LinkIcon, FileText, Tag } from 'lucide-react';
 import {
   Sidebar as SidebarPrimitive, SidebarHeader, SidebarContent, SidebarFooter,
   SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarSeparator, useSidebar,
 } from '@/components/ui/sidebar';
-import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { ICON_STROKE } from '@/components/v2/constants';
 import { FooterLinkIcon } from '@/components/v2/footer-link-icon';
 import { initials } from '@/components/v2/initials';
-import { iconForRoute } from '@/components/v2/nav-icons';
-import { ScrambleLink } from '@/components/v2/scramble-link';
+
 import { sectionHref } from '@/components/v2/section-routes';
 import { useCommandPalette } from '@/components/v2/command-palette-context';
 import { useSite } from '@/components/v2/site-context';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useRelease } from '@/hooks/release';
+import { navItems } from '@/data/sidebar';
+import { Badge } from '@/components/ui/badge';
 
 const INSET = 'px-4';
-const SEPARATOR_AFTER = ['/recommendations', '/deployments'];
-const L1n3arIcon = iconForRoute('/l1n3ar');
 
 const FOOTER_ICONS: Record<string, typeof LinkIcon> = {
   resume: FileText,
@@ -35,7 +34,7 @@ const FOOTER_LABELS: Record<string, string> = {
 };
 
 export function AppSidebar({ currentPath }: { currentPath: string }) {
-  const { site, navItems } = useSite();
+  const { site } = useSite();
   const { setOpen: setPaletteOpen } = useCommandPalette();
   const { data: release } = useRelease();
   const { setOpenMobile } = useSidebar();
@@ -62,7 +61,7 @@ export function AppSidebar({ currentPath }: { currentPath: string }) {
       <SidebarContent className={`gap-0 py-3 ${INSET} gz-scroll`}>
         <SidebarMenu className="gap-1">
           {navItems.map((item) => {
-            const Icon = iconForRoute(item.href);
+            const Icon = item.icon;
             return (
               <Fragment key={item.href}>
                 <SidebarMenuItem>
@@ -71,13 +70,19 @@ export function AppSidebar({ currentPath }: { currentPath: string }) {
                     isActive={currentPath === item.href}
                     onClick={closeMobile}
                     render={<NextLink href={item.href} />}
-                    className="text-0_7 gap-2 text-sidebar-foreground/70 data-[active]:text-sidebar-foreground"
+                    className="text-0_7 gap-2 text-sidebar-foreground/70 data-[active]:text-sidebar-foreground flex items-center justify-between"
                   >
-                    <Icon strokeWidth={ICON_STROKE} />
-                    <span>{item.label}</span>
+                    <div className='flex items-center gap-2'>
+                      <Icon strokeWidth={ICON_STROKE} />
+                      <span>{item.label}</span>
+                    </div>
+                    {
+                      item.isNew && <Badge variant='outline' className='text-xs'>NEW</Badge>
+                    }
+
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-                {SEPARATOR_AFTER.includes(item.href) && (
+                {item.separatorAfter && (
                   <SidebarSeparator className="mx-0 my-2" />
                 )}
               </Fragment>
@@ -87,13 +92,13 @@ export function AppSidebar({ currentPath }: { currentPath: string }) {
       </SidebarContent>
 
       <SidebarFooter className={`gap-3 pt-3 ${isMobile ? 'pb-6' : 'pb-3'} ${INSET}`}>
-        <ScrambleLink
+        {/* <ScrambleLink
           href={sectionHref('l1n3ar')}
           text="l1n3ar"
           icon={<L1n3arIcon strokeWidth={ICON_STROKE} />}
           onClick={closeMobile}
           className="flex w-full items-center gap-2 rounded-md h-7 p-2 text-0_7 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors [&_svg]:size-icon-xs [&_svg]:shrink-0"
-        />
+        /> */}
 
         <SidebarSeparator className="mx-0" />
 

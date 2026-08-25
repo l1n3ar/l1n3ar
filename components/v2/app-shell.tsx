@@ -10,13 +10,14 @@ import { sectionHref, topLevelPath } from '@/components/v2/section-routes';
 import { SiteProvider } from '@/components/v2/site-context';
 import { useIsMobile } from '@/hooks/use-mobile';
 import type { SiteConfig, NavItem, Project } from '@/lib/types';
+import { navItems } from '@/data/sidebar';
 
 const PROJECT_DETAIL = /^\/projects\/([^/]+)$/;
 
 export function AppShell({
-  site, navItems, projects, children,
+  site, projects, children,
 }: {
-  site: SiteConfig; navItems: NavItem[]; projects: Project[]; children: React.ReactNode;
+  site: SiteConfig; projects: Project[]; children: React.ReactNode;
 }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -39,7 +40,7 @@ export function AppShell({
   const resumeHref = site.footerLinks.find((l) => l.label.toLowerCase().includes('resume'))?.href;
 
   return (
-    <SiteProvider site={site} navItems={navItems} projects={projects}>
+    <SiteProvider site={site} projects={projects}>
       <CommandPaletteProvider>
         <div className="v2 font-sans">
           <SidebarProvider style={{ '--sidebar-width': 'clamp(14rem, 18vw, 18rem)' } as React.CSSProperties}>

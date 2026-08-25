@@ -28,11 +28,6 @@ export async function getOffTheClock(): Promise<OffTheClock> {
   return { music };
 }
 
-export async function getNavItems(): Promise<NavItem[]> {
-  return client.fetch(`*[_type == "navItem" && hidden != true] | order(order asc){
-    href, label, group, order, hidden
-  }`);
-}
 
 export async function getHomeTiles(): Promise<HomeTileContent[]> {
   return client.fetch(`*[_type == "homeTile"] | order(order asc){

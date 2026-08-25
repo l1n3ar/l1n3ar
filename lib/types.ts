@@ -1,3 +1,5 @@
+import { LucideIcon } from "lucide-react";
+
 export type Metric = { key: string; value: string };
 
 export type CaseImageBlock = {
@@ -82,11 +84,12 @@ export const NAV_ICON_NAMES = [
 export type NavIconName = (typeof NAV_ICON_NAMES)[number];
 
 export type NavItem = {
+  icon : LucideIcon;
   href: string;
   label: string;
-  group: NavGroupName;
-  order: number;
   hidden?: boolean;
+  separatorAfter? : boolean;
+  isNew? : boolean;
 };
 
 export const HOME_TILE_KEYS = [

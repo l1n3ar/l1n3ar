@@ -4,17 +4,16 @@ import type { NavItem, Project, SiteConfig } from '@/lib/types';
 
 type SiteContextValue = {
   site: SiteConfig;
-  navItems: NavItem[];
   projects: Project[];
 };
 
 const SiteContext = createContext<SiteContextValue | null>(null);
 
 export function SiteProvider({
-  site, navItems, projects, children,
+  site, projects, children,
 }: SiteContextValue & { children: ReactNode }) {
   return (
-    <SiteContext.Provider value={{ site, navItems, projects }}>
+    <SiteContext.Provider value={{ site, projects }}>
       {children}
     </SiteContext.Provider>
   );
