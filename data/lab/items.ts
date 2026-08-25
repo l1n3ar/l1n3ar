@@ -17,8 +17,9 @@ export const labSections: LabSection[] = [
                 props: {
                     content: "MCP serverize this portfolio",
                     className: "bg-yellow-100 border-yellow-400",
-                    cellotapeRotateAngle: '-8',
+                    cellotapeRotateAngle: '8',
                     type: 'In Progress',
+                    showId: true
                 },
             },
             {
@@ -40,6 +41,17 @@ export const labSections: LabSection[] = [
                     className: "bg-blue-100 border-blue-400",
                     cellotapeRotateAngle: '-3',
                     type: 'Complete',
+                },
+            },
+            {
+                id: 'NOTE-004',
+                component: 'sticky-note',
+                props: {
+                    content: "why the hell can't we rename desktops on mac",
+                    className: "bg-green-100 border-green-400",
+                    cellotapeRotateAngle: '-2',
+                    type: 'To-Do',
+                    showId: true
                 },
             },
         ],
