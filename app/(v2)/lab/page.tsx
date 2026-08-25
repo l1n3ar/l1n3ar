@@ -1,11 +1,9 @@
-import React from 'react'
+import { getLabPositions } from "@/actions/lab"
+import { LabBoard } from "@/components/v2/lab/lab-board"
 
-const Lab = () => {
-  return (
-    <div className='h-full w-full flex items-center justify-center'>
-      <span className='text-muted-foreground'>Under Construction!</span>
-    </div>
-  )
+const Lab = async () => {
+  const positions = await getLabPositions()
+  return <LabBoard initialPositions={positions} />
 }
 
 export default Lab

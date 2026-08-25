@@ -86,10 +86,7 @@ export function Navbar({
               <MessageSquare strokeWidth={ICON_STROKE} />
               Provide feedback
             </DropdownMenuItem>
-            <DropdownMenuItem render={<NextLink href="/v1" className='text-foreground' />}>
-              <History strokeWidth={ICON_STROKE} />
-              Switch to v1
-            </DropdownMenuItem>
+           
 
 
           </DropdownMenuContent>

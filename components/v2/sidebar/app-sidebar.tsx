@@ -20,6 +20,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useRelease } from '@/hooks/release';
 import { navItems } from '@/data/sidebar';
 import { Badge } from '@/components/ui/badge';
+import { CanvasText } from '@/components/ui/canvas-text';
 
 const INSET = 'px-4';
 
@@ -77,7 +78,10 @@ export function AppSidebar({ currentPath }: { currentPath: string }) {
                       <span>{item.label}</span>
                     </div>
                     {
-                      item.isNew && <Badge variant='outline' className='text-xs'>NEW</Badge>
+                      item.isNew &&
+                      <Badge className='text-[0.6rem] px-1 bg-blue-100 dark:bg-blue-900 text-foreground'>
+                        NEW
+                      </Badge>
                     }
 
                   </SidebarMenuButton>

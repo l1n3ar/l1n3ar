@@ -2,7 +2,6 @@
 import { useState, type FormEvent } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -61,8 +60,8 @@ export default function QaLogPage() {
             placeholder="Password"
             className="w-40 text-0_7"
           />
-          <Button type="submit" size="sm" disabled={isLoading}>
-            {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Unlock'}
+          <Button type="submit" size="sm" isSaving={isLoading}>
+            Unlock
           </Button>
         </form>
         {error && <p className="text-0_7 text-destructive">{error}</p>}

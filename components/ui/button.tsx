@@ -1,6 +1,7 @@
 import * as React from "react"
 import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { cva, type VariantProps } from "class-variance-authority"
+import { Loader2 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -43,15 +44,18 @@ const buttonVariants = cva(
 
 const Button = React.forwardRef<
   HTMLButtonElement,
-  ButtonPrimitive.Props & VariantProps<typeof buttonVariants>
->(({ className, variant = "default", size = "default", ...props }, ref) => {
+  ButtonPrimitive.Props & VariantProps<typeof buttonVariants> & { isSaving?: boolean }
+>(({ className, variant = "default", size = "default", isSaving = false, disabled, children, ...props }, ref) => {
   return (
     <ButtonPrimitive
       ref={ref}
       data-slot="button"
+      disabled={disabled || isSaving}
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
-    />
+    >
+      {isSaving ? <Loader2 className="animate-spin" /> : children}
+    </ButtonPrimitive>
   )
 })
 Button.displayName = "Button"
