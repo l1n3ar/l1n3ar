@@ -11,8 +11,8 @@ const ScriptKiddieDetailDialog = ({
     onOpenChange
 }: ScriptKiddieDetailDialogProps) => {
     return (
-        <Dialog>
-            <DialogContent>
+        <Dialog open={open} onOpenChange={onOpenChange}>
+            <DialogContent className='max-w-2xl'>
                 <DialogHeader>
                     Script Kiddie
                 </DialogHeader>
