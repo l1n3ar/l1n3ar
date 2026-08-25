@@ -4,11 +4,13 @@ import { LiveDot } from '@/components/v2/live-dot'
 import { ICON_STROKE } from '@/components/v2/constants'
 import { cn } from '@/lib/utils'
 import { LucideIcon } from 'lucide-react'
+import { BRAND_ICONS } from '../../tech-icons'
 
 interface WebProductProps {
     id: string
     title: string
     url?: string
+    repo?: string
     description?: string
     type?: LabItemStatus
     icon?: LucideIcon
@@ -23,6 +25,7 @@ const WebProduct = ({
     id,
     title,
     url,
+    repo,
     description,
     type,
     icon: Icon,
@@ -39,7 +42,13 @@ const WebProduct = ({
                     ))}
                 </div>
                 <span className='flex-1 text-center text-0_6 line-clamp-1 hover:underline hover:cursor-pointer'><a href={url} className='text-muted-foreground hover:text-foreground'>{url}</a></span>
-                <span className='truncate text-0_6 text-muted-foreground'>{id}</span>
+
+                <a href={repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className='text-black dark:text-white'>
+                    <BRAND_ICONS.github className='size-icon-sm shrink-0' color='currentColor' />
+                </a>
             </div>
 
             <div className='flex flex-col gap-2 p-4'>
