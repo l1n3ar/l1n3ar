@@ -4,6 +4,7 @@ import { Globe } from 'lucide-react'
 
 interface WebProductProps {
     id: string
+    displayId? : string
     url?: string
     repo?: string
 
@@ -12,6 +13,7 @@ interface WebProductProps {
 
 const WebProduct = ({
     id,
+    displayId,
     url,
     repo,
 
