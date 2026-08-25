@@ -34,7 +34,7 @@ const CliProject = ({
     return (
         <>
             <div className={cn('flex items-center justify-between gap-4 bg-codeBlock rounded-lg border shadow-md px-3 py-2', className)}>
-                <Terminal className='size-4 text-codeBlock-foreground' />
+                {/* <Terminal className='size-4 text-codeBlock-foreground' /> */}
                 <span className='flex-1  text-center text-0_6 text-codeBlock-foreground hover:cursor-pointer hover:underline' onClick={handleClick}>{title}</span>
                 <Tooltip>
                     <TooltipTrigger

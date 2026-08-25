@@ -22,7 +22,7 @@ const WebProduct = ({
 }: WebProductProps) => {
     return (
         <div className='flex items-center justify-between gap-4 bg-muted px-3 py-2 rounded-lg border border-border text-card-foreground shadow-md'>
-            <Globe className='size-4 text-muted-foreground'/>
+            {/* <Globe className='size-4 text-muted-foreground'/> */}
             <a href={url} className='text-muted-foreground hover:text-foreground flex-1 text-center text-0_6 line-clamp-1 hover:underline'>
                 {url}
             </a>
