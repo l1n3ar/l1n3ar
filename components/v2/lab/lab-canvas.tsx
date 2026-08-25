@@ -1,21 +1,16 @@
 'use client'
 
-import { ReactNode, useRef, useState } from 'react'
+import { useRef, useState, type ComponentType } from 'react'
 import { Draggable } from '@/components/v2/lab/draggable'
 import { saveLabPosition } from '@/actions/lab'
 import type { LabPosition } from '@/actions/lab'
+import { LAB_REGISTRY, type LabItemConfig } from '@/data/lab-registry'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Save } from 'lucide-react'
 
-export interface LabItem {
-    id: string
-    defaultPosition: LabPosition
-    element: ReactNode
-}
-
 interface LabCanvasProps {
-    items: LabItem[]
+    items: LabItemConfig[]
     initialPositions: Record<string, LabPosition>
 }
 
@@ -53,21 +48,25 @@ export function LabCanvas({ items, initialPositions }: LabCanvasProps) {
     }
 
     return (
-        <div ref={containerRef} className="relative flex-1 min-h-0 w-full h-full overflow-hidden ">
-            {items.map((item) => (
-                <Draggable
-                    key={item.id}
-                    containerRef={containerRef}
-                    position={positions[item.id]}
-                    onPositionChange={(position) => handlePositionChange(item.id, position)}
-                >
-                    {item.element}
-                </Draggable>
-            ))}
+        <div ref={containerRef} className="relative w-full h-full p-8 overflow-hidden">
+
+            {items.map((item) => {
+                const Component = LAB_REGISTRY[item.component] as ComponentType<any>
+                return (
+                    <Draggable
+                        key={item.id}
+                        containerRef={containerRef}
+                        position={positions[item.id]}
+                        onPositionChange={(position) => handlePositionChange(item.id, position)}
+                    >
+                        <Component id={item.id} {...item.props} />
+                    </Draggable>
+                )
+            })}
 
             {dirtyIds.size > 0 && (
                 <div className="absolute bottom-4 right-4 flex flex-col items-center gap-2 rounded-lg border border-border bg-card p-2 shadow-md">
-                          {error && <span className="text-0_7 text-destructive">Wrong password</span>}
+                    {error && <span className="text-0_7 text-destructive">Wrong password</span>}
                     <Input
                         type="password"
                         value={password}
@@ -75,10 +74,10 @@ export function LabCanvas({ items, initialPositions }: LabCanvasProps) {
                         placeholder="Password"
                         className="h-7 w-28 text-0_7"
                     />
-                    <Button size="sm" onClick={handleSave} isSaving={isSaving} className='w-28'> 
-                       <Save className='size-3 mr-1'/> Save 
+                    <Button size="sm" onClick={handleSave} isSaving={isSaving} className='w-28'>
+                        <Save className='size-3 mr-1' /> Save
                     </Button>
-              
+
                 </div>
             )}
         </div>

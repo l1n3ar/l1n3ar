@@ -37,9 +37,9 @@ const StickyNote = ({
         <div className={cn('w-fit max-w-[20rem]  p-4 flex flex-col gap-2 relative text-black shadow-md rounded-lg border', className)}>
 
             <Badge
-                className="absolute bg-card/95 text-foreground border border-border/90 -top-5 p-4 left-1/2 font-semibold"
+                className="absolute bg-card/95 text-foreground border border-border/90 -top-5 p-4 left-1/2 font-semibold text-[0.7rem]"
                 style={{ transform: `translateX(-50%) rotate(${cellotapeRotateAngle}deg)` }}
-            >{`${id}`}</Badge>
+            >{`NOTE - ${id}`}</Badge>
 
             <div className='flex items-center justify-between gap-2'>
                 {title && <span className='font-semibold flex-1 line-clamp-1'>{title}</span>}
