@@ -23,8 +23,6 @@ interface LabConnection {
 const CONNECTIONS: LabConnection[] = [
     { from: 'NOTE-002', to: 'WEB-001' },
     { from: 'NOTE-003', to: 'CLI-001' },
-    { from: 'NOTE-004', to: 'WEB-002' },
-  
 ]
 
 function renderItem(item: LabItemConfig) {
