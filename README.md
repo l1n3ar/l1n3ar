@@ -58,6 +58,6 @@ gives a filing an immutable, timestamped proof of ownership by hashing the asset
 
 [l1n3ar-digest](https://github.com/l1n3ar/l1n3ar-digest) — a news feed that researches and drafts its own entries
 [n-way-switch](https://github.com/l1n3ar/shadcn-nway) ([demo](https://shadcn-nway-switch.vercel.app/)) — exclusive-select toggle switch for shadcn
-[rota-lms](https://github.com/l1n3ar/rota-lms) — fork, open-source lms (next.js + django)
-[trulytrue-web](https://github.com/l1n3ar/trulytrue-web) — fork, community-driven scam-detection db
+[rota-lms](https://github.com/l1n3ar/rota-lms) — open-source lms (next.js + django)
+
 
