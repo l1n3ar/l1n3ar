@@ -57,6 +57,5 @@ gives a filing an immutable, timestamped proof of ownership by hashing the asset
 ## side projects
 
 [corex](https://github.com/l1n3ar/corex): self-hosted AI + cloud platform built from scratch (GPU kernels through inference serving, storage through observability), including agentz, an agent framework built with LangChain/LangGraph/LangSmith, and agentx, a planned rebuild on native primitives
-[study](https://github.com/l1n3ar/study): DSA, ML, and system design notes and exercises
 
 
