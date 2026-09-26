@@ -56,8 +56,6 @@ gives a filing an immutable, timestamped proof of ownership by hashing the asset
 
 ## side projects
 
-[l1n3ar-digest](https://github.com/l1n3ar/l1n3ar-digest) — a news feed that researches and drafts its own entries
-[n-way-switch](https://github.com/l1n3ar/shadcn-nway) ([demo](https://shadcn-nway-switch.vercel.app/)) — exclusive-select toggle switch for shadcn
-[rota-lms](https://github.com/l1n3ar/rota-lms) — open-source lms (next.js + django)
+[corex](https://github.com/l1n3ar/corex): self-hosted AI + cloud platform built from scratch (GPU kernels through inference serving, storage through observability)
 
 
