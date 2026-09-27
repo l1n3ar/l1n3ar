@@ -34,7 +34,7 @@ export function ProjectCard({ project, showCategory }: { project: Project; showC
     <button
       type="button"
       onClick={() => router.push(`/projects/${project.id}`)}
-      className="group relative flex flex-col text-left border border-border rounded-lg bg-card overflow-hidden shadow-sm"
+      className="group flex flex-col text-left border border-border rounded-lg bg-card overflow-hidden shadow-sm"
     >
 
         <div className="relative w-full h-40 shrink-0 overflow-hidden">
@@ -79,9 +79,7 @@ export function ProjectCard({ project, showCategory }: { project: Project; showC
             </span>
           ))}
         </div>
-      </div>
-
-      <div
+            <div
         className={cn(
           'pastel-chip absolute inset-0 z-20 opacity-0 [@media(hover:hover)]:group-hover:opacity-100 transition-opacity flex items-center justify-center text-center p-4',
           showDescription && 'opacity-100',
@@ -90,6 +88,9 @@ export function ProjectCard({ project, showCategory }: { project: Project; showC
       >
         <p className="text-0_7 leading-relaxed">{project.description}</p>
       </div>
+      </div>
+
+  
 
       {hasLinks && (
         <div className="border-t border-border p-2 flex gap-1.5">
